@@ -9,12 +9,20 @@
 /* Begin PBXBuildFile section */
 		57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B72B023A0D001040A5 /* AppDelegate.swift */; };
 		57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */; };
-		57BCF3BC2B023A0D001040A5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3BB2B023A0D001040A5 /* ViewController.swift */; };
 		57BCF3C12B023A0E001040A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57BCF3C02B023A0E001040A5 /* Assets.xcassets */; };
 		57BCF3C42B023A0E001040A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57BCF3C22B023A0E001040A5 /* LaunchScreen.storyboard */; };
 		57BCF3CF2B023A0E001040A5 /* MovieTalkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3CE2B023A0E001040A5 /* MovieTalkTests.swift */; };
 		57BCF3D92B023A0E001040A5 /* MovieTalkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3D82B023A0E001040A5 /* MovieTalkUITests.swift */; };
 		57BCF3DB2B023A0E001040A5 /* MovieTalkUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3DA2B023A0E001040A5 /* MovieTalkUITestsLaunchTests.swift */; };
+		57BCF3E92B025FC0001040A5 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF3E82B025FC0001040A5 /* Moya */; };
+		57BCF3EB2B025FC0001040A5 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF3EA2B025FC0001040A5 /* RxMoya */; };
+		57BCF3F02B02600C001040A5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3EF2B02600C001040A5 /* LoginViewController.swift */; };
+		57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3F12B026057001040A5 /* SignUpViewController.swift */; };
+		57BCF3F42B0260C8001040A5 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */; };
+		57BCF3F62B0260CE001040A5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */; };
+		57BCF3F92B02610C001040A5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF3F82B02610C001040A5 /* SnapKit */; };
+		57BCF3FB2B026126001040A5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FA2B026126001040A5 /* HomeViewController.swift */; };
+		57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FC2B02612E001040A5 /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +46,6 @@
 		57BCF3B42B023A0D001040A5 /* MovieTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BCF3B72B023A0D001040A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		57BCF3BB2B023A0D001040A5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		57BCF3C02B023A0E001040A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57BCF3C32B023A0E001040A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57BCF3C52B023A0E001040A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +54,12 @@
 		57BCF3D42B023A0E001040A5 /* MovieTalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieTalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BCF3D82B023A0E001040A5 /* MovieTalkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTalkUITests.swift; sourceTree = "<group>"; };
 		57BCF3DA2B023A0E001040A5 /* MovieTalkUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTalkUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		57BCF3EF2B02600C001040A5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		57BCF3F12B026057001040A5 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		57BCF3FA2B026126001040A5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		57BCF3FC2B02612E001040A5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +67,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57BCF3F92B02610C001040A5 /* SnapKit in Frameworks */,
+				57BCF3EB2B025FC0001040A5 /* RxMoya in Frameworks */,
+				57BCF3E92B025FC0001040A5 /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +115,9 @@
 			children = (
 				57BCF3B72B023A0D001040A5 /* AppDelegate.swift */,
 				57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */,
-				57BCF3BB2B023A0D001040A5 /* ViewController.swift */,
+				57BCF3EE2B025FE9001040A5 /* Network */,
+				57BCF3ED2B025FE5001040A5 /* ViewModel */,
+				57BCF3EC2B025FDB001040A5 /* View */,
 				57BCF3C02B023A0E001040A5 /* Assets.xcassets */,
 				57BCF3C22B023A0E001040A5 /* LaunchScreen.storyboard */,
 				57BCF3C52B023A0E001040A5 /* Info.plist */,
@@ -124,6 +142,33 @@
 			path = MovieTalkUITests;
 			sourceTree = "<group>";
 		};
+		57BCF3EC2B025FDB001040A5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				57BCF3EF2B02600C001040A5 /* LoginViewController.swift */,
+				57BCF3F12B026057001040A5 /* SignUpViewController.swift */,
+				57BCF3FA2B026126001040A5 /* HomeViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		57BCF3ED2B025FE5001040A5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */,
+				57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */,
+				57BCF3FC2B02612E001040A5 /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		57BCF3EE2B025FE9001040A5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,6 +185,11 @@
 			dependencies = (
 			);
 			name = MovieTalk;
+			packageProductDependencies = (
+				57BCF3E82B025FC0001040A5 /* Moya */,
+				57BCF3EA2B025FC0001040A5 /* RxMoya */,
+				57BCF3F82B02610C001040A5 /* SnapKit */,
+			);
 			productName = MovieTalk;
 			productReference = 57BCF3B42B023A0D001040A5 /* MovieTalk.app */;
 			productType = "com.apple.product-type.application";
@@ -212,6 +262,10 @@
 				Base,
 			);
 			mainGroup = 57BCF3AB2B023A0D001040A5;
+			packageReferences = (
+				57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */,
+				57BCF3F72B02610C001040A5 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 57BCF3B52B023A0D001040A5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -254,9 +308,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57BCF3BC2B023A0D001040A5 /* ViewController.swift in Sources */,
+				57BCF3F02B02600C001040A5 /* LoginViewController.swift in Sources */,
+				57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */,
+				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
+				57BCF3FB2B026126001040A5 /* HomeViewController.swift in Sources */,
 				57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */,
+				57BCF3F42B0260C8001040A5 /* SignUpViewModel.swift in Sources */,
 				57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */,
+				57BCF3F62B0260CE001040A5 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +655,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 15.0.0;
+			};
+		};
+		57BCF3F72B02610C001040A5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		57BCF3E82B025FC0001040A5 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		57BCF3EA2B025FC0001040A5 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
+		};
+		57BCF3F82B02610C001040A5 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57BCF3F72B02610C001040A5 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 57BCF3AC2B023A0D001040A5 /* Project object */;
 }
