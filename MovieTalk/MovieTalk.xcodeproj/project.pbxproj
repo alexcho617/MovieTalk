@@ -29,6 +29,10 @@
 		57BCF4062B026DE5001040A5 /* EmailValidationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */; };
 		57BCF4082B026EB1001040A5 /* TokenRefreshDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */; };
 		57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */; };
+		57BCF4102B027047001040A5 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF40F2B027047001040A5 /* Secret.swift */; };
+		57BCF4122B02704D001040A5 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4112B02704D001040A5 /* Endpoints.swift */; };
+		57BCF4142B027280001040A5 /* ServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4132B027280001040A5 /* ServerAPI.swift */; };
+		57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +76,10 @@
 		57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationDTO.swift; sourceTree = "<group>"; };
 		57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshDTO.swift; sourceTree = "<group>"; };
 		57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawDTO.swift; sourceTree = "<group>"; };
+		57BCF40F2B027047001040A5 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		57BCF4112B02704D001040A5 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		57BCF4132B027280001040A5 /* ServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
+		57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +186,9 @@
 			isa = PBXGroup;
 			children = (
 				57BCF3FE2B026BAE001040A5 /* AuthManager.swift */,
+				57BCF4132B027280001040A5 /* ServerAPI.swift */,
+				57BCF4112B02704D001040A5 /* Endpoints.swift */,
+				57BCF40F2B027047001040A5 /* Secret.swift */,
 				57BCF4002B026BBE001040A5 /* DataMapping */,
 			);
 			path = Network;
@@ -191,6 +202,7 @@
 				57BCF4032B026DBE001040A5 /* LoginDTO.swift */,
 				57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */,
 				57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */,
+				57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -335,8 +347,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				57BCF3F02B02600C001040A5 /* LoginViewController.swift in Sources */,
+				57BCF4102B027047001040A5 /* Secret.swift in Sources */,
 				57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */,
 				57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */,
+				57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */,
 				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
 				57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */,
 				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
@@ -345,8 +359,10 @@
 				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,
 				57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */,
 				57BCF4082B026EB1001040A5 /* TokenRefreshDTO.swift in Sources */,
+				57BCF4142B027280001040A5 /* ServerAPI.swift in Sources */,
 				57BCF3F42B0260C8001040A5 /* SignUpViewModel.swift in Sources */,
 				57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */,
+				57BCF4122B02704D001040A5 /* Endpoints.swift in Sources */,
 				57BCF3F62B0260CE001040A5 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
