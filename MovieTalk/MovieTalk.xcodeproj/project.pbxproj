@@ -23,6 +23,12 @@
 		57BCF3F92B02610C001040A5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF3F82B02610C001040A5 /* SnapKit */; };
 		57BCF3FB2B026126001040A5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FA2B026126001040A5 /* HomeViewController.swift */; };
 		57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FC2B02612E001040A5 /* HomeViewModel.swift */; };
+		57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FE2B026BAE001040A5 /* AuthManager.swift */; };
+		57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4012B026C50001040A5 /* SignUpDTO.swift */; };
+		57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4032B026DBE001040A5 /* LoginDTO.swift */; };
+		57BCF4062B026DE5001040A5 /* EmailValidationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */; };
+		57BCF4082B026EB1001040A5 /* TokenRefreshDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */; };
+		57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +66,12 @@
 		57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		57BCF3FA2B026126001040A5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		57BCF3FC2B02612E001040A5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		57BCF3FE2B026BAE001040A5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		57BCF4012B026C50001040A5 /* SignUpDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDTO.swift; sourceTree = "<group>"; };
+		57BCF4032B026DBE001040A5 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
+		57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationDTO.swift; sourceTree = "<group>"; };
+		57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshDTO.swift; sourceTree = "<group>"; };
+		57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,8 +177,22 @@
 		57BCF3EE2B025FE9001040A5 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				57BCF3FE2B026BAE001040A5 /* AuthManager.swift */,
+				57BCF4002B026BBE001040A5 /* DataMapping */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		57BCF4002B026BBE001040A5 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+				57BCF4012B026C50001040A5 /* SignUpDTO.swift */,
+				57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */,
+				57BCF4032B026DBE001040A5 /* LoginDTO.swift */,
+				57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */,
+				57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */,
+			);
+			path = DataMapping;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,10 +335,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				57BCF3F02B02600C001040A5 /* LoginViewController.swift in Sources */,
+				57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */,
+				57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */,
+				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
 				57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */,
 				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
+				57BCF4062B026DE5001040A5 /* EmailValidationDTO.swift in Sources */,
 				57BCF3FB2B026126001040A5 /* HomeViewController.swift in Sources */,
+				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,
 				57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */,
+				57BCF4082B026EB1001040A5 /* TokenRefreshDTO.swift in Sources */,
 				57BCF3F42B0260C8001040A5 /* SignUpViewModel.swift in Sources */,
 				57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */,
 				57BCF3F62B0260CE001040A5 /* LoginViewModel.swift in Sources */,
