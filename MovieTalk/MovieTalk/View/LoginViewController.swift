@@ -7,13 +7,12 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     let viewModel = LoginViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
-        viewModel.login()
     }
     
 }

@@ -14,6 +14,6 @@ struct WithdrawRequestDTO: Encodable{
 
 struct WithdrawResponseDTO: Decodable{
     let _id: String
-    let _email: String
+    let email: String
     let nick: String
 }

@@ -7,6 +7,6 @@
 
 import Foundation
 
-class HomeViewModel{
+final class HomeViewModel{
     
 }

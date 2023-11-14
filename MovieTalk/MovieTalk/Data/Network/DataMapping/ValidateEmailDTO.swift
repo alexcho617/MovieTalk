@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct EmailValidationRequestDTO: Encodable{
+struct ValidateEmailRequestDTO: Encodable{
     let email: String
 }
 
 
-struct EmailValidationResponseDTO: Decodable{
+struct ValidateEmailResponseDTO: Decodable{
     let message: String
 }

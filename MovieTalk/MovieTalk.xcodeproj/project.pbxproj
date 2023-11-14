@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		571154B42B034C1F00FD26A2 /* ViewModel + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */; };
+		571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B52B03623300FD26A2 /* LandingViewController.swift */; };
 		57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B72B023A0D001040A5 /* AppDelegate.swift */; };
 		57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */; };
 		57BCF3C12B023A0E001040A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57BCF3C02B023A0E001040A5 /* Assets.xcassets */; };
@@ -26,13 +28,16 @@
 		57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FE2B026BAE001040A5 /* AuthManager.swift */; };
 		57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4012B026C50001040A5 /* SignUpDTO.swift */; };
 		57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4032B026DBE001040A5 /* LoginDTO.swift */; };
-		57BCF4062B026DE5001040A5 /* EmailValidationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */; };
-		57BCF4082B026EB1001040A5 /* TokenRefreshDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */; };
+		57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4052B026DE5001040A5 /* ValidateEmailDTO.swift */; };
+		57BCF4082B026EB1001040A5 /* RefreshTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4072B026EB1001040A5 /* RefreshTokenDTO.swift */; };
 		57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */; };
 		57BCF4102B027047001040A5 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF40F2B027047001040A5 /* Secret.swift */; };
 		57BCF4122B02704D001040A5 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4112B02704D001040A5 /* Endpoints.swift */; };
 		57BCF4142B027280001040A5 /* ServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4132B027280001040A5 /* ServerAPI.swift */; };
 		57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */; };
+		57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4192B030607001040A5 /* UserDefaultsManager.swift */; };
+		57BCF41F2B033218001040A5 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF41E2B033218001040A5 /* RxCocoa */; };
+		57BCF4212B033218001040A5 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF4202B033218001040A5 /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + Protocol.swift"; sourceTree = "<group>"; };
+		571154B52B03623300FD26A2 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		57BCF3B42B023A0D001040A5 /* MovieTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BCF3B72B023A0D001040A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,13 +80,14 @@
 		57BCF3FE2B026BAE001040A5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		57BCF4012B026C50001040A5 /* SignUpDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDTO.swift; sourceTree = "<group>"; };
 		57BCF4032B026DBE001040A5 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
-		57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationDTO.swift; sourceTree = "<group>"; };
-		57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshDTO.swift; sourceTree = "<group>"; };
+		57BCF4052B026DE5001040A5 /* ValidateEmailDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateEmailDTO.swift; sourceTree = "<group>"; };
+		57BCF4072B026EB1001040A5 /* RefreshTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenDTO.swift; sourceTree = "<group>"; };
 		57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawDTO.swift; sourceTree = "<group>"; };
 		57BCF40F2B027047001040A5 /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		57BCF4112B02704D001040A5 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		57BCF4132B027280001040A5 /* ServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
 		57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
+		57BCF4192B030607001040A5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +97,8 @@
 			files = (
 				57BCF3F92B02610C001040A5 /* SnapKit in Frameworks */,
 				57BCF3EB2B025FC0001040A5 /* RxMoya in Frameworks */,
+				57BCF4212B033218001040A5 /* RxSwift in Frameworks */,
+				57BCF41F2B033218001040A5 /* RxCocoa in Frameworks */,
 				57BCF3E92B025FC0001040A5 /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +175,7 @@
 		57BCF3EC2B025FDB001040A5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				571154B52B03623300FD26A2 /* LandingViewController.swift */,
 				57BCF3EF2B02600C001040A5 /* LoginViewController.swift */,
 				57BCF3F12B026057001040A5 /* SignUpViewController.swift */,
 				57BCF3FA2B026126001040A5 /* HomeViewController.swift */,
@@ -178,6 +189,7 @@
 				57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */,
 				57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */,
 				57BCF3FC2B02612E001040A5 /* HomeViewModel.swift */,
+				571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -198,9 +210,9 @@
 			isa = PBXGroup;
 			children = (
 				57BCF4012B026C50001040A5 /* SignUpDTO.swift */,
-				57BCF4052B026DE5001040A5 /* EmailValidationDTO.swift */,
+				57BCF4052B026DE5001040A5 /* ValidateEmailDTO.swift */,
 				57BCF4032B026DBE001040A5 /* LoginDTO.swift */,
-				57BCF4072B026EB1001040A5 /* TokenRefreshDTO.swift */,
+				57BCF4072B026EB1001040A5 /* RefreshTokenDTO.swift */,
 				57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */,
 				57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */,
 			);
@@ -210,9 +222,18 @@
 		57BCF4172B02FE20001040A5 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				57BCF4182B0305F3001040A5 /* UserDefaults */,
 				57BCF3EE2B025FE9001040A5 /* Network */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		57BCF4182B0305F3001040A5 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				57BCF4192B030607001040A5 /* UserDefaultsManager.swift */,
+			);
+			path = UserDefaults;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +256,8 @@
 				57BCF3E82B025FC0001040A5 /* Moya */,
 				57BCF3EA2B025FC0001040A5 /* RxMoya */,
 				57BCF3F82B02610C001040A5 /* SnapKit */,
+				57BCF41E2B033218001040A5 /* RxCocoa */,
+				57BCF4202B033218001040A5 /* RxSwift */,
 			);
 			productName = MovieTalk;
 			productReference = 57BCF3B42B023A0D001040A5 /* MovieTalk.app */;
@@ -311,6 +334,7 @@
 			packageReferences = (
 				57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */,
 				57BCF3F72B02610C001040A5 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				57BCF41D2B033218001040A5 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 57BCF3B52B023A0D001040A5 /* Products */;
 			projectDirPath = "";
@@ -355,18 +379,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				57BCF3F02B02600C001040A5 /* LoginViewController.swift in Sources */,
+				571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */,
 				57BCF4102B027047001040A5 /* Secret.swift in Sources */,
+				571154B42B034C1F00FD26A2 /* ViewModel + Protocol.swift in Sources */,
 				57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */,
 				57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */,
 				57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */,
+				57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */,
 				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
 				57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */,
 				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
-				57BCF4062B026DE5001040A5 /* EmailValidationDTO.swift in Sources */,
+				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,
 				57BCF3FB2B026126001040A5 /* HomeViewController.swift in Sources */,
 				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,
 				57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */,
-				57BCF4082B026EB1001040A5 /* TokenRefreshDTO.swift in Sources */,
+				57BCF4082B026EB1001040A5 /* RefreshTokenDTO.swift in Sources */,
 				57BCF4142B027280001040A5 /* ServerAPI.swift in Sources */,
 				57BCF3F42B0260C8001040A5 /* SignUpViewModel.swift in Sources */,
 				57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */,
@@ -729,6 +756,14 @@
 				minimumVersion = 5.6.0;
 			};
 		};
+		57BCF41D2B033218001040A5 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -746,6 +781,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 57BCF3F72B02610C001040A5 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		57BCF41E2B033218001040A5 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57BCF41D2B033218001040A5 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		57BCF4202B033218001040A5 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57BCF41D2B033218001040A5 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

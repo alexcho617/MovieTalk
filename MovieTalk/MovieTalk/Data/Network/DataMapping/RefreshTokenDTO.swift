@@ -12,6 +12,6 @@ import Foundation
 //
 //}
 
-struct TokenRefreshResponseDTO: Decodable{
+struct RefreshTokenResponseDTO: Decodable{
     let token: String
 }
