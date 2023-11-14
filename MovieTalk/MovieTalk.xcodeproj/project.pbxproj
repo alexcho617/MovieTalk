@@ -135,7 +135,7 @@
 			children = (
 				57BCF3B72B023A0D001040A5 /* AppDelegate.swift */,
 				57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */,
-				57BCF3EE2B025FE9001040A5 /* Network */,
+				57BCF4172B02FE20001040A5 /* Data */,
 				57BCF3ED2B025FE5001040A5 /* ViewModel */,
 				57BCF3EC2B025FDB001040A5 /* View */,
 				57BCF3C02B023A0E001040A5 /* Assets.xcassets */,
@@ -205,6 +205,14 @@
 				57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */,
 			);
 			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		57BCF4172B02FE20001040A5 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				57BCF3EE2B025FE9001040A5 /* Network */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
