@@ -14,7 +14,8 @@ enum AuthState{
     case loggedIn
     case signedUp
     case loggedOut
-    case timeout
+    case fail
+    case none
 }
 
 final class AuthManager {
@@ -22,39 +23,71 @@ final class AuthManager {
     private init() {}
     private let disposeBag = DisposeBag()
     
-    //    SSOT
+    //SSOT
     var currentAuthState = PublishSubject<AuthState>()
     
     func signUp(user: SignUpRequestDTO) -> PublishSubject<AuthState>{
+        let recovery = PublishSubject<Response>() //catch block
+
         let provider = MoyaProvider<ServerAPI>()
         provider.rx
             .request(ServerAPI.signUp(model: user))
             .asObservable()
             .filterSuccessfulStatusCodes()
-            .subscribe(with: self,
-                onNext: { owner, response in
-                if let decodedResponse = try? JSONDecoder().decode(SignUpResponseDTO.self, from: response.data) {
-                    //TODO: abstract to  manager class
-                    UserDefaultsManager.shared.saveAccountInfo(model: decodedResponse)
-                    owner.currentAuthState.onNext(.signedUp)
-                    print("ServerResponse",decodedResponse)
-                }
-            },
-                onError: { owner, error in
-                if let moyaError = error as? MoyaError, case let .statusCode(response) = moyaError {
-                    if let errorResponse = try? JSONDecoder().decode(ErrorResponseDTO.self, from: response.data) {
-                        owner.currentAuthState.onError(ServerAPIError.apiError(message: errorResponse.message))
-                        print("ServerResponse",errorResponse)
-
+            .catch{ error in
+                handleStatusCodeError(error)
+                return recovery
+            }
+            .subscribe(with: self, onNext: { owner, response in
+                if response.statusCode == 200{
+                    if let responseDTO = try? JSONDecoder().decode(SignUpResponseDTO.self, from: response.data) {
+                        UserDefaultsManager.shared.saveAccountInfo(model: responseDTO)
+                        owner.currentAuthState.onNext(.signedUp)
+                        print("ServerResponse",responseDTO)
                     }
                 }
+                
             })
             .disposed(by: disposeBag)
         return currentAuthState
     }
     
+    func validateEmail(email: ValidateEmailRequestDTO) -> PublishSubject<Bool>{
+        let validationResult = PublishSubject<Bool>()
+
+        let provider = MoyaProvider<ServerAPI>()
+        provider.rx
+            .request(ServerAPI.validateEmail(model: email))
+            .asObservable()
+            .subscribe(with: self) { owner, response in
+                if response.statusCode == 200{
+                    if let responseDTO = try? JSONDecoder().decode(ValidateEmailResponseDTO.self, from: response.data){
+                        print("ServerResponse",responseDTO)
+                        validationResult.onNext(true)
+                    }
+                }else{
+                    if let responseDTO = try? JSONDecoder().decode(ValidateEmailResponseDTO.self, from: response.data){
+                        print("ServerResponse",responseDTO)
+                        validationResult.onNext(false)
+                    }
+                }
+            }.disposed(by: disposeBag)
+        return validationResult
+    }
+    
     deinit {
-        print("AUthmanager deinit")
+        print("AuthManager deinit")
     }
 }
 
+
+func handleStatusCodeError(_ error: Error) {
+    guard let moyaError = error as? MoyaError else {return}
+    guard let response = moyaError.response else {return}
+    if var errorDTO = try? JSONDecoder().decode(ErrorResponseDTO.self, from: response.data) {
+        errorDTO.code = response.statusCode
+        print("ServerResponse",errorDTO.message, "\(errorDTO.code ?? -999)")
+    }else{
+        print("Error Decoding Failed")
+    }
+}

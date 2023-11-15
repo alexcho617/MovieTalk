@@ -9,7 +9,6 @@ import Foundation
 import Moya
 
 
-//TODO: validateEmail, tokenrefresh, withdraw
 enum ServerAPI{
     case signUp(model: SignUpRequestDTO)
     case login(model: LoginRequestDTO)
@@ -17,7 +16,7 @@ enum ServerAPI{
     case refresh
     case withdraw(model:WithdrawRequestDTO)
     
-}
+}              
 
 enum ServerAPIError: Error {
     case apiError(message: String)

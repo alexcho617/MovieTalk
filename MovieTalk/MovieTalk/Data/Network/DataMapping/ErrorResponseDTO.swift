@@ -8,5 +8,6 @@
 import Foundation
 
 struct ErrorResponseDTO: Decodable {
+    var code: Int?
     let message: String
 }
