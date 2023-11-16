@@ -123,7 +123,11 @@ final class SignUpViewController: UIViewController {
         output.authStatus
             .drive { state in
                 print(#function, state)
+                if state == AuthState.signedUp{
+                    print("Switch rooteview and login")
+                }
             }
+            .disposed(by: disposeBag)
 
         output.isValidated
             .drive(signUpButton.rx.isEnabled)

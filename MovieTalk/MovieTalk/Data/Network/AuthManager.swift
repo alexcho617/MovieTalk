@@ -43,7 +43,7 @@ final class AuthManager {
                     if let responseDTO = try? JSONDecoder().decode(SignUpResponseDTO.self, from: response.data) {
                         UserDefaultsManager.shared.saveAccountInfo(model: responseDTO)
                         owner.currentAuthState.onNext(.signedUp)
-                        print("ServerResponse",responseDTO)
+                        print("Server: Registration Success",responseDTO)
                     }
                 }
                 
@@ -62,12 +62,12 @@ final class AuthManager {
             .subscribe(with: self) { owner, response in
                 if response.statusCode == 200{
                     if let responseDTO = try? JSONDecoder().decode(ValidateEmailResponseDTO.self, from: response.data){
-                        print("ServerResponse",responseDTO)
+                        print("Server: Valid Email",responseDTO)
                         validationResult.onNext(true)
                     }
                 }else{
                     if let responseDTO = try? JSONDecoder().decode(ValidateEmailResponseDTO.self, from: response.data){
-                        print("ServerResponse",responseDTO)
+                        print("Server: Invalid Email ",responseDTO)
                         validationResult.onNext(false)
                     }
                 }
@@ -86,8 +86,8 @@ func handleStatusCodeError(_ error: Error) {
     guard let response = moyaError.response else {return}
     if var errorDTO = try? JSONDecoder().decode(ErrorResponseDTO.self, from: response.data) {
         errorDTO.code = response.statusCode
-        print("ServerResponse",errorDTO.message, "\(errorDTO.code ?? -999)")
+        print("Server: Fail",errorDTO.message, "\(errorDTO.code ?? -999)")
     }else{
-        print("Error Decoding Failed")
+        print("Server: Unknown Error")
     }
 }

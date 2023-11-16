@@ -29,9 +29,8 @@ final class SignUpViewModel: ViewModel{
     func transform(input: Input) -> Output {
         let isValid = BehaviorSubject(value: false)
         
-        //TODO: Even if validate, if new value is given, send false to isValid subject
         input.email
-                .map { _ in false } // Map any new value to false
+                .map { _ in false }
                 .asDriver(onErrorJustReturn: false)
                 .drive(isValid)
                 .disposed(by: disposeBag)
@@ -59,7 +58,5 @@ final class SignUpViewModel: ViewModel{
         let output = Output(authStatus: status.asDriver(onErrorJustReturn: .fail), isValidated: isValid.asDriver(onErrorJustReturn: false))
         return output
     }
-    
-    
     
 }
