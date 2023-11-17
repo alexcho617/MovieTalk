@@ -27,7 +27,7 @@ extension ServerAPI: TargetType{
     var baseURL: URL {
         Endpoints.baseURL
     }
-    //TODO: endpoint enum.rawvalue로 개선 가능
+    //MARK: endpoint enum.rawvalue로 개선 가능
     var path: String {
         switch self {
         case .signUp:
@@ -45,9 +45,9 @@ extension ServerAPI: TargetType{
     
     var method: Moya.Method {
         switch self {
-        case .signUp, .login, .validateEmail, .withdraw:
+        case .signUp, .login, .validateEmail:
             return .post
-        case .refresh:
+        case .refresh, .withdraw:
             return .get
         }
     }
@@ -78,7 +78,6 @@ extension ServerAPI: TargetType{
             ]
         case .withdraw:
             return [
-                "Content-Type" : "application/json",
                 "Authorization" : UserDefaultsManager.shared.currentToken,
                 "SesacKey" : Secret.key
             ]

@@ -24,9 +24,12 @@ final class AuthManager {
     private let disposeBag = DisposeBag()
     
     //SSOT
+    //Publish Subject 리턴하는거 별로 안좋음 Observable()
     var currentAuthState = PublishSubject<AuthState>()
     
     func signUp(user: SignUpRequestDTO) -> PublishSubject<AuthState>{
+        print("Server: Sign Up Initiate...")
+
         let recovery = PublishSubject<Response>() //catch block
 
         let provider = MoyaProvider<ServerAPI>()
@@ -53,6 +56,7 @@ final class AuthManager {
     }
     
     func validateEmail(email: ValidateEmailRequestDTO) -> PublishSubject<Bool>{
+        print("Server: ValidateEmail Initiate...")
         let validationResult = PublishSubject<Bool>()
 
         let provider = MoyaProvider<ServerAPI>()
@@ -73,6 +77,32 @@ final class AuthManager {
                 }
             }.disposed(by: disposeBag)
         return validationResult
+    }
+    
+    func login(model: LoginRequestDTO) -> PublishSubject<AuthState>{
+        print("Server: Login Initiate...")
+        let recovery = PublishSubject<Response>()
+        let provider = MoyaProvider<ServerAPI>()
+        
+        provider.rx.request(ServerAPI.login(model: model))
+            .asObservable()
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .filterSuccessfulStatusCodes()
+            .catch { error in
+                handleStatusCodeError(error)
+                return recovery
+            }
+            .subscribe(with: self) { owner, response in
+                if response.statusCode == 200{
+                    if let responseDTO = try? JSONDecoder().decode(LoginResponseDTO.self, from: response.data){
+                        UserDefaultsManager.shared.saveLoginCredentional(model: responseDTO)
+                        owner.currentAuthState.onNext(.loggedIn)
+                        print("Server: Login Success", responseDTO)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        return currentAuthState
     }
     
     deinit {

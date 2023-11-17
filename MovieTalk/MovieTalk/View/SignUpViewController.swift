@@ -65,16 +65,15 @@ final class SignUpViewController: UIViewController {
     }
     
     private func setView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
+        title = "회원가입"
+        navigationController?.navigationBar.prefersLargeTitles = true
         view.addSubview(emailTextField)
         view.addSubview(validateEmailButton)
-        validateEmailButton.layer.borderWidth = 2
-        
         
         view.addSubview(passwordTextField)
         view.addSubview(nicknameTextField)
         view.addSubview(signUpButton)
-        signUpButton.layer.borderWidth = 2
         
         emailTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)

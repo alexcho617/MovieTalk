@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct WithdrawRequestDTO: Encodable{
-    let email: String
-    let password: String
-}
+//struct WithdrawRequestDTO: Encodable{
+//    let email: String
+//    let password: String
+//}
 
 struct WithdrawResponseDTO: Decodable{
     let _id: String

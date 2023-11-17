@@ -9,13 +9,12 @@ import Foundation
 
 final class UserDefaultsManager{
     
-    enum Key: String{
+    enum Key: String, CaseIterable{
         case token = "token"
         case refresh = "refresh"
         case id = "id"
         case email = "email"
         case nick = "nick"
-        
     }
     
     static let shared = UserDefaultsManager()
@@ -29,6 +28,13 @@ final class UserDefaultsManager{
     var currentRefreshToken: String{
         return standard.string(forKey: Key.refresh.rawValue) ?? ""
     }
+    
+    var currentEmail: String{
+        return standard.string(forKey: Key.email.rawValue) ?? ""
+    }
+    
+    //TODO: 비밀번호는 없음. 그렇다면 withdraw는 어떻게 할 것인가? 사용자에게 받아야함
+    
     //사용자 정보 저장
     func saveAccountInfo(model: SignUpResponseDTO){
         standard.setValue(model._id, forKey: Key.id.rawValue)
@@ -41,6 +47,21 @@ final class UserDefaultsManager{
         standard.setValue(model.token, forKey: Key.token.rawValue)
         standard.setValue(model.refreshToken, forKey: Key.refresh.rawValue)
     }
-    
+    func printAllData(){
+        print("===PRINTING UD...===")
+        let keys = Key.allCases
+        for key in keys {
+            print(key.rawValue,standard.object(forKey: key.rawValue) ?? "nil")
+        }
+        print("===END OF UD...===")
+
+    }
+    func clearToken(){
+        printAllData()
+        standard.removeObject(forKey: Key.token.rawValue)
+        standard.removeObject(forKey: Key.refresh.rawValue)
+        print("TOKENS CLEARED FROM UD")
+        printAllData()
+    }
 }
 
