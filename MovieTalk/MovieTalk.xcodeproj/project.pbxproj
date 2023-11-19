@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		571154B42B034C1F00FD26A2 /* ViewModel + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */; };
 		571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B52B03623300FD26A2 /* LandingViewController.swift */; };
+		574B8BEE2B0A537B00018EBD /* PostDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574B8BED2B0A537B00018EBD /* PostDTO.swift */; };
 		57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B72B023A0D001040A5 /* AppDelegate.swift */; };
 		57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */; };
 		57BCF3C12B023A0E001040A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57BCF3C02B023A0E001040A5 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 /* Begin PBXFileReference section */
 		571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + Protocol.swift"; sourceTree = "<group>"; };
 		571154B52B03623300FD26A2 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		574B8BED2B0A537B00018EBD /* PostDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDTO.swift; sourceTree = "<group>"; };
 		57BCF3B42B023A0D001040A5 /* MovieTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BCF3B72B023A0D001040A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				57BCF4072B026EB1001040A5 /* RefreshTokenDTO.swift */,
 				57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */,
 				57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */,
+				574B8BED2B0A537B00018EBD /* PostDTO.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -389,6 +392,7 @@
 				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
 				57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */,
 				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
+				574B8BEE2B0A537B00018EBD /* PostDTO.swift in Sources */,
 				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,
 				57BCF3FB2B026126001040A5 /* HomeViewController.swift in Sources */,
 				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,

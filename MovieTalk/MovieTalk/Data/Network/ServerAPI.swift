@@ -14,7 +14,7 @@ enum ServerAPI{
     case login(model: LoginRequestDTO)
     case validateEmail(model: ValidateEmailRequestDTO)
     case refresh
-    case withdraw(model:WithdrawRequestDTO)
+    case withdraw //withdraw request body 필요없어짐 v11.17
     
 }              
 
@@ -62,10 +62,8 @@ extension ServerAPI: TargetType{
             
         case .validateEmail(model: let model):
             return .requestJSONEncodable(model)
-        case .refresh:
+        case .refresh, .withdraw:
             return .requestPlain
-        case .withdraw(model: let model):
-            return .requestJSONEncodable(model)
         }
     }
     
