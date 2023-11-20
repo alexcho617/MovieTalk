@@ -15,7 +15,7 @@ enum ServerAPI{
     case validateEmail(model: ValidateEmailRequestDTO)
     case refresh
     case withdraw //withdraw request body 필요없어짐 v11.17
-    
+//    case movieCreate(model: )
 }              
 
 enum ServerAPIError: Error {

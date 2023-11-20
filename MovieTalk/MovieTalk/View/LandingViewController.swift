@@ -6,36 +6,44 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 //TODO: Auth manager참조 여기서 해서 login/home/signup 분기처리하기
 final class LandingViewController: UIViewController {
-
+    let vm = LandingViewModel()
+    let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
-        routeview()
+        print("Landing Viewdidload")
+        bind()
 
     }
     
-    func routeview(){
-        //1 get token from userdefautls
-        let token = UserDefaultsManager.shared.currentToken
-        let refresh = UserDefaultsManager.shared.currentRefreshToken
-        
-        //2 check token validation
-        //how to check token validation? with content?
-        //refresh에서 주는 상태코드로 분기처리
+    func bind(){
+        vm.authState
+            .bind(with: self) { owner, state in
+                switch state{
+                case .loggedIn:
+                    print("Go to home")
+                    self.navigator(HomeViewController())
+                default:
+                    print("Login")
+                    self.navigator(LoginViewController())
 
-        //2-1 token is valid
-        //go to Home
-        
-        //2-2 token is invalid
-        //3 try refresh
-        //3-1 refresh worked
-        //4validate new token
-        //go to home
-        //3-2 refresh didnt work
-        //go to login
+                }
+                
+               
+                
+            }.disposed(by: disposeBag)
         
     }
     
+    func navigator(_ vc: UIViewController){
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        let nav = UINavigationController(rootViewController: vc)
+        sceneDelegate?.window?.rootViewController = nav
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
 }

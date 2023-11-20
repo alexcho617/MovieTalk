@@ -20,6 +20,7 @@ enum AuthState{
     case none
 }
 
+// API Call(1) -> 419 -> refresh -> 갱신 -> API Call(1) : interceptor
 
 final class AuthManager {
     static let shared = AuthManager()
@@ -32,9 +33,9 @@ final class AuthManager {
     
     func signUp(user: SignUpRequestDTO) -> PublishSubject<AuthState>{
         print("START:", #function)
-
+        
         let recovery = PublishSubject<Response>() //catch block
-
+        
         let provider = MoyaProvider<ServerAPI>()
         provider.rx
             .request(ServerAPI.signUp(model: user))
@@ -61,7 +62,7 @@ final class AuthManager {
     func validateEmail(email: ValidateEmailRequestDTO) -> PublishSubject<Bool>{
         print("START:", #function)
         let validationResult = PublishSubject<Bool>()
-
+        
         let provider = MoyaProvider<ServerAPI>()
         provider.rx
             .request(ServerAPI.validateEmail(model: email))
@@ -135,26 +136,33 @@ final class AuthManager {
     }
     
     func refresh() -> PublishSubject<AuthState>{
+        print("START:", #function)
         let provider = MoyaProvider<ServerAPI>()
         let recovery = PublishSubject<Response>()
         
         provider.rx.request(ServerAPI.refresh)
             .asObservable()
-            .filterSuccessfulStatusCodes()
             .catch { error in
                 handleStatusCodeError(error)
                 return recovery
             }
             .subscribe(with: self) { owner, response in
-                if response.statusCode == 200{
+                switch response.statusCode{
+                case 200:
                     if let responseDTO = try? JSONDecoder().decode(RefreshTokenResponseDTO.self, from: response.data){
                         print("Server: Token Refreshed",responseDTO)
                         //save current token
                         UserDefaultsManager.shared.saveToken(model: responseDTO)
                         owner.currentAuthState.onNext(.loggedIn)
                     }
-                   
-                }else{
+                case 409:
+                    print("Server: Token Not Outdated", response)
+                    owner.currentAuthState.onNext(.loggedIn)
+                case 418:
+                    print("Server: Token Outdated, Re Log In", response)
+                    owner.currentAuthState.onNext(.timedOut)
+                    print("Need to login")
+                default:
                     print("Server: Refresh Failed", response)
                     owner.currentAuthState.onNext(.timedOut)
                     print("Need to login")

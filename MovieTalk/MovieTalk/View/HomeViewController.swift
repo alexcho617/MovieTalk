@@ -109,6 +109,7 @@ class HomeViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
+        //여기서 이벤트 계속 발생 중
         output.authStatus
             .drive { state in
                 switch state{
