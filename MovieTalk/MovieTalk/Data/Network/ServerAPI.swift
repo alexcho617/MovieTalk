@@ -25,7 +25,7 @@ enum ServerAPIError: Error {
 
 extension ServerAPI: TargetType{
     var baseURL: URL {
-        Endpoints.baseURL
+        Secret.baseURL
     }
     //MARK: endpoint enum.rawvalue로 개선 가능
     var path: String {

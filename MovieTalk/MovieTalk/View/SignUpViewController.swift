@@ -109,7 +109,6 @@ final class SignUpViewController: UIViewController {
     }
     
     private func bind(){
-        AuthManager.shared.currentAuthState.subon
         
         let input = SignUpViewModel.Input(
             email: emailTextField.rx.text.orEmpty,
