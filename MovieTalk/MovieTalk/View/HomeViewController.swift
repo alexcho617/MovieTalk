@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 
 class HomeViewController: UIViewController {
+    let viewModel = HomeViewModel()
+    let disposeBag = DisposeBag()
     var logoutButton = {
         let view = UIButton(type: .system)
         view.setTitle("로그아웃", for: .normal)
@@ -55,7 +57,6 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         view.addSubview(logoutButton)
-        logoutButton.addTarget(self, action: #selector(logout), for: .touchUpInside)
         view.addSubview(withdrawButton)
         view.addSubview(tokenRefreshButton)
         view.addSubview(contentsButton)
@@ -91,11 +92,12 @@ class HomeViewController: UIViewController {
             make.height.equalTo(40)
         }
     }
-     @objc
+    
      func logout(){
          //delete all token
          UserDefaultsManager.shared.clearToken()
          
+         //rootview swap
          let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
          let sceneDelegate = windowScene?.delegate as? SceneDelegate
          let nav = UINavigationController(rootViewController: LoginViewController())
@@ -103,7 +105,20 @@ class HomeViewController: UIViewController {
          sceneDelegate?.window?.makeKeyAndVisible()
      }
     func bind(){
+        let input = HomeViewModel.Input(logoutClicked: logoutButton.rx.tap, withdrawClicked: withdrawButton.rx.tap, refreshClicked: tokenRefreshButton.rx.tap, contentsClicked: contentsButton.rx.tap)
         
+        let output = viewModel.transform(input: input)
+        
+        output.authStatus
+            .drive { state in
+                switch state{
+                case .withdrawn, .timedOut, .loggedOut:
+                    self.logout()
+                default:
+                    print("Default", state)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 

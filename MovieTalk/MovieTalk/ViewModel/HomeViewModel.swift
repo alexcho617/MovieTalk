@@ -13,6 +13,10 @@ final class HomeViewModel: ViewModel{
     
     var disposeBag = DisposeBag()
     
+    //TODO: Implement contents function
+//    let contents = Observable.just("Initial Value").asDriver(onErrorJustReturn: "nil")
+    private let authStatus = PublishSubject<AuthState>()
+    
     struct Input {
         let logoutClicked: ControlEvent<Void>
         let withdrawClicked: ControlEvent<Void>
@@ -21,20 +25,38 @@ final class HomeViewModel: ViewModel{
     }
     
     struct Output {
-        let contents: Driver<String>
+        let authStatus: Driver<AuthState>
     }
     
     func transform(input: Input) -> Output {
-        //TODO: Implement contents function
-        let contents = Observable.just("Initial Value").asDriver(onErrorJustReturn: "nil")
+        input.logoutClicked
+            .asObservable()
+            .map{
+                return AuthState.loggedOut
+            }
+            .subscribe(with: self) { owner, state in
+                owner.authStatus.onNext(state)
+            }
+            .disposed(by: disposeBag)
         
         input.withdrawClicked
-            .map{
-                //비밀번호는 어떻게 할 것인가?? 사용자 에게서 입력?
-                let dto = WithdrawRequestDTO(email: UserDefaultsManager.shared.currentEmail, password: "")
+            .flatMapLatest{
+                return AuthManager.shared.withdraw()
             }
+            .subscribe(with: self) { owner, state in
+                owner.authStatus.onNext(state)
+            }
+            .disposed(by: disposeBag)
         
+        input.refreshClicked
+            .flatMapLatest {
+                return AuthManager.shared.refresh()
+            }
+            .subscribe(with: self) { owner, state in
+                owner.authStatus.onNext(state)
+            }
+            .disposed(by: disposeBag)
         
-        return Output(contents: contents)
+        return Output(authStatus: authStatus.asDriver(onErrorJustReturn: .fail))
     }
 }

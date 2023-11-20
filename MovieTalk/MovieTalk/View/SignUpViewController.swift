@@ -123,7 +123,16 @@ final class SignUpViewController: UIViewController {
             .drive { state in
                 print(#function, state)
                 if state == AuthState.signedUp{
-                    print("Switch rooteview and login")
+                    //TODO: 한번에 로그인 시키고 홈으로 가기
+                    //일단은 로그인 화면으로
+                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                    let vc = LoginViewController()
+                    let nav = UINavigationController(rootViewController: vc)
+                    
+                    sceneDelegate?.window?.rootViewController = nav
+                    sceneDelegate?.window?.makeKeyAndVisible()
+                    
                 }
             }
             .disposed(by: disposeBag)

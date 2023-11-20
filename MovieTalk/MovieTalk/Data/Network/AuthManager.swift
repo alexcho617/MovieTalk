@@ -13,10 +13,13 @@ import RxSwift
 enum AuthState{
     case loggedIn
     case signedUp
+    case timedOut
     case loggedOut
+    case withdrawn
     case fail
     case none
 }
+
 
 final class AuthManager {
     static let shared = AuthManager()
@@ -28,7 +31,7 @@ final class AuthManager {
     var currentAuthState = PublishSubject<AuthState>()
     
     func signUp(user: SignUpRequestDTO) -> PublishSubject<AuthState>{
-        print("Server: Sign Up Initiate...")
+        print("START:", #function)
 
         let recovery = PublishSubject<Response>() //catch block
 
@@ -56,7 +59,7 @@ final class AuthManager {
     }
     
     func validateEmail(email: ValidateEmailRequestDTO) -> PublishSubject<Bool>{
-        print("Server: ValidateEmail Initiate...")
+        print("START:", #function)
         let validationResult = PublishSubject<Bool>()
 
         let provider = MoyaProvider<ServerAPI>()
@@ -80,7 +83,7 @@ final class AuthManager {
     }
     
     func login(model: LoginRequestDTO) -> PublishSubject<AuthState>{
-        print("Server: Login Initiate...")
+        print("START:", #function)
         let recovery = PublishSubject<Response>()
         let provider = MoyaProvider<ServerAPI>()
         
@@ -99,6 +102,62 @@ final class AuthManager {
                         owner.currentAuthState.onNext(.loggedIn)
                         print("Server: Login Success", responseDTO)
                     }
+                }
+            }
+            .disposed(by: disposeBag)
+        return currentAuthState
+    }
+    
+    func withdraw() -> PublishSubject<AuthState>{
+        print("START:", #function)
+        let provider = MoyaProvider<ServerAPI>()
+        let recovery = PublishSubject<Response>()
+        provider.rx.request(ServerAPI.withdraw)
+            .asObservable()
+            .filterSuccessfulStatusCodes()
+            .catch { error in
+                handleStatusCodeError(error)
+                return recovery
+            }
+            .subscribe(with: self) { owner, response in
+                if response.statusCode == 200{
+                    if let responseDTO = try? JSONDecoder().decode(WithdrawResponseDTO.self, from: response.data){
+                        owner.currentAuthState.onNext(.withdrawn)
+                        print("Server: Account Withdrawn")
+                        print(responseDTO)
+                    }
+                }
+                else if response.statusCode == 419{
+                    print("Need AccessToken Refresh", response.statusCode)
+                }
+            }.disposed(by: disposeBag)
+        return currentAuthState
+    }
+    
+    func refresh() -> PublishSubject<AuthState>{
+        let provider = MoyaProvider<ServerAPI>()
+        let recovery = PublishSubject<Response>()
+        
+        provider.rx.request(ServerAPI.refresh)
+            .asObservable()
+            .filterSuccessfulStatusCodes()
+            .catch { error in
+                handleStatusCodeError(error)
+                return recovery
+            }
+            .subscribe(with: self) { owner, response in
+                if response.statusCode == 200{
+                    if let responseDTO = try? JSONDecoder().decode(RefreshTokenResponseDTO.self, from: response.data){
+                        print("Server: Token Refreshed",responseDTO)
+                        //save current token
+                        UserDefaultsManager.shared.saveToken(model: responseDTO)
+                        owner.currentAuthState.onNext(.loggedIn)
+                    }
+                   
+                }else{
+                    print("Server: Refresh Failed", response)
+                    owner.currentAuthState.onNext(.timedOut)
+                    print("Need to login")
                 }
             }
             .disposed(by: disposeBag)
