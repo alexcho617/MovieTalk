@@ -35,8 +35,7 @@ final class AuthManager {
         print("START:", #function)
         
         let recovery = PublishSubject<Response>() //catch block
-        
-        let provider = MoyaProvider<ServerAPI>()
+        let provider = MoyaProvider<ServerAPI>()//(session: Moya.Session(interceptor: Interceptor()))
         provider.rx
             .request(ServerAPI.signUp(model: user))
             .asObservable()
@@ -188,3 +187,14 @@ func handleStatusCodeError(_ error: Error) {
         print("Server: Unknown Error")
     }
 }
+
+
+//class Interceptor: RequestInterceptor{
+//    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+//
+//    }
+//
+//    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
+//
+//    }
+//}

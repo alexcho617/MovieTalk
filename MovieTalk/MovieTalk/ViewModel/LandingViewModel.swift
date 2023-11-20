@@ -23,10 +23,10 @@ class LandingViewModel{
         
         //2 check token validation
         AuthManager.shared.refresh()
-            .subscribe(with: self) { owner, state in
-                owner.authState.onNext(state)
-            }
-            .disposed(by: disposeBag)
+//            .subscribe(with: self) { owner, state in
+////                owner.authState.onNext(state)
+//            }
+//            .disposed(by: disposeBag)
 
         //2-1 token is valid
         //go to Home

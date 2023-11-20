@@ -21,8 +21,8 @@ final class LandingViewController: UIViewController {
     }
     
     func bind(){
-        vm.authState
-            .bind(with: self) { owner, state in
+        AuthManager.shared.currentAuthState
+            .subscribe(with: self) { owner, state in
                 switch state{
                 case .loggedIn:
                     print("Go to home")
@@ -32,11 +32,7 @@ final class LandingViewController: UIViewController {
                     self.navigator(LoginViewController())
 
                 }
-                
-               
-                
             }.disposed(by: disposeBag)
-        
     }
     
     func navigator(_ vc: UIViewController){

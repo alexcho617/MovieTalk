@@ -102,5 +102,5 @@ iOSInjectionProject/
 *.xcuserstate
 .DS_Store
 *.pbxproj
-MovieTalk/MovieTalk/Network/Secret.swift
-MovieTalk/MovieTalk/Network/Endpoints.swift
+Secret.swift
+Endpoints.swift
