@@ -61,6 +61,7 @@ class HomeViewController: UIViewController {
         view.addSubview(tokenRefreshButton)
         view.addSubview(contentsButton)
         view.addSubview(contentsLabel)
+        contentsButton.addTarget(self, action: #selector(postData), for: .touchUpInside)
         
         logoutButton.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
@@ -93,6 +94,10 @@ class HomeViewController: UIViewController {
         }
     }
     
+    @objc
+    func postData(){
+        ContentsManager.shared.post()
+    }
      func logout(){
          //delete all token
          UserDefaultsManager.shared.clearToken()
@@ -104,6 +109,7 @@ class HomeViewController: UIViewController {
          sceneDelegate?.window?.rootViewController = nav
          sceneDelegate?.window?.makeKeyAndVisible()
      }
+    
     func bind(){
         let input = HomeViewModel.Input(logoutClicked: logoutButton.rx.tap, withdrawClicked: withdrawButton.rx.tap, refreshClicked: tokenRefreshButton.rx.tap, contentsClicked: contentsButton.rx.tap)
         
@@ -112,11 +118,8 @@ class HomeViewController: UIViewController {
         //여기서 이벤트 계속 발생 중
         output.authStatus
             .drive { state in
-                switch state{
-                case .loggedOut:
+                if state == .loggedOut{
                     self.logout()
-                default:
-                    print("Default", state)
                 }
             }
             .disposed(by: disposeBag)

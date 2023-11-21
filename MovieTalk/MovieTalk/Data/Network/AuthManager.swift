@@ -13,12 +13,6 @@ import RxSwift
 enum AuthState{
     case loggedIn
     case loggedOut
-
-//    case signedUp
-//    case timedOut
-//    case withdrawn
-//    case fail
-//    case none
 }
 
 // API Call(1) -> 419 -> refresh -> 갱신 -> API Call(1) : interceptor
@@ -37,9 +31,9 @@ final class AuthManager {
         print("START:", #function)
         let signUpResult = BehaviorSubject(value: false)
         let recovery = PublishSubject<Response>() //catch block
-        let provider = MoyaProvider<ServerAPI>()//(session: Moya.Session(interceptor: Interceptor()))
+        let provider = MoyaProvider<AuthServerAPI>()//(session: Moya.Session(interceptor: Interceptor()))
         provider.rx
-            .request(ServerAPI.signUp(model: user))
+            .request(AuthServerAPI.signUp(model: user))
             .asObservable()
             .filterSuccessfulStatusCodes()
             .catch{ error in
@@ -66,9 +60,9 @@ final class AuthManager {
         print("START:", #function)
         let validationResult = PublishSubject<Bool>()
         
-        let provider = MoyaProvider<ServerAPI>()
+        let provider = MoyaProvider<AuthServerAPI>()
         provider.rx
-            .request(ServerAPI.validateEmail(model: email))
+            .request(AuthServerAPI.validateEmail(model: email))
             .asObservable()
             .subscribe(with: self) { owner, response in
                 if response.statusCode == 200{
@@ -89,9 +83,9 @@ final class AuthManager {
     func login(model: LoginRequestDTO) -> PublishSubject<AuthState>{
         print("START:", #function)
         let recovery = PublishSubject<Response>()
-        let provider = MoyaProvider<ServerAPI>()
+        let provider = MoyaProvider<AuthServerAPI>()
         
-        provider.rx.request(ServerAPI.login(model: model))
+        provider.rx.request(AuthServerAPI.login(model: model))
             .asObservable()
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .filterSuccessfulStatusCodes()
@@ -114,9 +108,9 @@ final class AuthManager {
     
     func withdraw() -> PublishSubject<AuthState>{
         print("START:", #function)
-        let provider = MoyaProvider<ServerAPI>()
+        let provider = MoyaProvider<AuthServerAPI>()
         let recovery = PublishSubject<Response>()
-        provider.rx.request(ServerAPI.withdraw)
+        provider.rx.request(AuthServerAPI.withdraw)
             .asObservable()
             .filterSuccessfulStatusCodes()
             .catch { error in
@@ -140,10 +134,10 @@ final class AuthManager {
     
     func refresh() -> PublishSubject<AuthState>{
         print("START:", #function)
-        let provider = MoyaProvider<ServerAPI>()
+        let provider = MoyaProvider<AuthServerAPI>()
         let recovery = PublishSubject<Response>()
         
-        provider.rx.request(ServerAPI.refresh)
+        provider.rx.request(AuthServerAPI.refresh)
             .asObservable()
             .catch { error in
                 handleStatusCodeError(error)

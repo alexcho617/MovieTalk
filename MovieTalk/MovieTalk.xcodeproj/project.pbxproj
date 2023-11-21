@@ -11,8 +11,8 @@
 		571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B52B03623300FD26A2 /* LandingViewController.swift */; };
 		574B8BEE2B0A537B00018EBD /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574B8BED2B0A537B00018EBD /* MovieDTO.swift */; };
 		574B8C2A2B0B532D00018EBD /* ContentsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574B8C292B0B532D00018EBD /* ContentsManager.swift */; };
-		574B8C2C2B0B572800018EBD /* LandingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574B8C2B2B0B572800018EBD /* LandingViewModel.swift */; };
 		574B8C2E2B0B776C00018EBD /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574B8C2D2B0B776C00018EBD /* Secret.swift */; };
+		574B8C3E2B0C972400018EBD /* ContentsServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574B8C3D2B0C972400018EBD /* ContentsServerAPI.swift */; };
 		57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B72B023A0D001040A5 /* AppDelegate.swift */; };
 		57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */; };
 		57BCF3C12B023A0E001040A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57BCF3C02B023A0E001040A5 /* Assets.xcassets */; };
@@ -35,7 +35,7 @@
 		57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4052B026DE5001040A5 /* ValidateEmailDTO.swift */; };
 		57BCF4082B026EB1001040A5 /* RefreshTokenDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4072B026EB1001040A5 /* RefreshTokenDTO.swift */; };
 		57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */; };
-		57BCF4142B027280001040A5 /* ServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4132B027280001040A5 /* ServerAPI.swift */; };
+		57BCF4142B027280001040A5 /* AuthServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4132B027280001040A5 /* AuthServerAPI.swift */; };
 		57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */; };
 		57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4192B030607001040A5 /* UserDefaultsManager.swift */; };
 		57BCF41F2B033218001040A5 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF41E2B033218001040A5 /* RxCocoa */; };
@@ -64,8 +64,8 @@
 		571154B52B03623300FD26A2 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		574B8BED2B0A537B00018EBD /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		574B8C292B0B532D00018EBD /* ContentsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsManager.swift; sourceTree = "<group>"; };
-		574B8C2B2B0B572800018EBD /* LandingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewModel.swift; sourceTree = "<group>"; };
 		574B8C2D2B0B776C00018EBD /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		574B8C3D2B0C972400018EBD /* ContentsServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsServerAPI.swift; sourceTree = "<group>"; };
 		57BCF3B42B023A0D001040A5 /* MovieTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BCF3B72B023A0D001040A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 		57BCF4052B026DE5001040A5 /* ValidateEmailDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateEmailDTO.swift; sourceTree = "<group>"; };
 		57BCF4072B026EB1001040A5 /* RefreshTokenDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenDTO.swift; sourceTree = "<group>"; };
 		57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawDTO.swift; sourceTree = "<group>"; };
-		57BCF4132B027280001040A5 /* ServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
+		57BCF4132B027280001040A5 /* AuthServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServerAPI.swift; sourceTree = "<group>"; };
 		57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
 		57BCF4192B030607001040A5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -191,7 +191,6 @@
 			isa = PBXGroup;
 			children = (
 				57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */,
-				574B8C2B2B0B572800018EBD /* LandingViewModel.swift */,
 				57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */,
 				57BCF3FC2B02612E001040A5 /* HomeViewModel.swift */,
 				571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */,
@@ -204,7 +203,8 @@
 			children = (
 				57BCF3FE2B026BAE001040A5 /* AuthManager.swift */,
 				574B8C292B0B532D00018EBD /* ContentsManager.swift */,
-				57BCF4132B027280001040A5 /* ServerAPI.swift */,
+				57BCF4132B027280001040A5 /* AuthServerAPI.swift */,
+				574B8C3D2B0C972400018EBD /* ContentsServerAPI.swift */,
 				574B8C2D2B0B776C00018EBD /* Secret.swift */,
 				57BCF4002B026BBE001040A5 /* DataMapping */,
 			);
@@ -387,13 +387,13 @@
 				57BCF3F02B02600C001040A5 /* LoginViewController.swift in Sources */,
 				571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */,
 				571154B42B034C1F00FD26A2 /* ViewModel + Protocol.swift in Sources */,
+				574B8C3E2B0C972400018EBD /* ContentsServerAPI.swift in Sources */,
 				57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */,
 				57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */,
 				57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */,
 				57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */,
 				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
 				57BCF3FD2B02612E001040A5 /* HomeViewModel.swift in Sources */,
-				574B8C2C2B0B572800018EBD /* LandingViewModel.swift in Sources */,
 				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
 				574B8BEE2B0A537B00018EBD /* MovieDTO.swift in Sources */,
 				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,
@@ -402,7 +402,7 @@
 				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,
 				57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */,
 				57BCF4082B026EB1001040A5 /* RefreshTokenDTO.swift in Sources */,
-				57BCF4142B027280001040A5 /* ServerAPI.swift in Sources */,
+				57BCF4142B027280001040A5 /* AuthServerAPI.swift in Sources */,
 				57BCF3F42B0260C8001040A5 /* SignUpViewModel.swift in Sources */,
 				57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */,
 				574B8C2A2B0B532D00018EBD /* ContentsManager.swift in Sources */,

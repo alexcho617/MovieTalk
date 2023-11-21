@@ -36,6 +36,7 @@ final class HomeViewModel: ViewModel{
             }
             .subscribe(with: self) { owner, state in
                 owner.authStatus.onNext(state)
+                UserDefaultsManager.shared.clearToken()
             }
             .disposed(by: disposeBag)
         
@@ -56,6 +57,12 @@ final class HomeViewModel: ViewModel{
                 owner.authStatus.onNext(state)
             }
             .disposed(by: disposeBag)
+        
+//        input.contentsClicked
+//            .map{
+//                print("Contents Button Clicked")
+//                ContentsManager.shared.post()
+//            }
         
         return Output(authStatus: authStatus.asDriver(onErrorJustReturn: .loggedOut))
     }

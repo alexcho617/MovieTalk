@@ -8,20 +8,30 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
-//TODO: Auth manager참조 여기서 해서 login/home/signup 분기처리하기
+import SnapKit
 final class LandingViewController: UIViewController {
-//    let vm = LandingViewModel()
+    private var loadingText = {
+        let view = UILabel()
+        view.text = "로딩중..."
+        return view
+    }()
     let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print("Landing Viewdidload")
-        bind()
+        view.backgroundColor = .systemBackground
+        view.addSubview(loadingText)
+        loadingText.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bind()
+    }
+    
     func bind(){
-//        print(#function)
         AuthManager.shared.currentAuthState
             .withLatestFrom(AuthManager.shared.refresh())
             .subscribe(with: self) { owner, state in

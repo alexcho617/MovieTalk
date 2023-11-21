@@ -9,21 +9,15 @@ import Foundation
 import Moya
 
 
-enum ServerAPI{
+enum AuthServerAPI{
     case signUp(model: SignUpRequestDTO)
     case login(model: LoginRequestDTO)
     case validateEmail(model: ValidateEmailRequestDTO)
     case refresh
     case withdraw //withdraw request body 필요없어짐 v11.17
-//    case movieCreate(model: )
-}              
-
-enum ServerAPIError: Error {
-    case apiError(message: String)
-    case unknownError
 }
 
-extension ServerAPI: TargetType{
+extension AuthServerAPI: TargetType{
     var baseURL: URL {
         Secret.baseURL
     }
@@ -79,7 +73,6 @@ extension ServerAPI: TargetType{
                 "Authorization" : UserDefaultsManager.shared.currentToken,
                 "SesacKey" : Secret.key
             ]
-        //TODO: refresh test, UD의 타이밍 이슈로인해 불러오지못할 수 있음
         case .refresh:
             return [
                 "Authorization" : UserDefaultsManager.shared.currentToken,
