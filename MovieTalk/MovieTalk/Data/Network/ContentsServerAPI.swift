@@ -17,7 +17,7 @@ import Moya
 //MARK: 영화 Data 관리할 Table: ProductID -> mtMovie
 //MARK: 사용자의 SNS Data 관리할 Table: ProductID -> mtSNS
 enum ContentsServerAPI{
-    case createTopic
+    case createTopic(model: ContentsCreateRequestDTO)
 //    case readTopic
 //    case editTopic
 //    case deleteTopic
@@ -49,42 +49,47 @@ extension ContentsServerAPI: TargetType{
         }
     }
     
-    /*
-     content
-     더 레전드 오브 더 전설의 시작
-
-     product_id
-     movietalk_topic
-
-     title
-     해리포터와 마법사의 돌
-
-     content1
-     J.K.Rowling
-
-     
-     */
     
     var task: Moya.Task {
         switch self {
-        case .createTopic:
-            //TODO: make dto model and pass it
+        case .createTopic(let model):
             var multiPartData: [Moya.MultipartFormData] = []
+            let productIDData = model.product_id.data(using: .utf8) ?? Data()
+            let titleData = model.title.data(using: .utf8) ?? Data()
+            let contentData = model.content.data(using: .utf8) ?? Data()
+            let fileData = model.file
             
-            let productIDData = "mtSNS".data(using: .utf8) ?? Data()
-            let titleData = "해리포터를 봤다".data(using: .utf8) ?? Data()
-            let contentData = "해리포터는 정말 명작이야 보고 또 봐도 질리지 않아.".data(using: .utf8) ?? Data()
-            let contentOneData = "https://www.themoviedb.org/movie/671-harry-potter-and-the-philosopher-s-stone?language=ko".data(using: .utf8) ?? Data()
-            
-            let image = Image(named: "stone")
-            
-
-            //            let fileData data 타입 일단 쿼리부터 날려보자
             multiPartData.append(MultipartFormData(provider: .data(productIDData), name: "product_id"))
             multiPartData.append(MultipartFormData(provider: .data(titleData), name: "title"))
             multiPartData.append(MultipartFormData(provider: .data(contentData), name: "content"))
-            multiPartData.append(MultipartFormData(provider: .data(contentOneData), name: "content1"))
-            multiPartData.append(MultipartFormData(provider: .data((image?.jpegData(compressionQuality: 1.0))!), name: "file",fileName: "stone.png", mimeType: "image/png"))
+            
+            //binary데이터: fileName, mimeType 값 필요함
+            multiPartData.append(MultipartFormData(provider: .data(fileData), name: "file",fileName: "placeholder.jpeg", mimeType: "image/jpeg"))
+
+            if let content1: String = model.content1{
+                let data = content1.data(using: .utf8) ?? Data()
+                multiPartData.append(MultipartFormData(provider: .data(data), name: "content1"))
+            }
+            
+            if let content2: String = model.content2{
+                let data = content2.data(using: .utf8) ?? Data()
+                multiPartData.append(MultipartFormData(provider: .data(data), name: "content2"))
+            }
+            
+            if let content3: String = model.content3{
+                let data = content3.data(using: .utf8) ?? Data()
+                multiPartData.append(MultipartFormData(provider: .data(data), name: "content3"))
+            }
+            
+            if let content4: String = model.content4{
+                let data = content4.data(using: .utf8) ?? Data()
+                multiPartData.append(MultipartFormData(provider: .data(data), name: "content4"))
+            }
+            
+            if let content5: String = model.content5{
+                let data = content5.data(using: .utf8) ?? Data()
+                multiPartData.append(MultipartFormData(provider: .data(data), name: "content5"))
+            }
             
             return .uploadMultipart(multiPartData)
         }

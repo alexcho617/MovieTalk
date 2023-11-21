@@ -17,10 +17,11 @@ final class ContentsManager{
     private init(){}
     let disposeBag = DisposeBag()
     
-    func post(){
+    //TODO: Add error handling codes
+    func post(_ model: ContentsCreateRequestDTO){
         print("ContentsManager: post()")
-        var provider = MoyaProvider<ContentsServerAPI>()
-        provider.request(ContentsServerAPI.createTopic) { result in
+        let provider = MoyaProvider<ContentsServerAPI>()
+        provider.request(ContentsServerAPI.createTopic(model: model)) { result in
             switch result{
             case .success(let response):
                 let statusCode = response.statusCode
