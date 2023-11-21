@@ -57,6 +57,6 @@ final class HomeViewModel: ViewModel{
             }
             .disposed(by: disposeBag)
         
-        return Output(authStatus: authStatus.asDriver(onErrorJustReturn: .fail))
+        return Output(authStatus: authStatus.asDriver(onErrorJustReturn: .loggedOut))
     }
 }

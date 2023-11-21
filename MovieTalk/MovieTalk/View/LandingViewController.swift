@@ -11,24 +11,26 @@ import RxCocoa
 
 //TODO: Auth manager참조 여기서 해서 login/home/signup 분기처리하기
 final class LandingViewController: UIViewController {
-    let vm = LandingViewModel()
+//    let vm = LandingViewModel()
     let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Landing Viewdidload")
+//        print("Landing Viewdidload")
         bind()
 
     }
     
     func bind(){
+//        print(#function)
         AuthManager.shared.currentAuthState
+            .withLatestFrom(AuthManager.shared.refresh())
             .subscribe(with: self) { owner, state in
                 switch state{
                 case .loggedIn:
-                    print("Go to home")
+//                    print("Go to home")
                     self.navigator(HomeViewController())
                 default:
-                    print("Login")
+//                    print("Login")
                     self.navigator(LoginViewController())
 
                 }

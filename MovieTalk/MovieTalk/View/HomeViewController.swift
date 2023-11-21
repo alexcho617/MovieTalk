@@ -113,7 +113,7 @@ class HomeViewController: UIViewController {
         output.authStatus
             .drive { state in
                 switch state{
-                case .withdrawn, .timedOut, .loggedOut:
+                case .loggedOut:
                     self.logout()
                 default:
                     print("Default", state)

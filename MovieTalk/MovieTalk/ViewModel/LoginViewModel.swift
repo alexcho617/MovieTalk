@@ -55,7 +55,7 @@ final class LoginViewModel: ViewModel{
             })
             .disposed(by: disposeBag)
         
-        let output = Output(authStatus: status.asDriver(onErrorJustReturn: .fail), isValidated: validated.asDriver(onErrorJustReturn: false))
+        let output = Output(authStatus: status.asDriver(onErrorJustReturn: .loggedOut), isValidated: validated.asDriver(onErrorJustReturn: false))
         return output
     }
     

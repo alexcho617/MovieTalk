@@ -12,12 +12,13 @@ import RxSwift
 
 enum AuthState{
     case loggedIn
-    case signedUp
-    case timedOut
     case loggedOut
-    case withdrawn
-    case fail
-    case none
+
+//    case signedUp
+//    case timedOut
+//    case withdrawn
+//    case fail
+//    case none
 }
 
 // API Call(1) -> 419 -> refresh -> 갱신 -> API Call(1) : interceptor
@@ -29,11 +30,12 @@ final class AuthManager {
     
     //SSOT
     //Publish Subject 리턴하는거 별로 안좋음 Observable()
+    //TODO: AuthRefactor - Singleton 으로 상태관리를 하고 있어서 dispose가 제대로 안되고 있으며 여러모로 이벤트 관리가 안되고 있음. 컨텐츠 쪽만 격리 시켜서 관리하고 현재 refresh에서 이벤트 중복 발생하는건 인지하고 넘어가자.
     var currentAuthState = PublishSubject<AuthState>()
     
-    func signUp(user: SignUpRequestDTO) -> PublishSubject<AuthState>{
+    func signUp(user: SignUpRequestDTO) -> BehaviorSubject<Bool>{
         print("START:", #function)
-        
+        let signUpResult = BehaviorSubject(value: false)
         let recovery = PublishSubject<Response>() //catch block
         let provider = MoyaProvider<ServerAPI>()//(session: Moya.Session(interceptor: Interceptor()))
         provider.rx
@@ -48,14 +50,16 @@ final class AuthManager {
                 if response.statusCode == 200{
                     if let responseDTO = try? JSONDecoder().decode(SignUpResponseDTO.self, from: response.data) {
                         UserDefaultsManager.shared.saveAccountInfo(model: responseDTO)
-                        owner.currentAuthState.onNext(.signedUp)
+                        owner.currentAuthState.onNext(.loggedOut)
                         print("Server: Registration Success",responseDTO)
+                        signUpResult.onNext(true)
                     }
+                }else{
+                    signUpResult.onNext(false)
                 }
-                
             })
             .disposed(by: disposeBag)
-        return currentAuthState
+        return signUpResult
     }
     
     func validateEmail(email: ValidateEmailRequestDTO) -> PublishSubject<Bool>{
@@ -122,7 +126,7 @@ final class AuthManager {
             .subscribe(with: self) { owner, response in
                 if response.statusCode == 200{
                     if let responseDTO = try? JSONDecoder().decode(WithdrawResponseDTO.self, from: response.data){
-                        owner.currentAuthState.onNext(.withdrawn)
+                        owner.currentAuthState.onNext(.loggedOut)
                         print("Server: Account Withdrawn")
                         print(responseDTO)
                     }
@@ -154,16 +158,19 @@ final class AuthManager {
                         UserDefaultsManager.shared.saveToken(model: responseDTO)
                         owner.currentAuthState.onNext(.loggedIn)
                     }
+                case 403:
+                    print("Server: Forbidden")
+                    owner.currentAuthState.onNext(.loggedOut)
                 case 409:
                     print("Server: Token Not Outdated", response)
                     owner.currentAuthState.onNext(.loggedIn)
                 case 418:
                     print("Server: Token Outdated, Re Log In", response)
-                    owner.currentAuthState.onNext(.timedOut)
+                    owner.currentAuthState.onNext(.loggedOut)
                     print("Need to login")
                 default:
                     print("Server: Refresh Failed", response)
-                    owner.currentAuthState.onNext(.timedOut)
+                    owner.currentAuthState.onNext(.loggedOut)
                     print("Need to login")
                 }
             }

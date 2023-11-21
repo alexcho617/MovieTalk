@@ -123,7 +123,7 @@ final class SignUpViewController: UIViewController {
         output.authStatus
             .drive { state in
                 print(#function, state)
-                if state == AuthState.signedUp{
+                if state == true{
                     //TODO: 한번에 로그인 시키고 홈으로 가기
                     //일단은 로그인 화면으로
                     let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene

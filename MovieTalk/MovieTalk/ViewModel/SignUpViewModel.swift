@@ -11,7 +11,6 @@ import RxCocoa
 
 final class SignUpViewModel: ViewModel{
     var disposeBag = DisposeBag()
-    private let status = PublishSubject<AuthState>()
 
     struct Input{
         let email: ControlProperty<String>
@@ -22,11 +21,12 @@ final class SignUpViewModel: ViewModel{
     }
     
     struct Output{
-        let authStatus: Driver<AuthState>
+        let authStatus: Driver<Bool>
         let isValidated: Driver<Bool>
     }
     
     func transform(input: Input) -> Output {
+        let status = BehaviorSubject(value: false)
         let isValid = BehaviorSubject(value: false)
         
         input.email
@@ -52,10 +52,11 @@ final class SignUpViewModel: ViewModel{
                 let dto = SignUpRequestDTO(email: email, password: password, nick: nickname, phoneNum: nil, birthDay: nil)
                 return AuthManager.shared.signUp(user: dto)
             }
-            .asDriver(onErrorJustReturn: .fail)
+            .asDriver(onErrorJustReturn: false)
             .drive(status)
             .disposed(by: disposeBag)
-        let output = Output(authStatus: status.asDriver(onErrorJustReturn: .fail), isValidated: isValid.asDriver(onErrorJustReturn: false))
+        
+        let output = Output(authStatus: status.asDriver(onErrorJustReturn: false), isValidated: isValid.asDriver(onErrorJustReturn: false))
         return output
     }
     
