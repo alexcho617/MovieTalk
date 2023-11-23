@@ -43,8 +43,11 @@ final class ContentsManager{
                 switch result{
                 case .success(let response):
                     print("SUCCESS",response.statusCode)
-                    let decodedResponse = try! JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data)
-                    observer.onNext(decodedResponse)
+                    if let decodedResponse = try? JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data){
+                        observer.onNext(decodedResponse)
+                    }else{
+                        print("Decoding Failed")
+                    }
                 case .failure(let error):
                     print("FAILURE",error)
                     observer.onError(error)

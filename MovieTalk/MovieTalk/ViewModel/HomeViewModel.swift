@@ -16,10 +16,17 @@ class HomeViewModel: ViewModel{
     }
     
     struct Output{
-        
+        let contents: PublishRelay<[Post]>
     }
     
     func transform(input: Input) -> Output {
-        return Output()
+        let snsContents = PublishRelay<[Post]>()
+        let networkFailResponseDTO = ContentsReadResponseDTO(data: [], next_cursor: "0")
+        ContentsManager.shared.fetch()
+            .subscribe(with: self) { owner, responseDTO in
+                snsContents.accept(responseDTO.data)
+            }
+            .disposed(by: disposeBag)
+        return Output(contents: snsContents)
     }
 }

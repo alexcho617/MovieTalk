@@ -25,7 +25,6 @@ class HomeViewController: UIViewController{
         print("Home VDL")
         setView()
         bind()
-        ContentsManager.shared.fetch()
     }
     
     func setView(){
@@ -40,12 +39,24 @@ class HomeViewController: UIViewController{
     }
     
     func bind(){
+        let input = HomeViewModel.Input()
+        let output = viewModel.transform(input: input)
         
+        //contents = relay
+        output.contents
+            .asDriver(onErrorJustReturn: [])
+            .drive(contentsCollectionView.rx.items(cellIdentifier: HomeViewCell.idenifier, cellType: HomeViewCell.self)){
+                row, element, cell in
+                cell.cellData = element
+                //configure cell
+                cell.configureCell()
+            }
+            .disposed(by: disposeBag)
     }
     
     static func layout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 100, height: 40)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: 100)
         layout.scrollDirection = .horizontal
         return layout
     }

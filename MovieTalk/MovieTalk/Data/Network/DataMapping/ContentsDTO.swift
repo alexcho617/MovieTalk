@@ -81,13 +81,8 @@ struct ContentsCreateResponseDTO: Decodable{
 
 
 struct ContentsReadResponseDTO: Codable {
-    let posts: [Post]
-    let nextCursor: String
-
-    enum CodingKeys: String, CodingKey {
-        case posts
-        case nextCursor = "next_cursor"
-    }
+    let data: [Post]
+    let next_cursor: String
 }
 
 // MARK: - Post
