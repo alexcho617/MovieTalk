@@ -26,7 +26,7 @@ class HomeViewCell: UITableViewCell {
     
     let movieLabel: UILabel = {
         let label = UILabel()
-        label.text = "Default Movie"
+        label.text = "기본영화제목"
         return label
     }()
     
@@ -82,6 +82,7 @@ class HomeViewCell: UITableViewCell {
         contentView.addSubview(movieLabel)
         contentView.addSubview(movieButton)
         movieButton.addTarget(self, action: #selector(movieButtonClicked), for: .touchUpInside)
+        
         contentView.addSubview(mainImageView)
         contentView.addSubview(likeButton)
         contentView.addSubview(titleLabel)

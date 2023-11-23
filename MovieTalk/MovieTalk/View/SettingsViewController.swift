@@ -10,8 +10,8 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class DevViewController: UIViewController {
-    let viewModel = DevViewModel()
+class SettingsViewController: UIViewController {
+    let viewModel = SettingsViewModel()
     let disposeBag = DisposeBag()
     var logoutButton = {
         let view = UIButton(type: .system)
@@ -114,7 +114,7 @@ class DevViewController: UIViewController {
      }
     
     func bind(){
-        let input = DevViewModel.Input(logoutClicked: logoutButton.rx.tap, withdrawClicked: withdrawButton.rx.tap, refreshClicked: tokenRefreshButton.rx.tap, contentsClicked: contentsButton.rx.tap)
+        let input = SettingsViewModel.Input(logoutClicked: logoutButton.rx.tap, withdrawClicked: withdrawButton.rx.tap, refreshClicked: tokenRefreshButton.rx.tap, contentsClicked: contentsButton.rx.tap)
         
         let output = viewModel.transform(input: input)
         

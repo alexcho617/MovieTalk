@@ -21,6 +21,7 @@
 		57877FE12B0F80E400046F9B /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FE02B0F80E400046F9B /* MovieViewModel.swift */; };
 		57877FE92B0F99C100046F9B /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FE82B0F99C100046F9B /* MovieDTO.swift */; };
 		57877FEB2B0F9C2D00046F9B /* MovieAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FEA2B0F9C2D00046F9B /* MovieAPI.swift */; };
+		57877FED2B0FA84200046F9B /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FEC2B0FA84200046F9B /* AddViewController.swift */; };
 		57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B72B023A0D001040A5 /* AppDelegate.swift */; };
 		57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */; };
 		57BCF3C12B023A0E001040A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57BCF3C02B023A0E001040A5 /* Assets.xcassets */; };
@@ -35,8 +36,8 @@
 		57BCF3F42B0260C8001040A5 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */; };
 		57BCF3F62B0260CE001040A5 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */; };
 		57BCF3F92B02610C001040A5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF3F82B02610C001040A5 /* SnapKit */; };
-		57BCF3FB2B026126001040A5 /* DevViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FA2B026126001040A5 /* DevViewController.swift */; };
-		57BCF3FD2B02612E001040A5 /* DevViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FC2B02612E001040A5 /* DevViewModel.swift */; };
+		57BCF3FB2B026126001040A5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FA2B026126001040A5 /* SettingsViewController.swift */; };
+		57BCF3FD2B02612E001040A5 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FC2B02612E001040A5 /* SettingsViewModel.swift */; };
 		57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3FE2B026BAE001040A5 /* AuthManager.swift */; };
 		57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4012B026C50001040A5 /* SignUpDTO.swift */; };
 		57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4032B026DBE001040A5 /* LoginDTO.swift */; };
@@ -81,6 +82,7 @@
 		57877FE02B0F80E400046F9B /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		57877FE82B0F99C100046F9B /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		57877FEA2B0F9C2D00046F9B /* MovieAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPI.swift; sourceTree = "<group>"; };
+		57877FEC2B0FA84200046F9B /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		57BCF3B42B023A0D001040A5 /* MovieTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BCF3B72B023A0D001040A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,8 +98,8 @@
 		57BCF3F12B026057001040A5 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		57BCF3FA2B026126001040A5 /* DevViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevViewController.swift; sourceTree = "<group>"; };
-		57BCF3FC2B02612E001040A5 /* DevViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevViewModel.swift; sourceTree = "<group>"; };
+		57BCF3FA2B026126001040A5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		57BCF3FC2B02612E001040A5 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		57BCF3FE2B026BAE001040A5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		57BCF4012B026C50001040A5 /* SignUpDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDTO.swift; sourceTree = "<group>"; };
 		57BCF4032B026DBE001040A5 /* LoginDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDTO.swift; sourceTree = "<group>"; };
@@ -207,8 +209,9 @@
 				57BCF3EF2B02600C001040A5 /* LoginViewController.swift */,
 				57BCF3F12B026057001040A5 /* SignUpViewController.swift */,
 				57877FDE2B0F80B600046F9B /* MovieViewController.swift */,
+				57877FEC2B0FA84200046F9B /* AddViewController.swift */,
 				57877FD22B0F10DD00046F9B /* HomeViewController.swift */,
-				57BCF3FA2B026126001040A5 /* DevViewController.swift */,
+				57BCF3FA2B026126001040A5 /* SettingsViewController.swift */,
 				57877FD62B0F13F700046F9B /* Cells&Supplementay */,
 			);
 			path = View;
@@ -221,7 +224,7 @@
 				57877FD42B0F117C00046F9B /* HomeViewModel.swift */,
 				57877FE02B0F80E400046F9B /* MovieViewModel.swift */,
 				57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */,
-				57BCF3FC2B02612E001040A5 /* DevViewModel.swift */,
+				57BCF3FC2B02612E001040A5 /* SettingsViewModel.swift */,
 				571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */,
 			);
 			path = ViewModel;
@@ -429,14 +432,15 @@
 				57877FEB2B0F9C2D00046F9B /* MovieAPI.swift in Sources */,
 				57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */,
 				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
-				57BCF3FD2B02612E001040A5 /* DevViewModel.swift in Sources */,
+				57BCF3FD2B02612E001040A5 /* SettingsViewModel.swift in Sources */,
 				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
 				57877FE92B0F99C100046F9B /* MovieDTO.swift in Sources */,
 				57877FD32B0F10DD00046F9B /* HomeViewController.swift in Sources */,
 				57877FDF2B0F80B600046F9B /* MovieViewController.swift in Sources */,
 				574B8BEE2B0A537B00018EBD /* ContentsDTO.swift in Sources */,
+				57877FED2B0FA84200046F9B /* AddViewController.swift in Sources */,
 				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,
-				57BCF3FB2B026126001040A5 /* DevViewController.swift in Sources */,
+				57BCF3FB2B026126001040A5 /* SettingsViewController.swift in Sources */,
 				574B8C2E2B0B776C00018EBD /* Secret.swift in Sources */,
 				57877FE12B0F80E400046F9B /* MovieViewModel.swift in Sources */,
 				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,
