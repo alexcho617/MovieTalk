@@ -28,7 +28,7 @@ final class AuthManager {
     var currentAuthState = PublishSubject<AuthState>()
     
     func signUp(user: SignUpRequestDTO) -> BehaviorSubject<Bool>{
-        print("START:", #function)
+        print("AuthManager::", #function)
         let signUpResult = BehaviorSubject(value: false)
         let recovery = PublishSubject<Response>() //catch block
         let provider = MoyaProvider<AuthServerAPI>()//(session: Moya.Session(interceptor: Interceptor()))
@@ -57,7 +57,7 @@ final class AuthManager {
     }
     
     func validateEmail(email: ValidateEmailRequestDTO) -> PublishSubject<Bool>{
-        print("START:", #function)
+        print("AuthManager::", #function)
         let validationResult = PublishSubject<Bool>()
         
         let provider = MoyaProvider<AuthServerAPI>()
@@ -81,7 +81,7 @@ final class AuthManager {
     }
     
     func login(model: LoginRequestDTO) -> PublishSubject<AuthState>{
-        print("START:", #function)
+        print("AuthManager::", #function)
         let recovery = PublishSubject<Response>()
         let provider = MoyaProvider<AuthServerAPI>()
         
@@ -107,7 +107,7 @@ final class AuthManager {
     }
     
     func withdraw() -> PublishSubject<AuthState>{
-        print("START:", #function)
+        print("AuthManager::", #function)
         let provider = MoyaProvider<AuthServerAPI>()
         let recovery = PublishSubject<Response>()
         provider.rx.request(AuthServerAPI.withdraw)
@@ -133,7 +133,7 @@ final class AuthManager {
     }
     
     func refresh() -> PublishSubject<AuthState>{
-        print("START:", #function)
+        print("AuthManager::", #function)
         let provider = MoyaProvider<AuthServerAPI>()
         let recovery = PublishSubject<Response>()
         

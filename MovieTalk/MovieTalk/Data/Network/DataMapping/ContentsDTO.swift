@@ -9,10 +9,14 @@ import Foundation
 
 
 struct Comment: Codable{
-    
+    let _id: String
+    let content: String
+    let time: String
+    let creator: Creator
 }
 
 struct Creator: Codable{
+    //TODO: profile 있는지 확인
     let _id: String
     let nick: String
 }
@@ -80,26 +84,29 @@ struct ContentsCreateResponseDTO: Decodable{
 //}
 
 
-struct ContentsReadResponseDTO: Codable {
+struct ContentsReadResponseDTO: Decodable {
     let data: [Post]
     let next_cursor: String
 }
 
-// MARK: - Post
-struct Post: Codable {
+//content4, content5 비어있음
+struct Post: Decodable {
     let id: String
-    let comments: [Comment]
+    let comments: [Comment?]
     let content: String
-    let content1, content2, content3: String
+    let movieID, movieTitle, moviePosterURL: String
     let creator: Creator
     let hashTags: [String]
-    let image: [String] //base url + image 별도 리퀘스트 필요
-    let likes: [String]
+    let image: [String]? //base url + image 별도 리퀘스트 필요
+    let likes: [String]?
     let productID, time, title: String
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case comments, content, content1, content2, content3, creator, hashTags, image, likes
+        case comments, content, creator, hashTags, image, likes
+        case movieID = "content1"
+        case movieTitle = "content2"
+        case moviePosterURL = "content3"
         case productID = "product_id"
         case time, title
     }

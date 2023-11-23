@@ -26,11 +26,11 @@ final class ContentsManager{
                 let statusCode = response.statusCode
                 let data = response.data
                 
-                print("SUCCESS:",statusCode,data)
+                print("SESAC SUCCESS:",statusCode,data)
                 print(response.data.description)
                 
             case .failure(let error):
-                print("FAILURE",error)
+                print("SESAC FAILURE",error)
             }
         }
     }
@@ -42,7 +42,7 @@ final class ContentsManager{
             provider.request(ContentsServerAPI.readTopic) { result in
                 switch result{
                 case .success(let response):
-                    print("SUCCESS",response.statusCode)
+                    print("SESAC SUCCESS",response.statusCode)
                     if let decodedResponse = try? JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data){
                         observer.onNext(decodedResponse)
                     }else{

@@ -16,6 +16,11 @@
 		57877FD32B0F10DD00046F9B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FD22B0F10DD00046F9B /* HomeViewController.swift */; };
 		57877FD52B0F117C00046F9B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FD42B0F117C00046F9B /* HomeViewModel.swift */; };
 		57877FD82B0F142E00046F9B /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FD72B0F142E00046F9B /* HomeViewCell.swift */; };
+		57877FDD2B0F4D1800046F9B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 57877FDC2B0F4D1800046F9B /* Kingfisher */; };
+		57877FDF2B0F80B600046F9B /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FDE2B0F80B600046F9B /* MovieViewController.swift */; };
+		57877FE12B0F80E400046F9B /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FE02B0F80E400046F9B /* MovieViewModel.swift */; };
+		57877FE92B0F99C100046F9B /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FE82B0F99C100046F9B /* MovieDTO.swift */; };
+		57877FEB2B0F9C2D00046F9B /* MovieAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57877FEA2B0F9C2D00046F9B /* MovieAPI.swift */; };
 		57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B72B023A0D001040A5 /* AppDelegate.swift */; };
 		57BCF3BA2B023A0D001040A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */; };
 		57BCF3C12B023A0E001040A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57BCF3C02B023A0E001040A5 /* Assets.xcassets */; };
@@ -72,6 +77,10 @@
 		57877FD22B0F10DD00046F9B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		57877FD42B0F117C00046F9B /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		57877FD72B0F142E00046F9B /* HomeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
+		57877FDE2B0F80B600046F9B /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
+		57877FE02B0F80E400046F9B /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
+		57877FE82B0F99C100046F9B /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
+		57877FEA2B0F9C2D00046F9B /* MovieAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPI.swift; sourceTree = "<group>"; };
 		57BCF3B42B023A0D001040A5 /* MovieTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57BCF3B72B023A0D001040A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57BCF3B92B023A0D001040A5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57877FDD2B0F4D1800046F9B /* Kingfisher in Frameworks */,
 				57BCF3F92B02610C001040A5 /* SnapKit in Frameworks */,
 				57BCF3EB2B025FC0001040A5 /* RxMoya in Frameworks */,
 				57BCF4212B033218001040A5 /* RxSwift in Frameworks */,
@@ -196,6 +206,7 @@
 				571154B52B03623300FD26A2 /* LandingViewController.swift */,
 				57BCF3EF2B02600C001040A5 /* LoginViewController.swift */,
 				57BCF3F12B026057001040A5 /* SignUpViewController.swift */,
+				57877FDE2B0F80B600046F9B /* MovieViewController.swift */,
 				57877FD22B0F10DD00046F9B /* HomeViewController.swift */,
 				57BCF3FA2B026126001040A5 /* DevViewController.swift */,
 				57877FD62B0F13F700046F9B /* Cells&Supplementay */,
@@ -208,6 +219,7 @@
 			children = (
 				57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */,
 				57877FD42B0F117C00046F9B /* HomeViewModel.swift */,
+				57877FE02B0F80E400046F9B /* MovieViewModel.swift */,
 				57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */,
 				57BCF3FC2B02612E001040A5 /* DevViewModel.swift */,
 				571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */,
@@ -222,6 +234,7 @@
 				574B8C292B0B532D00018EBD /* ContentsManager.swift */,
 				57BCF4132B027280001040A5 /* AuthServerAPI.swift */,
 				574B8C3D2B0C972400018EBD /* ContentsServerAPI.swift */,
+				57877FEA2B0F9C2D00046F9B /* MovieAPI.swift */,
 				574B8C2D2B0B776C00018EBD /* Secret.swift */,
 				57BCF4002B026BBE001040A5 /* DataMapping */,
 			);
@@ -238,6 +251,7 @@
 				57BCF4092B026F5A001040A5 /* WithdrawDTO.swift */,
 				57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */,
 				574B8BED2B0A537B00018EBD /* ContentsDTO.swift */,
+				57877FE82B0F99C100046F9B /* MovieDTO.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -281,6 +295,7 @@
 				57BCF3F82B02610C001040A5 /* SnapKit */,
 				57BCF41E2B033218001040A5 /* RxCocoa */,
 				57BCF4202B033218001040A5 /* RxSwift */,
+				57877FDC2B0F4D1800046F9B /* Kingfisher */,
 			);
 			productName = MovieTalk;
 			productReference = 57BCF3B42B023A0D001040A5 /* MovieTalk.app */;
@@ -358,6 +373,7 @@
 				57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */,
 				57BCF3F72B02610C001040A5 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				57BCF41D2B033218001040A5 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				57877FDB2B0F4D1800046F9B /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 57BCF3B52B023A0D001040A5 /* Products */;
 			projectDirPath = "";
@@ -410,15 +426,19 @@
 				57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */,
 				57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */,
 				57877FD82B0F142E00046F9B /* HomeViewCell.swift in Sources */,
+				57877FEB2B0F9C2D00046F9B /* MovieAPI.swift in Sources */,
 				57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */,
 				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
 				57BCF3FD2B02612E001040A5 /* DevViewModel.swift in Sources */,
 				57BCF3F22B026057001040A5 /* SignUpViewController.swift in Sources */,
+				57877FE92B0F99C100046F9B /* MovieDTO.swift in Sources */,
 				57877FD32B0F10DD00046F9B /* HomeViewController.swift in Sources */,
+				57877FDF2B0F80B600046F9B /* MovieViewController.swift in Sources */,
 				574B8BEE2B0A537B00018EBD /* ContentsDTO.swift in Sources */,
 				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,
 				57BCF3FB2B026126001040A5 /* DevViewController.swift in Sources */,
 				574B8C2E2B0B776C00018EBD /* Secret.swift in Sources */,
+				57877FE12B0F80E400046F9B /* MovieViewModel.swift in Sources */,
 				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,
 				57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */,
 				57BCF4082B026EB1001040A5 /* RefreshTokenDTO.swift in Sources */,
@@ -770,6 +790,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		57877FDB2B0F4D1800046F9B /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 7.10.0;
+			};
+		};
 		57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -797,6 +825,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		57877FDC2B0F4D1800046F9B /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 57877FDB2B0F4D1800046F9B /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		57BCF3E82B025FC0001040A5 /* Moya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 57BCF3E72B025FC0001040A5 /* XCRemoteSwiftPackageReference "Moya" */;
