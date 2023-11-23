@@ -20,7 +20,7 @@ final class AddViewController: UIViewController {
         title = "Add"
         view.backgroundColor = .systemBackground
         view.addSubview(someLabel)
-        
+        //TODO: 뷰 구현하기
         someLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }

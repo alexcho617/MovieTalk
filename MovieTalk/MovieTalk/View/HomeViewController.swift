@@ -82,7 +82,7 @@ class HomeViewController: UIViewController{
                         print("more tap")
 //                        let index = IndexPath(row: row, section: 0)
                         cell.contentLabel.numberOfLines = 0
-                        //TODO: 더보기 버튼
+                        //TODO: 더보기 버튼 버그
 //                        cell.moreButton.isHidden = true
 //                        self.contentsTableView.reloadRows(at: [index], with: .automatic)
 //                        self.contentsTableView.reloadData()

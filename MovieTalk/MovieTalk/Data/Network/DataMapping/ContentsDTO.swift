@@ -16,7 +16,7 @@ struct Comment: Codable{
 }
 
 struct Creator: Codable{
-    //TODO: profile 있는지 확인
+    //TODO: profile picture 있는지 확인
     let _id: String
     let nick: String
 }

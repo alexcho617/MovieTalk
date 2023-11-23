@@ -152,8 +152,7 @@ class HomeViewCell: UITableViewCell {
 
         nickLabel.text = cellData.creator.nick
         dateLabel.text = cellData.time
-        //TODO: replace with cellData image
-        //TODO: Request image from sesac server
+        //TODO: Request image from sesac server & replace with cellData image
         mainImageView.kf.setImage(with: URL(string: "https://www.themoviedb.org/t/p/w1280/unEtC8uWn2lcQLnwKG9PZJX0h0c.jpg"), options: [.cacheOriginalImage])
         titleLabel.text = cellData.title
         
