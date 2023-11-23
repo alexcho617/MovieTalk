@@ -9,7 +9,8 @@ import Foundation
 import Moya
 
 enum MovieAPI{
-    case search(id: String)
+    case lookUp(id: String)
+    case search(query: String)
 }
 
 extension MovieAPI: TargetType{
@@ -19,8 +20,10 @@ extension MovieAPI: TargetType{
     
     var path: String {
         switch self {
-        case .search(let id):
+        case .lookUp(let id):
             return "movie/\(id)"
+        case .search:
+            return "movie"
         }
     }
     
@@ -29,7 +32,22 @@ extension MovieAPI: TargetType{
     }
     
     var task: Moya.Task {
-        .requestParameters(parameters: ["api_key" : Secret.tmdbKey], encoding: URLEncoding.default)
+        switch self {
+        case .lookUp:
+            let parameters = [
+                "api_key" : Secret.tmdbKey,
+                "language" : "ko-KR"
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        case .search(let query):
+            let parameters = [
+                "api_key" : Secret.tmdbKey,
+                "query" : query,
+                "language" : "ko-KR"
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        }
+        
     }
     
     var headers: [String : String]? {

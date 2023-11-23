@@ -27,7 +27,7 @@ final class MovieViewModel: ViewModel{
         let movieObservable = {
             return Observable<MovieResponseDTO>.create { observer in
                 let provider = MoyaProvider<MovieAPI>()
-                provider.request(MovieAPI.search(id: self.movieID)) { result in
+                provider.request(MovieAPI.lookUp(id: self.movieID)) { result in
                     switch result{
                     case .success(let response):
                         print("TMDB SUCCESS", response.statusCode)
