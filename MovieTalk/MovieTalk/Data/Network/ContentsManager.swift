@@ -11,7 +11,6 @@ import Moya
 import RxSwift
 
 
-
 final class ContentsManager{
     static let shared = ContentsManager()
     private init(){}
@@ -34,6 +33,26 @@ final class ContentsManager{
                 print("FAILURE",error)
             }
         }
+    }
+    
+    func fetch() -> Observable<ContentsReadResponseDTO>{
+        return Observable<ContentsReadResponseDTO>.create { observer in
+            print("ContentsManager: fetch()")
+            let provider = MoyaProvider<ContentsServerAPI>()
+            provider.request(ContentsServerAPI.readTopic) { result in
+                switch result{
+                case .success(let response):
+                    print("SUCCESS",response.statusCode)
+                    let decodedResponse = try! JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data)
+                    observer.onNext(decodedResponse)
+                case .failure(let error):
+                    print("FAILURE",error)
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create()
+        }
+        
     }
     
 }

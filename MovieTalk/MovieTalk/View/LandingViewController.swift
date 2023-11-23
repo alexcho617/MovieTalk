@@ -37,10 +37,8 @@ final class LandingViewController: UIViewController {
             .subscribe(with: self) { owner, state in
                 switch state{
                 case .loggedIn:
-//                    print("Go to home")
                     self.navigator(HomeViewController())
                 default:
-//                    print("Login")
                     self.navigator(LoginViewController())
 
                 }

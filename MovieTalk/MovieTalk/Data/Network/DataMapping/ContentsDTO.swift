@@ -80,6 +80,38 @@ struct ContentsCreateResponseDTO: Decodable{
 //}
 
 
+struct ContentsReadResponseDTO: Codable {
+    let posts: [Post]
+    let nextCursor: String
+
+    enum CodingKeys: String, CodingKey {
+        case posts
+        case nextCursor = "next_cursor"
+    }
+}
+
+// MARK: - Post
+struct Post: Codable {
+    let id: String
+    let comments: [Comment]
+    let content: String
+    let content1, content2, content3: String
+    let creator: Creator
+    let hashTags: [String]
+    let image: [String] //base url + image 별도 리퀘스트 필요
+    let likes: [String]
+    let productID, time, title: String
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case comments, content, content1, content2, content3, creator, hashTags, image, likes
+        case productID = "product_id"
+        case time, title
+    }
+}
+
+
+
 //MARK: Update
 
 //MARK: Delete

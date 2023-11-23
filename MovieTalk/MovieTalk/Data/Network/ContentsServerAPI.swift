@@ -18,7 +18,7 @@ import Moya
 //MARK: 사용자의 SNS Data 관리할 Table: ProductID -> mtSNS
 enum ContentsServerAPI{
     case createTopic(model: ContentsCreateRequestDTO)
-//    case readTopic
+    case readTopic
 //    case editTopic
 //    case deleteTopic
     
@@ -37,7 +37,7 @@ extension ContentsServerAPI: TargetType{
     
     var path: String {
         switch self {
-        case .createTopic:
+        case .createTopic, .readTopic:
             return "post"
         }
     }
@@ -46,6 +46,8 @@ extension ContentsServerAPI: TargetType{
         switch self {
         case .createTopic:
             return .post
+        case .readTopic:
+            return .get
         }
     }
     
@@ -90,8 +92,9 @@ extension ContentsServerAPI: TargetType{
                 let data = content5.data(using: .utf8) ?? Data()
                 multiPartData.append(MultipartFormData(provider: .data(data), name: "content5"))
             }
-            
             return .uploadMultipart(multiPartData)
+        case .readTopic: //TODO: next limit parameter, use enum to abstact
+            return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
         }
     }
     
@@ -101,6 +104,11 @@ extension ContentsServerAPI: TargetType{
             return [
                 "Authorization" : UserDefaultsManager.shared.currentToken,
                 "Content-Type" : "multipart/form-data",
+                "SesacKey" : Secret.key
+            ]
+        case .readTopic:
+            return [
+                "Authorization" : UserDefaultsManager.shared.currentToken,
                 "SesacKey" : Secret.key
             ]
         }

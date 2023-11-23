@@ -94,7 +94,7 @@ final class LoginViewController: UIViewController {
                     //change rootview
                     let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                     let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                    let nav = UINavigationController(rootViewController: HomeViewController())
+                    let nav = UINavigationController(rootViewController: DevViewController())
                     sceneDelegate?.window?.rootViewController = nav
                     sceneDelegate?.window?.makeKeyAndVisible()
                 }else{
