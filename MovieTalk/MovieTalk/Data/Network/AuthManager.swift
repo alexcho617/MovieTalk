@@ -73,7 +73,7 @@ final class AuthManager {
                 }else{
                     if let responseDTO = try? JSONDecoder().decode(ValidateEmailResponseDTO.self, from: response.data){
                         print("Server: Invalid Email ",responseDTO)
-                        validationResult.onNext(false)
+                        validationResult.onNext(false) //실패해도 에러 이벤트를 반환하지 않고 onNext에 false를 전달함
                     }
                 }
             }.disposed(by: disposeBag)

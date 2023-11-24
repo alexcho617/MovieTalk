@@ -33,6 +33,7 @@ final class MovieViewModel: ViewModel{
                         print("TMDB SUCCESS", response.statusCode)
                         if let decodedResponse = try? JSONDecoder().decode(MovieResponseDTO.self, from: response.data){
                             observer.onNext(decodedResponse)
+                            observer.onCompleted() //해제
                         }else{
                             print("Movie Decoding Failed")
                         }
@@ -43,6 +44,7 @@ final class MovieViewModel: ViewModel{
                 }
                 return Disposables.create()
             }
+            .debug()
         }
         
         movieObservable()

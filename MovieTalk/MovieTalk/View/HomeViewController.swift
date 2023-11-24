@@ -73,7 +73,7 @@ class HomeViewController: UIViewController{
                 //configure cell
                 cell.configureCellData(element)
                 cell.navigationHandler = {
-                    let vc = MovieViewController()
+                    let vc = MovieViewController() //Rx 사용 안했기 때문에 구독이 끊길 일이 없음
                     vc.movieID = element.movieID
                     self.navigationController?.pushViewController(vc, animated: true)
                 }

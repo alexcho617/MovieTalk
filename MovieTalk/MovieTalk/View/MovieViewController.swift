@@ -43,7 +43,7 @@ final class MovieViewController: UIViewController {
     func bind(){
         let input = MovieViewModel.Input()
         let output = viewModel.transform(input: input)
-        
+        //TODO: 에러 처리 확인
         output.movieContents
             .subscribe(with: self) { owner, response in
                 //image
