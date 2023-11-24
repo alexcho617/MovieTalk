@@ -18,11 +18,11 @@ class HomeViewController: UIViewController{
     lazy var reloadButton = {
         let button = UIButton()
         button.setTitle("Reload", for: .normal)
-        button.addTarget(self, action: #selector(reloadCollectionView), for: .touchUpInside)
+        button.addTarget(self, action: #selector(reloadTableView), for: .touchUpInside)
         return button
     }()
     @objc
-    func reloadCollectionView(){
+    func reloadTableView(){
         self.contentsTableView.reloadData()
     }
     //view
@@ -30,6 +30,7 @@ class HomeViewController: UIViewController{
         let view = UITableView()
         view.estimatedRowHeight = 500
         view.rowHeight = UITableView.automaticDimension
+        view.separatorStyle = .none
         view.register(HomeViewCell.self, forCellReuseIdentifier: HomeViewCell.identifier)
         return view
     }()
@@ -41,8 +42,13 @@ class HomeViewController: UIViewController{
     
     func setView(){
         view.backgroundColor = .systemBackground
-        title = "Feed"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.scrollEdgeAppearance = navigationBarAppearance
+        navigationItem.standardAppearance = navigationBarAppearance
+        navigationItem.compactAppearance = navigationBarAppearance
+        
         view.addSubview(contentsTableView)
         view.addSubview(reloadButton)
         contentsTableView.snp.makeConstraints { make in
@@ -52,15 +58,6 @@ class HomeViewController: UIViewController{
     }
     
     func bind(){
-        
-//        Observable.zip(contentsTableView.rx.modelSelected(Post.self), contentsTableView.rx.itemSelected)
-//            .bind { [weak self] (post, indexPath) in
-//                self?.contentsTableView.deselectRow(at: indexPath, animated: true)
-//                print(post.movieID)
-//            }
-//            .disposed(by: disposeBag)
-        
-        
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
         
@@ -72,20 +69,22 @@ class HomeViewController: UIViewController{
                 row, element, cell in
                 //configure cell
                 cell.configureCellData(element)
+                cell.selectionStyle = .none
                 cell.navigationHandler = {
                     let vc = MovieViewController() //Rx 사용 안했기 때문에 구독이 끊길 일이 없음
-                    vc.movieID = element.movieID
+                    vc.movieID = element.movieID ?? ""
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
+                
+                //더보기 버튼
+                //TODO: 두번 클릭해야 실행됨
                 cell.moreButton.rx.tap
-                    .bind(with: self) { owner, _ in
-                        print("more tap")
-//                        let index = IndexPath(row: row, section: 0)
+                    .asDriver()
+                    .debug("MOREBUTTON TAP")
+                    .drive { _ in
                         cell.contentLabel.numberOfLines = 0
-                        //TODO: 더보기 버튼 버그
-//                        cell.moreButton.isHidden = true
-//                        self.contentsTableView.reloadRows(at: [index], with: .automatic)
-//                        self.contentsTableView.reloadData()
+                        cell.moreButton.isHidden = true
+                        self.contentsTableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
                     }.disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)

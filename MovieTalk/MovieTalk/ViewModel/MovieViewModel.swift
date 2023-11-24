@@ -13,30 +13,46 @@ import Moya
 final class MovieViewModel: ViewModel{
     var movieID: String = ""
     var disposeBag =  DisposeBag()
-    
     struct Input{
-        
+        let didClickExpand: ControlEvent<Void>
     }
     
     struct Output{
-        let movieContents: PublishRelay<MovieResponseDTO>
+        let isExpanded: BehaviorRelay<Bool>
+        let movieData: PublishRelay<MovieResponseDTO>
     }
     func transform(input: Input) -> Output {
+        var isExpand = false
         let movieContents = PublishRelay<MovieResponseDTO>()
-
+        let isExpandedRelay = BehaviorRelay(value: false)
+        
+        input.didClickExpand
+            .subscribe { _ in
+                isExpand.toggle()
+                isExpandedRelay.accept(isExpand)
+            }
+            .disposed(by: disposeBag)
+            
+        
         let movieObservable = {
             return Observable<MovieResponseDTO>.create { observer in
                 let provider = MoyaProvider<MovieAPI>()
                 provider.request(MovieAPI.lookUp(id: self.movieID)) { result in
                     switch result{
                     case .success(let response):
-                        print("TMDB SUCCESS", response.statusCode)
-                        if let decodedResponse = try? JSONDecoder().decode(MovieResponseDTO.self, from: response.data){
-                            observer.onNext(decodedResponse)
-                            observer.onCompleted() //해제
+                        if response.statusCode == 200{
+                            print("TMDB SUCCESS", response.statusCode)
+                            if let decodedResponse = try? JSONDecoder().decode(MovieResponseDTO.self, from: response.data){
+                                observer.onNext(decodedResponse)
+                                observer.onCompleted() //해제
+                            }else{
+                                print("Movie Decoding Failed")
+                            }
                         }else{
-                            print("Movie Decoding Failed")
+                            print("TMDB FAilure", response.statusCode)
+                            print(String(data: response.data, encoding: .utf8) ?? "")
                         }
+                        observer.onCompleted() //해제
                     case .failure(let error):
                         print("TMDB FAilure")
                         observer.onError(error)
@@ -44,7 +60,7 @@ final class MovieViewModel: ViewModel{
                 }
                 return Disposables.create()
             }
-            .debug()
+//            .debug()
         }
         
         movieObservable()
@@ -52,7 +68,8 @@ final class MovieViewModel: ViewModel{
                 movieContents.accept(response)
             }
             .disposed(by: disposeBag)
-        let output = Output(movieContents: movieContents)
+        
+        let output = Output(isExpanded: isExpandedRelay, movieData: movieContents)
         return output
     }
     

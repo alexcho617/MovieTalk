@@ -74,8 +74,8 @@ final class LandingViewController: UIViewController {
     func navigator(_ vc: UIViewController){
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
-        let nav = UINavigationController(rootViewController: vc)
-        sceneDelegate?.window?.rootViewController = nav
+//        let nav = UINavigationController(rootViewController: vc)
+        sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKeyAndVisible()
     }
 }

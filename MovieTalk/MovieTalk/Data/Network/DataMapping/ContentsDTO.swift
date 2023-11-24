@@ -86,20 +86,23 @@ struct ContentsCreateResponseDTO: Decodable{
 
 struct ContentsReadResponseDTO: Decodable {
     let data: [Post]
-    let next_cursor: String
+    let next_cursor: Int?
 }
 
-//content4, content5 비어있음
 struct Post: Decodable {
     let id: String
     let comments: [Comment?]
     let content: String
-    let movieID, movieTitle, moviePosterURL: String
+    let movieID: String?
+    let movieTitle: String?
+    let moviePosterURL: String?
     let creator: Creator
     let hashTags: [String]
-    let image: [String]? //base url + image 별도 리퀘스트 필요
+    let image: [String]?
     let likes: [String]?
-    let productID, time, title: String
+    let productID: String
+    let time: String
+    let title: String
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
@@ -111,6 +114,7 @@ struct Post: Decodable {
         case time, title
     }
 }
+
 
 
 
