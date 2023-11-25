@@ -7,6 +7,13 @@
 
 import Foundation
 
+struct MovieSearchReponseDTO: Codable{
+    let page: Int
+    let results: [MovieResponseDTO]
+    let total_pages: Int
+    let total_results: Int
+}
+
 // MARK: - MovieResponse
 struct MovieResponseDTO: Codable {
     let adult: Bool?

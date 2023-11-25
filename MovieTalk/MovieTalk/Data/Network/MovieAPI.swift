@@ -23,7 +23,7 @@ extension MovieAPI: TargetType{
         case .lookUp(let id):
             return "movie/\(id)"
         case .search:
-            return "movie"
+            return "search/movie"
         }
     }
     

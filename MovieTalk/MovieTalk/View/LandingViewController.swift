@@ -40,7 +40,7 @@ final class LandingViewController: UIViewController {
                     
                     let tabBarController = UITabBarController()
                     let homeVC = UINavigationController(rootViewController: HomeViewController())
-                    let addVC = UINavigationController(rootViewController: AddViewController())
+                    let addVC = UINavigationController(rootViewController: SearchViewController())
                     let devVC = UINavigationController(rootViewController: SettingsViewController())
                     
                     tabBarController.setViewControllers([homeVC, addVC, devVC], animated: true)

@@ -188,6 +188,9 @@ final class MovieViewController: UIViewController {
             make.height.equalTo(150)
             make.bottom.equalToSuperview()
         }
+        
+        //https://api.themoviedb.org/3/movie/671/images?api_key=42de580fd67c2991513fc60dfa628a99
+        //TODO: 사용해서 이미지들 쭉 보여줘도 좋을듯
 
     }
     

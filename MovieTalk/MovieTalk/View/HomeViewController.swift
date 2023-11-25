@@ -65,6 +65,8 @@ class HomeViewController: UIViewController{
         output.contents
             .asDriver(onErrorJustReturn: [])
 //            .debug()
+        //TODO: CRUD를 위해서 지역변수에 저장 후 바인드 해야함
+        //TODO: Rxdatasource를 쓰면?
             .drive(contentsTableView.rx.items(cellIdentifier: HomeViewCell.identifier, cellType: HomeViewCell.self)){
                 row, element, cell in
                 //configure cell
