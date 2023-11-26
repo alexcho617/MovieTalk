@@ -35,24 +35,57 @@ class AddPostViewController: UIViewController {
         return view
     }()
     
+    let posterImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.backgroundColor = .clear
+        view.layer.cornerRadius = Design.paddingDefault
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    let movieTitleLabel = {
+        let view = UILabel()
+        view.font = Design.fontAccentDefault
+        view.textColor = Design.colorTextTitle
+        view.numberOfLines = 0
+        return view
+    }()
+    
+    let titleLabel = {
+        let view = UILabel()
+        view.text = "제목"
+        view.font = Design.fontSmall
+        view.textColor = Design.colorTextSubTitle
+        return view
+    }()
+    
     let titleTextField = {
         let view = UITextField()
-        view.backgroundColor = Design.debugBlue
-        view.placeholder = "  제목입력하세요"
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
         view.layer.cornerRadius = Design.paddingDefault
-        view.layer.borderWidth = 1
+        return view
+    }()
+    
+    let contentsLabel = {
+        let view = UILabel()
+        view.text = "내용"
+        view.font = Design.fontSmall
+        view.textColor = Design.colorTextSubTitle
         return view
     }()
     
     let contentsTextView = {
         var view = UITextView()
-        view.backgroundColor = Design.debugPink
         view.font = Design.fontDefault
         view.isEditable = true
         view.isSelectable = true
         view.isScrollEnabled = true
         view.layer.cornerRadius = Design.paddingDefault
-        view.layer.borderWidth = 1
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
+        view.keyboardDismissMode = .onDrag
         return view
     }()
     
@@ -70,7 +103,11 @@ class AddPostViewController: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(mainImageView)
         view.addSubview(postButton)
+        view.addSubview(posterImageView)
+        view.addSubview(movieTitleLabel)
+        view.addSubview(titleLabel)
         view.addSubview(titleTextField)
+        view.addSubview(contentsLabel)
         view.addSubview(contentsTextView)
 
     }
@@ -78,7 +115,7 @@ class AddPostViewController: UIViewController {
     func bind(){
         mainImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalToSuperview().multipliedBy(0.3)
         }
         
         postButton.snp.makeConstraints { make in
@@ -87,16 +124,38 @@ class AddPostViewController: UIViewController {
             make.height.equalTo(30)
         }
         
+        posterImageView.snp.makeConstraints { make in
+            make.bottom.equalTo(mainImageView.snp.bottom).offset(2*Design.paddingDefault)
+            make.leading.equalToSuperview().offset(Design.paddingDefault)
+            make.width.equalToSuperview().multipliedBy(0.3)
+            make.height.equalTo(posterImageView.snp.width).multipliedBy(1.5)
+        }
+        
+        movieTitleLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(mainImageView.snp.bottom).offset(-Design.paddingDefault)
+            make.leading.equalTo(posterImageView.snp.trailing).offset(Design.paddingDefault)
+            make.trailing.lessThanOrEqualToSuperview().inset(Design.paddingDefault)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(posterImageView.snp.bottom).offset(Design.paddingDefault)
+            make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
+        }
         titleTextField.snp.makeConstraints { make in
-            make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Design.paddingDefault)
             make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
             make.height.equalTo(40)
         }
         
-        contentsTextView.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(Design.paddingDefault)
+        contentsLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleTextField.snp.bottom).offset(4)
             make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
-            make.height.equalTo(150)
+        }
+        
+        contentsTextView.snp.makeConstraints { make in
+            make.top.equalTo(contentsLabel.snp.bottom).offset(Design.paddingDefault)
+            make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
             
         }
     }
@@ -104,7 +163,10 @@ class AddPostViewController: UIViewController {
     func setMovieData(_ movieData: MovieResponseDTO){
         print(movieData)
         
-        mainImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.backdropPath ?? ""))
+        mainImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.backdropPath ?? movieData.posterPath ?? ""))
+        
+        posterImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.posterPath ?? ""))
+        movieTitleLabel.text = movieData.title ?? ""
     }
 
 }
