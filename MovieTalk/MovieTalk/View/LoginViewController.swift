@@ -86,7 +86,6 @@ final class LoginViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.authStatus
-//            .debug("AUTH STATUSSSS")
             .drive { state in
                 if state == AuthState.loggedIn{
                     //이 메시지가 여러번 출력 된다는건 ouput.authStatus에서 이벤트가 여러번 방출되고 있다는 뜻.

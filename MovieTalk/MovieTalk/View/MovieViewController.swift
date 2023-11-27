@@ -57,7 +57,7 @@ final class MovieViewController: UIViewController {
     
     let titleLabel = {
         let view = UILabel()
-        view.text = "해리포터와 마법사의 돌"
+        view.text = "-"
         view.numberOfLines = 0
         view.textColor = Design.colorTextTitle
         view.font = Design.fontTitle
@@ -67,7 +67,7 @@ final class MovieViewController: UIViewController {
     let originalTitleLabel = {
         let view = UILabel()
         view.numberOfLines = 0
-        view.text = "Harry Potter and Philosopher's Stone"
+        view.text = "-"
         view.textColor = Design.colorTextSubTitle
         view.font = Design.fontDefault
         return view
@@ -75,7 +75,7 @@ final class MovieViewController: UIViewController {
     
     let infoLabel = {
         let view = UILabel()
-        view.text = "2001-11-16개봉" + " | "  + "\(152)분"
+        view.text = "-"
         view.textColor = Design.colorTextSubTitle
         view.font = Design.fontDefault
         return view
@@ -83,7 +83,7 @@ final class MovieViewController: UIViewController {
     
     let genreLabel = {
         let view = UILabel()
-        view.text = "모험, 판타지"
+        view.text = "-"
         view.textColor = Design.colorTextSubTitle
         view.font = Design.fontDefault
         return view
@@ -92,7 +92,7 @@ final class MovieViewController: UIViewController {
     //TODO: \n\n 처리를 어떻게 해줄 것인가?
     let expandableDescriptionLabel = {
         let view = UILabel()
-        view.text = "해리 포터는 위압적인 버논 숙부와 냉담한 이모 페투니아, 욕심 많고 버릇없는 사촌 더즐리 밑에서 갖은 구박을 견디며 계단 밑 벽장에서 생활한다.\n\n 이모네 식구들 역시 해리와의 동거가 불편하기는 마찬가지.\n\n 이모 페투니아에겐 해리가 이상한 언니 부부에 관한 기억을 떠올리게 만드는 달갑지 않은 존재다. 11살 생일이 며칠 앞으로 다가왔지만 한번도 생일파티를 치르거나 제대로 된 생일선물을 받아 본 적이 없는 해리로서는 특별히 신날 것도 기대 할 것도 없다.\n\n 11살 생일을 며칠 앞둔 어느 날 해리에게 초록색 잉크로 쓰여진 한 통의 편지가 배달된다. \n\n그 편지의 내용은 다름 아닌 해리의 11살 생일을 맞이하여 호그와트에서 보낸 입학 초대장이었다. 그리고 해리의 생일을 축하하러 온 거인 해그리드는 해리가 모르고 있었던 해리의 진정한 정체를 알려주는데..."
+        view.text = "-"
         view.font = Design.fontDefault
         view.textColor = .white
         return view
@@ -114,17 +114,13 @@ final class MovieViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        viewModel.movieID = movieID
         setView()
-//        bind()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         gradientLayer.frame = posterImageView.frame
     }
-    
     
     func setView(){
         let navigationBarAppearance = UINavigationBarAppearance()
@@ -137,13 +133,11 @@ final class MovieViewController: UIViewController {
         view.backgroundColor = .black
         view.addSubview(scrollView)
         
-        
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         scrollView.addSubview(contentsView)
-        
         
         contentsView.addSubview(posterImageView)
         posterImageView.layer.addSublayer(gradientLayer)
@@ -162,7 +156,6 @@ final class MovieViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(500)
         }
-        
 
         infoStackView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
@@ -170,6 +163,7 @@ final class MovieViewController: UIViewController {
             make.bottom.equalTo(posterImageView.snp.bottom)
             make.height.equalTo(120)
         }
+        
         expandableDescriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(infoStackView.snp.bottom).offset(Design.paddingDefault)
             make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
@@ -189,16 +183,14 @@ final class MovieViewController: UIViewController {
         }
         
         //https://api.themoviedb.org/3/movie/671/images?api_key=42de580fd67c2991513fc60dfa628a99
-        //TODO: 사용해서 이미지들 쭉 보여줘도 좋을듯
+        //TODO: 이미지 API 사용해서 이미지 스틸컷들 쭉 보여줘도 좋을듯.
 
     }
     
     func bind(_ movieID: String){
-        print("DEBUG: Movie VC id: ", movieID)
         let input = MovieViewModel.Input(didClickExpand: expandButton.rx.tap, movieID: movieID)
         let output = viewModel.transform(input: input)
-        //movie id 넘겨줘야함
-        //data 처리
+        
         //TODO: 에러 처리 확인
         output.movieData
             .subscribe(with: self) { owner, data in
@@ -206,12 +198,10 @@ final class MovieViewController: UIViewController {
                 owner.titleLabel.text = data.title
                 owner.originalTitleLabel.text = data.originalTitle
                 owner.infoLabel.text = "\(data.releaseDate ?? "-")개봉" + " | "  + "\(data.runtime ?? 0)분"
-
                 owner.genreLabel.text = data.genres?.first?.name
                 owner.expandableDescriptionLabel.text = data.overview
                 owner.posterImageView.kf.setImage(with: Secret.getEndPointImageURL(data.posterPath ?? ""))
                 owner.backdropImageView.kf.setImage(with: Secret.getEndPointImageURL(data.backdropPath ?? ""))
-                
             }.disposed(by: disposeBag)
         
         //영화 설명 레이블 줄 수 토글

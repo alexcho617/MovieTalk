@@ -20,23 +20,20 @@ class AddPostViewModel: ViewModel{
         
         let movieID: String
         let movieTitle: String
-//        let postImageData: Data
-        let postImage: UIImage
+        let postImageData: Data
     }
     
     struct Output{
         let postResult: PublishRelay<Bool>
     }
-    //with file
+    
     func transform(input: Input) -> Output {
         let postResult = PublishRelay<Bool>()
        
         input.postClicked
             .withLatestFrom(Observable.zip(input.title, input.contents))
-            .flatMapLatest {title, content in
-                let postImageData = input.postImage.pngData()
-                
-                let requestmodel = ContentsCreateRequestDTO(title: title, content: content, file: postImageData, product_id: "mtSNS", content1: input.movieID, content2: input.movieTitle, content3: nil, content4: nil, content5: nil)
+            .flatMapLatest {title, content in                
+                let requestmodel = ContentsCreateRequestDTO(title: title, content: content, file: input.postImageData, product_id: "mtSNS", content1: input.movieID, content2: input.movieTitle, content3: nil, content4: nil, content5: nil)
                 return ContentsManager.shared.post(requestmodel)
             }
             .bind { result in
@@ -48,24 +45,5 @@ class AddPostViewModel: ViewModel{
 
         return Output(postResult: postResult)
     }
-    //without file
-//    func transform(input: Input) -> Output {
-//        let postResult = PublishRelay<Bool>()
-//        
-//        input.postClicked
-//            .withLatestFrom(Observable.zip(input.title, input.contents))
-//            .flatMapLatest {title, content in
-//                let requestmodel = ContentsCreateRequestDTO(title: title, content: content, file: nil, product_id: "mtSNS", content1: input.movieID, content2: input.movieTitle, content3: nil, content4: nil, content5: nil)
-//                return ContentsManager.shared.post(requestmodel)
-//            }
-//            .bind { result in
-//                postResult.accept(result)
-//            }
-//            .disposed(by: disposeBag)
-//        
-//        
-//
-//        return Output(postResult: postResult)
-//    }
 }
 

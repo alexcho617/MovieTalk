@@ -54,5 +54,4 @@ extension MovieAPI: TargetType{
         nil
     }
     
-    
 }

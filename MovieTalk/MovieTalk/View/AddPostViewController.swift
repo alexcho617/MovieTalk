@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-class AddPostViewController: UIViewController {
+final class AddPostViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     let viewModel = AddPostViewModel()
@@ -62,10 +62,8 @@ class AddPostViewController: UIViewController {
         return view
     }()
     
-    
-    
     let titleTextField = {
-        let view = TextFieldWithPadding()
+        let view = PaddedTextField()
         view.layer.borderWidth = 1.0
         view.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
         view.layer.cornerRadius = Design.paddingDefault
@@ -97,12 +95,7 @@ class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
-        
     }
-    
-    //메인사진 뷰 위에 선택한 영화 제목이랑 조그만한 포스터 보여주고
-    //메인 사진은 사용자가 선택 할 수 있게 해야함. 카메라나 갤러리에서 선택하게 해줌. 디폴트로 tmdb에서 백드롭 사진을 줌
-    //게시글 자체는 포스터 다운받은걸 새싹서버에 올리게 해야함. 그래야 홈에서 가져올 수 있음
     
     func setView(){
         view.backgroundColor = .systemBackground
@@ -158,7 +151,6 @@ class AddPostViewController: UIViewController {
             make.top.equalTo(contentsLabel.snp.bottom).offset(Design.paddingDefault)
             make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
             make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
-            
         }
 
     }
@@ -166,49 +158,21 @@ class AddPostViewController: UIViewController {
     func bind(_ movieData: MovieResponseDTO, _ backdropImage: UIImage){
 
         mainImageView.image = backdropImage
-
-        
         posterImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.posterPath ?? ""))
         movieTitleLabel.text = movieData.title ?? ""
         
-        lazy var input = AddPostViewModel.Input(postClicked: postButton.rx.tap, title: titleTextField.rx.text.orEmpty, contents: contentsTextView.rx.text.orEmpty, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImage: posterImageView.image ?? UIImage(systemName: "star")!)
-        //TODO: 이 시점에서 imageData가 없기 때문에 vm에 제대로 안들어감, 그렇다면 이미지 데이터를 SearchVC에서 같이 함수에 넘겨줘야할듯.
-        print("⚠️",input.postImage) // 123 0 bytes
-        
+        lazy var input = AddPostViewModel.Input(postClicked: postButton.rx.tap, title: titleTextField.rx.text.orEmpty, contents: contentsTextView.rx.text.orEmpty, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImageData: posterImageView.image?.pngData() ?? Data())
+       
         let output = viewModel.transform(input: input)
         
         output.postResult
             .bind(with: self) { owner, result in
                 if result{
                     print("Post Success")
-                    owner.navigationController?.popToRootViewController(animated: true)
-                    
+                    owner.dismiss(animated: true)                    
                 }else{
                     print("Post Failed")
                 }
             }.disposed(by: disposeBag)
-    }
-                
-    
-    
-
-}
-
-final class TextFieldWithPadding: UITextField {
-    var textPadding = UIEdgeInsets(
-        top: 0,
-        left: Design.paddingDefault,
-        bottom: 0,
-        right: Design.paddingDefault
-    )
-
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.textRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
-    }
-
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.editingRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
     }
 }

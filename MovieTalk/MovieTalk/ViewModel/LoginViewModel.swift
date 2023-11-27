@@ -27,6 +27,7 @@ final class LoginViewModel: ViewModel{
     
     func transform(input: Input) -> Output {
         disposeBag = DisposeBag()
+        
         //validate
         Observable.combineLatest(input.email, input.password) { email, password in
             if email.isEmpty || email.count < 4 || password.isEmpty{
@@ -44,7 +45,7 @@ final class LoginViewModel: ViewModel{
         input.loginClicked
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(Observable.combineLatest(input.email, input.password))
-        //MARK: FlatMap -> FlatMapLatest로 변경하여 해결
+        
             .flatMapLatest{email, password in
                 print("Login with", email, password)
                 let dto = LoginRequestDTO(email: email, password: password)

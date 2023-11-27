@@ -75,7 +75,7 @@ final class SearchViewController: UIViewController {
         }
     }
     
-    //비어있을때 tmdb trend api 써서 미리 보여줌.
+    //TODO: 비어있을때 tmdb trend api 써서 미리 보여줌.
     func bind(){
         let input = SearchViewModel.Input(searchQueryEntered: searchBar.rx.text.orEmpty, searchButtonClicked: searchBar.rx.searchButtonClicked)
         
@@ -93,18 +93,15 @@ final class SearchViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        //cell 선택시 add 화면 sheet pop up
         Observable.zip(collectionView.rx.itemSelected, collectionView.rx.modelSelected(MovieResponseDTO.self))
             .map { (indexPath, selectedData) in //set
-//                print("Selected",indexPath, selectedData)
                 return selectedData
             }
             .subscribe(with: self) { owner, selectedData in
-//                print("selectedData", selectedData)
+                //이미지 데이터 먼저 생성 후 completion 호출
                 owner.getImageData(selectedData: selectedData) { backdropImage in
                     let vc = AddPostViewController()
-                    //TODO: ⚠️ backdrop 이미지 생성후 같이 넘겨주기
-                    vc.bind(selectedData, backdropImage)
+                    vc.bind(selectedData, backdropImage) //시점 떄문에 이미지 생성 후 같이 넘김
                     if let sheet = vc.sheetPresentationController{
                         sheet.detents = [.large()]
                         sheet.prefersGrabberVisible = true

@@ -9,7 +9,6 @@ import UIKit
 import RxSwift
 import SnapKit
 
-//2xn 세로 검색 결과
 class SearchCollectionViewCell: UICollectionViewCell {
     static let identifier = "SearchCollectionViewCell"
     var disposeBag = DisposeBag()
@@ -41,7 +40,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
         
         posterImage.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
-//            make.height.equalTo(200)
         }
         
         title.snp.makeConstraints { make in
@@ -54,7 +52,6 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     func configureCellData(_ cellData: MovieResponseDTO) {
         title.text = cellData.title
-        //TODO: Request image from sesac server & replace with cellData image
         posterImage.kf.setImage(with: Secret.getEndPointImageURL(cellData.posterPath ?? ""), options: [.cacheOriginalImage])
     }
     

@@ -9,12 +9,15 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
+
 final class LandingViewController: UIViewController {
+    
     private var loadingText = {
         let view = UILabel()
         view.text = "MovieTalk"
         return view
     }()
+    
     let disposeBag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +26,6 @@ final class LandingViewController: UIViewController {
         loadingText.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,7 +76,6 @@ final class LandingViewController: UIViewController {
     func navigator(_ vc: UIViewController){
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//        let nav = UINavigationController(rootViewController: vc)
         sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKeyAndVisible()
     }

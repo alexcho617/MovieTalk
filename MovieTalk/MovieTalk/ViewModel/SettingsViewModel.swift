@@ -55,12 +55,6 @@ final class SettingsViewModel: ViewModel{
             }
             .disposed(by: disposeBag)
         
-//        input.contentsClicked
-//            .map{
-//                print("Contents Button Clicked")
-//                ContentsManager.shared.post()
-//            }
-        
         return Output(authStatus: authStatus.asDriver(onErrorJustReturn: .loggedOut))
     }
 }

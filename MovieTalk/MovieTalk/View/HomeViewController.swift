@@ -51,6 +51,7 @@ class HomeViewController: UIViewController{
         
         view.addSubview(contentsTableView)
         view.addSubview(reloadButton)
+        
         contentsTableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -61,10 +62,8 @@ class HomeViewController: UIViewController{
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
         
-        //contents = relay
         output.contents
             .asDriver(onErrorJustReturn: [])
-//            .debug()
         
         //TODO: CRUD를 위해서 지역변수에 저장 후 바인드 해야함
         //TODO: Rxdatasource를 쓰면?
@@ -80,7 +79,7 @@ class HomeViewController: UIViewController{
                 }
                 
                 //더보기 버튼
-                //TODO: 두번 클릭해야 실행됨
+                //TODO: 두번 클릭해야 실행되는 문제 있음
                 cell.moreButton.rx.tap
                     .asDriver()
                     .debug("MOREBUTTON TAP")

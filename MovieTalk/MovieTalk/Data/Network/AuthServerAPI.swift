@@ -21,7 +21,7 @@ extension AuthServerAPI: TargetType{
     var baseURL: URL {
         Secret.baseURL
     }
-    //MARK: endpoint enum.rawvalue로 개선 가능
+    
     var path: String {
         switch self {
         case .signUp:

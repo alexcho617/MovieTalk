@@ -26,7 +26,6 @@ class SearchViewModel: ViewModel {
         let searchResult = BehaviorRelay<[MovieResponseDTO]>(value: [])
         let scrollToTop = PublishRelay<Void>()
 
-        // Observable for search button click
         let searchButtonObservable = input.searchButtonClicked
             .withLatestFrom(input.searchQueryEntered.asObservable())
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
@@ -35,13 +34,10 @@ class SearchViewModel: ViewModel {
                 return self.fetchMovies(query: query)
             }
             .asDriver(onErrorDriveWith: .empty())
-        
-        searchButtonObservable
-            .drive(searchResult)
-            .disposed(by: disposeBag)
-        
+      
         searchButtonObservable
             .drive(onNext: { movies in
+                searchResult.accept(movies)
                 if !movies.isEmpty {
                     scrollToTop.accept(())
                 }
@@ -76,6 +72,6 @@ class SearchViewModel: ViewModel {
                 }
             }
             return Disposables.create()
-        }//.debug("TMDB Event")
+        }
     }
 }

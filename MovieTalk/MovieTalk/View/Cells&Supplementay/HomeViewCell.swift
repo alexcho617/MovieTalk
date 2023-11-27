@@ -43,7 +43,7 @@ class HomeViewCell: UITableViewCell {
     
     let movieLabel: UILabel = {
         let label = UILabel()
-        label.text = "기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목기본영화제목"
+        label.text = "-"
         label.font = Design.fontDefault
         label.textColor = Design.colorTextDefault
         return label
@@ -209,7 +209,7 @@ class HomeViewCell: UITableViewCell {
         nickLabel.text = cellData.creator.nick
         dateLabel.text = cellData.time
         movieLabel.text = cellData.movieTitle
-        //TODO: Request image from sesac server & replace with cellData image
+        
         if let fileArray = cellData.image{
             if fileArray.count != 0{
                 
@@ -226,11 +226,12 @@ class HomeViewCell: UITableViewCell {
             }
         }
         titleLabel.text = cellData.title
-        contentLabel.text = simulateVariableText(text: cellData.content) //simulate multiple lines
+        contentLabel.text = cellData.content //TODO: 문단 구별이 되어있지 않아서 추가적인 parsing 필요
+        //DEBUG
+//        contentLabel.text = simulateVariableText(text: cellData.content) //simulate multiple lines
     }
     
     @objc func movieButtonClicked(){
-        //closure
         navigationHandler?()
     }
     
@@ -244,8 +245,9 @@ class HomeViewCell: UITableViewCell {
         return imageDownloadRequest
     }
     
+    //디버깅을 위해 컨텐츠 길이를 늘려주는 함수
     func simulateVariableText(text: String) -> String {
-        let count = Int.random(in: 10...10)
+        let count = Int.random(in: 5...10)
         var output: String = ""
         
         for _ in 0..<count {

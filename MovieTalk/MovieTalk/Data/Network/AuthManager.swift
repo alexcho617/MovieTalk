@@ -22,13 +22,11 @@ final class AuthManager {
     private init() {}
     private let disposeBag = DisposeBag()
     
-    //SSOT
-    //Publish Subject 리턴하는거 별로 안좋음 Observable()
     //TODO: AuthRefactor - Singleton 으로 상태관리를 하고 있어서 dispose가 제대로 안되고 있으며 여러모로 이벤트 관리가 안되고 있음. 컨텐츠 쪽만 격리 시켜서 관리하고 현재 refresh에서 이벤트 중복 발생하는건 인지하고 넘어가자.
     var currentAuthState = PublishSubject<AuthState>()
     
     func signUp(user: SignUpRequestDTO) -> BehaviorSubject<Bool>{
-        print("AuthManager::", #function)
+        print("AuthManager:", #function)
         let signUpResult = BehaviorSubject(value: false)
         let recovery = PublishSubject<Response>() //catch block
         let provider = MoyaProvider<AuthServerAPI>()//(session: Moya.Session(interceptor: Interceptor()))
@@ -57,7 +55,7 @@ final class AuthManager {
     }
     
     func validateEmail(email: ValidateEmailRequestDTO) -> PublishSubject<Bool>{
-        print("AuthManager::", #function)
+        print("AuthManager:", #function)
         let validationResult = PublishSubject<Bool>()
         
         let provider = MoyaProvider<AuthServerAPI>()
@@ -81,7 +79,7 @@ final class AuthManager {
     }
     
     func login(model: LoginRequestDTO) -> PublishSubject<AuthState>{
-        print("AuthManager::", #function)
+        print("AuthManager:", #function)
         let recovery = PublishSubject<Response>()
         let provider = MoyaProvider<AuthServerAPI>()
         
@@ -178,7 +176,7 @@ final class AuthManager {
 }
 
 
-func handleStatusCodeError(_ error: Error) {
+private func handleStatusCodeError(_ error: Error) {
     guard let moyaError = error as? MoyaError else {return}
     guard let response = moyaError.response else {return}
     if var errorDTO = try? JSONDecoder().decode(ErrorResponseDTO.self, from: response.data) {
@@ -188,14 +186,3 @@ func handleStatusCodeError(_ error: Error) {
         print("Server: Unknown Error")
     }
 }
-
-
-//class Interceptor: RequestInterceptor{
-//    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-//
-//    }
-//
-//    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-//
-//    }
-//}

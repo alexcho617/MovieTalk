@@ -43,6 +43,7 @@ final class ContentsManager{
         }
     }
     
+    //TODO: 에러핸들링 어떻게 할지
     func fetch() -> Observable<ContentsReadResponseDTO>{
         return Observable<ContentsReadResponseDTO>.create { observer in
             print("ContentsManager: fetch()")
@@ -72,25 +73,14 @@ final class ContentsManager{
             print("ContentsManager: fetchPostFile()")
             let provider = MoyaProvider<ContentsServerAPI>()
             provider.request(ContentsServerAPI.getImage(imagePath: path)) { result in
+                //기본 이미지를 전달하여 애러 처리
                 switch result{
                 case .success(let response):
-                    //상태코드200은 받아오는데 이미지가 비어있음
-                    print("SESAC Contents File SUCCESS",response.statusCode)
-                    
-                    print("SESAC Contents File data:",response.data)
-                    
                     if let decodedImage = UIImage(data: response.data){
-//                        print("Image:",decodedImage)
                         observer.onNext(decodedImage)
                     }else{
                         observer.onNext(UIImage(systemName: "photo")!)
                     }
-//                    if let decodedResponse = try? JSONDecoder().decode(Data.self, from: response.data){
-//                        observer.onNext(decodedResponse)
-//                    }else{
-//                        print("Contents File : Decoding Failed")
-//                        observer.onNext(Data())
-//                    }
                 case .failure(let error):
                     print("SESAC Contents FileFAILURE",error)
                     observer.onNext(UIImage(systemName: "photo")!)

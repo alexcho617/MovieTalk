@@ -33,7 +33,7 @@ final class SignUpViewController: UIViewController {
         textField.borderStyle = .roundedRect
         return textField
     }()
-    
+//    회원가입 옵셔널 데이터
 //    private let phoneNumberTextField: UITextField = {
 //        let textField = UITextField()
 //        textField.placeholder = "phoneNumber"
@@ -47,6 +47,7 @@ final class SignUpViewController: UIViewController {
 //        textField.borderStyle = .roundedRect
 //        return textField
 //    }()
+    
     private let validateEmailButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("중복확인", for: .normal)

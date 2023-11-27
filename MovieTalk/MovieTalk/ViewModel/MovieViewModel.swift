@@ -62,7 +62,6 @@ final class MovieViewModel: ViewModel{
                 }
                 return Disposables.create()
             }
-//            .debug()
         }
         
         movieObservable()
