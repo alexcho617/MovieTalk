@@ -31,7 +31,7 @@ struct Creator: Codable{
 struct ContentsCreateRequestDTO: Encodable{
     let title: String
     let content: String
-    let file: Data
+    let file: Data?
     let product_id: String
     let content1: String? // movie id
     let content2: String? // movie title

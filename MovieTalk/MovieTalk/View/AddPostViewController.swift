@@ -163,24 +163,17 @@ class AddPostViewController: UIViewController {
 
     }
     
-    func bind(_ movieData: MovieResponseDTO){
-        var imageData = Data()
-        //⭐️TODO: 포스트 한 이미지가 insomnia에서도 확인되지 않고 있음.
-        //TODO: upload to sesac server along with images from user and tmdb
-        mainImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.backdropPath ?? movieData.posterPath ?? "")) { imageResult in
-            switch imageResult{
-            case .success:
-                imageData = self.mainImageView.image?.jpegData(compressionQuality: 1.0) ?? Data()
-                print("DEBUG IMAGE DATA", imageData)
-            case .failure(let error):
-                print("Image loading error", error)
-            }
-        }
+    func bind(_ movieData: MovieResponseDTO, _ backdropImage: UIImage){
+
+        mainImageView.image = backdropImage
+
         
         posterImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.posterPath ?? ""))
         movieTitleLabel.text = movieData.title ?? ""
         
-        let input = AddPostViewModel.Input(postClicked: postButton.rx.tap, title: titleTextField.rx.text.orEmpty, contents: contentsTextView.rx.text.orEmpty, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImageData: imageData)
+        lazy var input = AddPostViewModel.Input(postClicked: postButton.rx.tap, title: titleTextField.rx.text.orEmpty, contents: contentsTextView.rx.text.orEmpty, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImage: posterImageView.image ?? UIImage(systemName: "star")!)
+        //TODO: 이 시점에서 imageData가 없기 때문에 vm에 제대로 안들어감, 그렇다면 이미지 데이터를 SearchVC에서 같이 함수에 넘겨줘야할듯.
+        print("⚠️",input.postImage) // 123 0 bytes
         
         let output = viewModel.transform(input: input)
         

@@ -9,12 +9,11 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class SearchViewController: UIViewController {
     let viewModel = SearchViewModel()
     let disposeBag = DisposeBag()
-    
-    
     let searchBar = {
         let view = UISearchBar()
         view.barTintColor = .clear
@@ -102,14 +101,17 @@ final class SearchViewController: UIViewController {
             }
             .subscribe(with: self) { owner, selectedData in
 //                print("selectedData", selectedData)
-                
-                let vc = AddPostViewController()
-                vc.bind(selectedData)
-                if let sheet = vc.sheetPresentationController{
-                    sheet.detents = [.large()]
-                    sheet.prefersGrabberVisible = true
+                owner.getImageData(selectedData: selectedData) { backdropImage in
+                    let vc = AddPostViewController()
+                    //TODO: ⚠️ backdrop 이미지 생성후 같이 넘겨주기
+                    vc.bind(selectedData, backdropImage)
+                    if let sheet = vc.sheetPresentationController{
+                        sheet.detents = [.large()]
+                        sheet.prefersGrabberVisible = true
+                    }
+                    self.present(vc, animated: true, completion: nil)
                 }
-                self.present(vc, animated: true, completion: nil)
+               
             }.disposed(by: disposeBag)
     }
     
@@ -117,4 +119,14 @@ final class SearchViewController: UIViewController {
         collectionView.setContentOffset(.zero, animated: true)
     }
     
+    private func getImageData(selectedData: MovieResponseDTO, completion: @escaping (UIImage) -> Void){
+        KingfisherManager.shared.retrieveImage(with: Secret.getEndPointImageURL(selectedData.backdropPath ?? selectedData.posterPath ?? "")) { result in
+            switch result{
+            case .success(let value):
+                completion(value.image)
+            case .failure(let error):
+                print("Cannot get movie image Error", error)
+            }
+        }
+    }
 }

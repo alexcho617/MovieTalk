@@ -210,15 +210,38 @@ class HomeViewCell: UITableViewCell {
         dateLabel.text = cellData.time
         movieLabel.text = cellData.movieTitle
         //TODO: Request image from sesac server & replace with cellData image
-        mainImageView.kf.setImage(with: URL(string: "https://www.themoviedb.org/t/p/w1280/unEtC8uWn2lcQLnwKG9PZJX0h0c.jpg"), options: [.cacheOriginalImage])
+        if let fileArray = cellData.image{
+            if fileArray.count != 0{
+                
+                //MARK: using moya api
+//                ContentsManager.shared.fetchPostFile(fileArray.first ?? "")
+//                    .bind { fetchedImage in
+//                        self.mainImageView.image = fetchedImage
+//                    }.disposed(by: disposeBag)
+                
+                //MARK: Using kingfisher request modifier
+                let imageRequestString = Secret.baseURLString + (fileArray.first ?? "") + Secret.imageQuery
+                
+                mainImageView.kf.setImage(with: URL(string: imageRequestString),options: [.requestModifier(getRequestModifier()), .cacheOriginalImage])
+            }
+        }
         titleLabel.text = cellData.title
-        
         contentLabel.text = simulateVariableText(text: cellData.content) //simulate multiple lines
     }
     
     @objc func movieButtonClicked(){
         //closure
         navigationHandler?()
+    }
+    
+    private func getRequestModifier() -> AnyModifier{
+        let imageDownloadRequest = AnyModifier { request in
+            var requestBody = request
+            requestBody.setValue(Secret.key, forHTTPHeaderField: "SesacKey")
+            requestBody.setValue(UserDefaultsManager.shared.currentToken, forHTTPHeaderField: "Authorization")
+            return requestBody
+        }
+        return imageDownloadRequest
     }
     
     func simulateVariableText(text: String) -> String {

@@ -19,6 +19,7 @@ import Moya
 enum ContentsServerAPI{
     case createTopic(model: ContentsCreateRequestDTO)
     case readTopic
+    case getImage(imagePath: String)
 //    case editTopic
 //    case deleteTopic
     
@@ -39,6 +40,8 @@ extension ContentsServerAPI: TargetType{
         switch self {
         case .createTopic, .readTopic:
             return "post"
+        case .getImage(let imagePath):
+            return imagePath
         }
     }
     
@@ -46,7 +49,7 @@ extension ContentsServerAPI: TargetType{
         switch self {
         case .createTopic:
             return .post
-        case .readTopic:
+        case .readTopic, .getImage:
             return .get
         }
     }
@@ -59,20 +62,22 @@ extension ContentsServerAPI: TargetType{
             let productIDData = model.product_id.data(using: .utf8) ?? Data()
             let titleData = model.title.data(using: .utf8) ?? Data()
             let contentData = model.content.data(using: .utf8) ?? Data()
-            let fileData = model.file
+            let fileData = model.file ?? Data()
             
             multiPartData.append(MultipartFormData(provider: .data(productIDData), name: "product_id"))
             multiPartData.append(MultipartFormData(provider: .data(titleData), name: "title"))
             multiPartData.append(MultipartFormData(provider: .data(contentData), name: "content"))
             
             //binary데이터: fileName, mimeType 값 필요함
-            multiPartData.append(MultipartFormData(provider: .data(fileData), name: "file",fileName: "placeholder.jpeg", mimeType: "image/jpeg"))
-
+            multiPartData.append(MultipartFormData(provider: .data(fileData), name: "file",fileName: "placeholder.png", mimeType: "image/png"))
+            
+            //movie id
             if let content1: String = model.content1{
                 let data = content1.data(using: .utf8) ?? Data()
                 multiPartData.append(MultipartFormData(provider: .data(data), name: "content1"))
             }
             
+            //movie name
             if let content2: String = model.content2{
                 let data = content2.data(using: .utf8) ?? Data()
                 multiPartData.append(MultipartFormData(provider: .data(data), name: "content2"))
@@ -92,8 +97,15 @@ extension ContentsServerAPI: TargetType{
                 let data = content5.data(using: .utf8) ?? Data()
                 multiPartData.append(MultipartFormData(provider: .data(data), name: "content5"))
             }
+            
+            multiPartData.map({ data in
+                print(data)
+            })
+            
             return .uploadMultipart(multiPartData)
         case .readTopic: //TODO: next limit parameter, use enum to abstact
+            return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
+        case .getImage:
             return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
         }
     }
@@ -106,7 +118,7 @@ extension ContentsServerAPI: TargetType{
                 "Content-Type" : "multipart/form-data",
                 "SesacKey" : Secret.key
             ]
-        case .readTopic:
+        case .readTopic, .getImage:
             return [
                 "Authorization" : UserDefaultsManager.shared.currentToken,
                 "SesacKey" : Secret.key

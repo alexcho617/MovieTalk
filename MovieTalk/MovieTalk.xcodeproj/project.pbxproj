@@ -227,10 +227,9 @@
 		57BCF3EC2B025FDB001040A5 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5740B0982B122C67008A7808 /* AddPostViewController.swift */,
 				57877FEC2B0FA84200046F9B /* SearchViewController.swift */,
 				571154B52B03623300FD26A2 /* LandingViewController.swift */,
-				5740B0982B122C67008A7808 /* AddPostViewController.swift */,
-				5740B09A2B122C99008A7808 /* AddPostViewModel.swift */,
 				57BCF3EF2B02600C001040A5 /* LoginViewController.swift */,
 				57BCF3F12B026057001040A5 /* SignUpViewController.swift */,
 				57877FDE2B0F80B600046F9B /* MovieViewController.swift */,
@@ -245,6 +244,7 @@
 		57BCF3ED2B025FE5001040A5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5740B09A2B122C99008A7808 /* AddPostViewModel.swift */,
 				57BCF3F52B0260CE001040A5 /* LoginViewModel.swift */,
 				5740B0942B11D156008A7808 /* SearchViewModel.swift */,
 				57877FD42B0F117C00046F9B /* HomeViewModel.swift */,
