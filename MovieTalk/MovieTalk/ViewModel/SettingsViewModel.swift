@@ -12,9 +12,6 @@ import RxCocoa
 final class SettingsViewModel: ViewModel{
     
     var disposeBag = DisposeBag()
-    
-    //TODO: Implement contents function
-//    let contents = Observable.just("Initial Value").asDriver(onErrorJustReturn: "nil")
     private let authStatus = PublishSubject<AuthState>()
     
     struct Input {

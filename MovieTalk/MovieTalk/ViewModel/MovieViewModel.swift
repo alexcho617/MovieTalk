@@ -11,10 +11,10 @@ import RxCocoa
 import Moya
 
 final class MovieViewModel: ViewModel{
-    var movieID: String = ""
     var disposeBag =  DisposeBag()
     struct Input{
         let didClickExpand: ControlEvent<Void>
+        let movieID: String
     }
     
     struct Output{
@@ -37,7 +37,9 @@ final class MovieViewModel: ViewModel{
         let movieObservable = {
             return Observable<MovieResponseDTO>.create { observer in
                 let provider = MoyaProvider<MovieAPI>()
-                provider.request(MovieAPI.lookUp(id: self.movieID)) { result in
+                
+                print("DEBUG MovieViewModel movieID:",input.movieID)
+                provider.request(MovieAPI.lookUp(id: input.movieID)) { result in
                     switch result{
                     case .success(let response):
                         if response.statusCode == 200{

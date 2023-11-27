@@ -86,7 +86,7 @@ struct ContentsCreateResponseDTO: Decodable{
 
 struct ContentsReadResponseDTO: Decodable {
     let data: [Post]
-    let next_cursor: Int?
+    let next_cursor: String?
 }
 
 struct Post: Decodable {

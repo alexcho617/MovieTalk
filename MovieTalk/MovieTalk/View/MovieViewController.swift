@@ -13,7 +13,6 @@ import RxCocoa
 final class MovieViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel = MovieViewModel()
-    var movieID: String = ""
     
     //MARK: View Component
     let backdropImageView = {
@@ -115,9 +114,9 @@ final class MovieViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.movieID = movieID
+//        viewModel.movieID = movieID
         setView()
-        bind()
+//        bind()
     }
     
     override func viewDidLayoutSubviews() {
@@ -194,16 +193,22 @@ final class MovieViewController: UIViewController {
 
     }
     
-    func bind(){
-        let input = MovieViewModel.Input(didClickExpand: expandButton.rx.tap)
+    func bind(_ movieID: String){
+        print("DEBUG: Movie VC id: ", movieID)
+        let input = MovieViewModel.Input(didClickExpand: expandButton.rx.tap, movieID: movieID)
         let output = viewModel.transform(input: input)
-        
+        //movie id 넘겨줘야함
         //data 처리
         //TODO: 에러 처리 확인
         output.movieData
             .subscribe(with: self) { owner, data in
                 //image
-                
+                owner.titleLabel.text = data.title
+                owner.originalTitleLabel.text = data.originalTitle
+                owner.infoLabel.text = "\(data.releaseDate ?? "-")개봉" + " | "  + "\(data.runtime ?? 0)분"
+
+                owner.genreLabel.text = data.genres?.first?.name
+                owner.expandableDescriptionLabel.text = data.overview
                 owner.posterImageView.kf.setImage(with: Secret.getEndPointImageURL(data.posterPath ?? ""))
                 owner.backdropImageView.kf.setImage(with: Secret.getEndPointImageURL(data.backdropPath ?? ""))
                 

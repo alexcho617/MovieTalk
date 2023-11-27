@@ -17,21 +17,29 @@ final class ContentsManager{
     let disposeBag = DisposeBag()
     
     //TODO: Add error handling codes
-    func post(_ model: ContentsCreateRequestDTO){
-        print("ContentsManager: post()")
-        let provider = MoyaProvider<ContentsServerAPI>()
-        provider.request(ContentsServerAPI.createTopic(model: model)) { result in
-            switch result{
-            case .success(let response):
-                let statusCode = response.statusCode
-                let data = response.data
-                
-                print("SESAC SUCCESS:",statusCode,data)
-                print(response.data.description)
-                
-            case .failure(let error):
-                print("SESAC FAILURE",error)
+    func post(_ model: ContentsCreateRequestDTO) -> Observable<Bool>{
+        return Observable<Bool>.create { observer in
+            print("ContentsManager: post()")
+            let provider = MoyaProvider<ContentsServerAPI>()
+            provider.request(ContentsServerAPI.createTopic(model: model)) { result in
+                switch result{
+                case .success(let response):
+                    if response.statusCode == 200{
+                        observer.onNext(true)
+                        observer.onCompleted() //해제
+                        print(String(data: response.data, encoding: .utf8))
+                    }else{
+                        print("Sesac Failure", response.statusCode)
+                        print(String(data: response.data, encoding: .utf8) ?? "")
+                        observer.onNext(false)
+                    }
+                    observer.onCompleted() //해제
+                case .failure(let error):
+                    print("Sesac Failure", error)
+                    observer.onNext(false)
+                }
             }
+            return Disposables.create()
         }
     }
     
@@ -43,7 +51,7 @@ final class ContentsManager{
                 switch result{
                 case .success(let response):
                     print("SESAC SUCCESS",response.statusCode)
-//                    print(String(data: response.data, encoding: .utf8))
+                    print(String(data: response.data, encoding: .utf8))
                     if let decodedResponse = try? JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data){
                         observer.onNext(decodedResponse)
                     }else{

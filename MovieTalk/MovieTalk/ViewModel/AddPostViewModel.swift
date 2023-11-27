@@ -8,19 +8,41 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import UIKit
 
 class AddPostViewModel: ViewModel{
     var disposeBag = DisposeBag()
     struct Input{
+        let postClicked: ControlEvent<Void>
         
+        let title: ControlProperty<String>
+        let contents: ControlProperty<String>
+        
+        let movieID: String
+        let movieTitle: String
+        let postImageData: Data
     }
     
     struct Output{
-//        var requestmodel = ContentsCreateRequestDTO(title: <#T##String#>, content: <#T##String#>, file: <#T##Data#>, product_id: <#T##String#>, content1: <#T##String?#>, content2: <#T##String?#>, content3: <#T##String?#>, content4: <#T##String?#>, content5: <#T##String?#>)
-        
+        let postResult: PublishRelay<Bool>
     }
     func transform(input: Input) -> Output {
-        return Output()
+        let postResult = PublishRelay<Bool>()
+        
+        input.postClicked
+            .withLatestFrom(Observable.zip(input.title, input.contents))
+            .flatMapLatest {title, content in
+                let requestmodel = ContentsCreateRequestDTO(title: title, content: content, file: input.postImageData, product_id: "mtSNS", content1: input.movieID, content2: input.movieTitle, content3: nil, content4: nil, content5: nil)
+                return ContentsManager.shared.post(requestmodel)
+            }
+            .bind { result in
+                postResult.accept(result)
+            }
+            .disposed(by: disposeBag)
+        
+        
+
+        return Output(postResult: postResult)
     }
 }
 

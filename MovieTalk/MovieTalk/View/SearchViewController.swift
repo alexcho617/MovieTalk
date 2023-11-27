@@ -104,7 +104,7 @@ final class SearchViewController: UIViewController {
 //                print("selectedData", selectedData)
                 
                 let vc = AddPostViewController()
-                vc.setMovieData(selectedData)
+                vc.bind(selectedData)
                 if let sheet = vc.sheetPresentationController{
                     sheet.detents = [.large()]
                     sheet.prefersGrabberVisible = true

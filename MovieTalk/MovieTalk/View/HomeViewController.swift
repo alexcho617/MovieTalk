@@ -65,6 +65,7 @@ class HomeViewController: UIViewController{
         output.contents
             .asDriver(onErrorJustReturn: [])
 //            .debug()
+        
         //TODO: CRUD를 위해서 지역변수에 저장 후 바인드 해야함
         //TODO: Rxdatasource를 쓰면?
             .drive(contentsTableView.rx.items(cellIdentifier: HomeViewCell.identifier, cellType: HomeViewCell.self)){
@@ -74,7 +75,7 @@ class HomeViewController: UIViewController{
                 cell.selectionStyle = .none
                 cell.navigationHandler = {
                     let vc = MovieViewController() //Rx 사용 안했기 때문에 구독이 끊길 일이 없음
-                    vc.movieID = element.movieID ?? ""
+                    vc.bind(element.movieID ?? "")
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 

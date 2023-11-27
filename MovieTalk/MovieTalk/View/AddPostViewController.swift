@@ -35,6 +35,8 @@ class AddPostViewController: UIViewController {
         return view
     }()
     
+    //TODO: ImagePicker
+    
     let posterImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
@@ -60,11 +62,14 @@ class AddPostViewController: UIViewController {
         return view
     }()
     
+    
+    
     let titleTextField = {
-        let view = UITextField()
+        let view = TextFieldWithPadding()
         view.layer.borderWidth = 1.0
         view.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
         view.layer.cornerRadius = Design.paddingDefault
+        view.font = Design.fontDefault
         return view
     }()
     
@@ -92,7 +97,7 @@ class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
-        bind()
+        
     }
     
     //메인사진 뷰 위에 선택한 영화 제목이랑 조그만한 포스터 보여주고
@@ -109,10 +114,7 @@ class AddPostViewController: UIViewController {
         view.addSubview(titleTextField)
         view.addSubview(contentsLabel)
         view.addSubview(contentsTextView)
-
-    }
-    
-    func bind(){
+        
         mainImageView.snp.makeConstraints { make in
             make.top.horizontalEdges.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.3)
@@ -158,15 +160,62 @@ class AddPostViewController: UIViewController {
             make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
             
         }
+
     }
     
-    func setMovieData(_ movieData: MovieResponseDTO){
-        print(movieData)
-        
-        mainImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.backdropPath ?? movieData.posterPath ?? ""))
+    func bind(_ movieData: MovieResponseDTO){
+        var imageData = Data()
+        //⭐️TODO: 포스트 한 이미지가 insomnia에서도 확인되지 않고 있음.
+        //TODO: upload to sesac server along with images from user and tmdb
+        mainImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.backdropPath ?? movieData.posterPath ?? "")) { imageResult in
+            switch imageResult{
+            case .success:
+                imageData = self.mainImageView.image?.jpegData(compressionQuality: 1.0) ?? Data()
+                print("DEBUG IMAGE DATA", imageData)
+            case .failure(let error):
+                print("Image loading error", error)
+            }
+        }
         
         posterImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.posterPath ?? ""))
         movieTitleLabel.text = movieData.title ?? ""
+        
+        let input = AddPostViewModel.Input(postClicked: postButton.rx.tap, title: titleTextField.rx.text.orEmpty, contents: contentsTextView.rx.text.orEmpty, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImageData: imageData)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.postResult
+            .bind(with: self) { owner, result in
+                if result{
+                    print("Post Success")
+                    owner.navigationController?.popToRootViewController(animated: true)
+                    
+                }else{
+                    print("Post Failed")
+                }
+            }.disposed(by: disposeBag)
+    }
+                
+    
+    
+
+}
+
+final class TextFieldWithPadding: UITextField {
+    var textPadding = UIEdgeInsets(
+        top: 0,
+        left: Design.paddingDefault,
+        bottom: 0,
+        right: Design.paddingDefault
+    )
+
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
     }
 
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
 }
