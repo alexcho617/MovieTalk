@@ -73,41 +73,6 @@ class HomeViewController: UIViewController{
         
     }
     
-    /// 원래 함수
-    //    func bind(){
-    //        let input = HomeViewModel.Input()
-    //        let output = viewModel.transform(input: input)
-    //
-    //        output.contents
-    //            .asDriver(onErrorJustReturn: [])
-    //
-    //        //TODO: CRUD를 위해서 지역변수에 저장 후 바인드 해야함
-    //        //TODO: Rxdatasource를 쓰면?
-    //            .drive(contentsTableView.rx.items(cellIdentifier: HomeViewCell.identifier, cellType: HomeViewCell.self)){
-    //                row, element, cell in
-    //                //configure cell
-    //                cell.configureCellData(element)
-    //                cell.selectionStyle = .none
-    //                cell.navigationHandler = {
-    //                    let vc = MovieViewController() //Rx 사용 안했기 때문에 구독이 끊길 일이 없음
-    //                    vc.bind(element.movieID ?? "")
-    //                    self.navigationController?.pushViewController(vc, animated: true)
-    //                }
-    //                //TODO: 두번 클릭해야 실행되는 문제 있음
-    //                //더보기 버튼
-    //                cell.moreButton.rx.tap
-    //                    .debug("More Clicked at\(row)")
-    //                    .bind { _ in
-    //                        cell.contentLabel.numberOfLines = 0
-    //                        cell.moreButton.isHidden = true
-    //                        self.contentsTableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
-    //                    }.disposed(by: cell.disposeBag)
-    //            }
-    //            .disposed(by: disposeBag)
-    //    }
-    
-    ///원래함수 끝
-    
     func bind(){
         let input = HomeViewModel.Input()
         let output = viewModel.transform(input: input)
@@ -124,8 +89,6 @@ class HomeViewController: UIViewController{
                     let vc = MovieViewController()
                     vc.bind(element.movieID ?? "")
                     self.navigationController?.pushViewController(vc, animated: true) //Rx 사용 안했기 때문에 구독이 끊길 일이 없음
-                    //더보기 버튼
-                    //TODO: 두번 클릭해야 실행되는 문제 있음
                 }
                 
                 cell.moreButton.rx.tap
@@ -142,13 +105,6 @@ class HomeViewController: UIViewController{
             }
             .disposed(by: disposeBag)
         
-        //cell인데 어떻게 빼지?
-        //        output.cellExpanded
-        //            .asDriver()
-        //            .drive { isExpanded in
-        //
-        //            }
-        //
     }
     
 }

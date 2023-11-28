@@ -15,7 +15,6 @@ class HomeViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var navigationHandler: (() -> Void)?
     var reloadCompletion: (() -> Void)?
-//    var isExpanded: Bool
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -57,7 +56,6 @@ class HomeViewCell: UITableViewCell {
         return button
     }()
     
-    //backdrop 이미지를 사용하면 어떨까?
     private let mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -89,7 +87,7 @@ class HomeViewCell: UITableViewCell {
     
     var contentLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 2 //isExpanded ? 2 : 0
+        label.numberOfLines = 2
         label.font = Design.fontDefault
         label.textColor = Design.colorTextDefault
         return label
@@ -133,7 +131,6 @@ class HomeViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(contentLabel)
         contentView.addSubview(moreButton)
-//        moreButton.addTarget(self, action: #selector(moreButtonClicked), for: .touchUpInside)
         contentView.addSubview(allCommentsButton)
         
         profileImageView.snp.makeConstraints { make in
@@ -242,12 +239,6 @@ class HomeViewCell: UITableViewCell {
         navigationHandler?()
     }
     
-//    @objc func moreButtonClicked(){
-//        print("More Clicked")
-//        self.isExpanded = true
-//        reloadCompletion?()
-//    }
-    
     private func getRequestModifier() -> AnyModifier{
         let imageDownloadRequest = AnyModifier { request in
             var requestBody = request
@@ -259,16 +250,16 @@ class HomeViewCell: UITableViewCell {
     }
     
     //디버깅을 위해 컨텐츠 길이를 늘려주는 함수
-    func simulateVariableText(text: String) -> String {
-        let count = Int.random(in: 5...10)
-        var output: String = ""
-        
-        for _ in 0..<count {
-            output += text
-        }
-        
-        return output
-    }
+//    func simulateVariableText(text: String) -> String {
+//        let count = Int.random(in: 5...10)
+//        var output: String = ""
+//        
+//        for _ in 0..<count {
+//            output += text
+//        }
+//        
+//        return output
+//    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
