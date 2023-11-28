@@ -87,6 +87,10 @@ struct ContentsCreateResponseDTO: Decodable{
 struct ContentsReadResponseDTO: Decodable {
     let data: [Post]
     let next_cursor: String?
+    
+    static func emptyResponse() -> ContentsReadResponseDTO{
+        return ContentsReadResponseDTO(data: [], next_cursor: "0")
+    }
 }
 
 struct Post: Decodable {

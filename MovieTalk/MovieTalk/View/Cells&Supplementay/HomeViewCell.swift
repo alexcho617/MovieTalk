@@ -15,7 +15,7 @@ class HomeViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var navigationHandler: (() -> Void)?
     var reloadCompletion: (() -> Void)?
-    
+    var id = ""
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person.fill")
@@ -233,8 +233,21 @@ class HomeViewCell: UITableViewCell {
         }
         titleLabel.text = cellData.title
         contentLabel.text = cellData.content //TODO: 문단 구별이 되어있지 않아서 추가적인 parsing 필요
+        self.id = cellData.id
         //DEBUG
 //        contentLabel.text = simulateVariableText(text: cellData.content) //simulate multiple lines
+
+        let postLiked = ContentsManager.shared.likePost(self.id)
+        likeButton.rx.tap
+            .withLatestFrom(postLiked)
+            .bind { isLiked in
+                print("Post",self.id,isLiked)
+                self.likeButton.tintColor = isLiked ? .red : .black
+            }
+            .disposed(by: disposeBag)
+        
+           
+
     }
     
     @objc func movieButtonClicked(){

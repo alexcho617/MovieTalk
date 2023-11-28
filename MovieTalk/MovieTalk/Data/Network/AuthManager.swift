@@ -176,7 +176,7 @@ final class AuthManager {
 }
 
 
-private func handleStatusCodeError(_ error: Error) {
+public func handleStatusCodeError(_ error: Error) {
     guard let moyaError = error as? MoyaError else {return}
     guard let response = moyaError.response else {return}
     if var errorDTO = try? JSONDecoder().decode(ErrorResponseDTO.self, from: response.data) {

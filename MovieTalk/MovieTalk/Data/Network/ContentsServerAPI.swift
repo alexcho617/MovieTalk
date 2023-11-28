@@ -22,7 +22,7 @@ enum ContentsServerAPI{
 //    case deleteComment
     
     //toggle like<>dislike
-//    case likeTopic
+    case likeTopic(postId: String)
 }
 
 extension ContentsServerAPI: TargetType{
@@ -36,12 +36,14 @@ extension ContentsServerAPI: TargetType{
             return "post"
         case .getImage(let imagePath):
             return imagePath
+        case .likeTopic(postId: let postId):
+            return "post/like/\(postId)"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .createTopic:
+        case .createTopic, .likeTopic:
             return .post
         case .readTopic, .getImage:
             return .get
@@ -91,13 +93,12 @@ extension ContentsServerAPI: TargetType{
                 let data = content5.data(using: .utf8) ?? Data()
                 multiPartData.append(MultipartFormData(provider: .data(data), name: "content5"))
             }
-            
             //DEBUG
 //            multiPartData.map({ data in
 //                print(data)
 //            })
-            
             return .uploadMultipart(multiPartData)
+            
         case .readTopic(let next):
             let queryParameters = [
                 "product_id" : "mtSNS",
@@ -105,8 +106,12 @@ extension ContentsServerAPI: TargetType{
                 "next" : next
             ]
             return .requestParameters(parameters: queryParameters, encoding: URLEncoding.default)
+            
         case .getImage:
             return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
+            
+        case .likeTopic:
+            return .requestPlain
         }
     }
     
@@ -118,7 +123,7 @@ extension ContentsServerAPI: TargetType{
                 "Content-Type" : "multipart/form-data",
                 "SesacKey" : Secret.key
             ]
-        case .readTopic, .getImage:
+        case .readTopic, .getImage, .likeTopic:
             return [
                 "Authorization" : UserDefaultsManager.shared.currentToken,
                 "SesacKey" : Secret.key

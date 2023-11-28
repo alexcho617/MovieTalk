@@ -35,15 +35,15 @@ final class ContentsManager{
                     }
                     observer.onCompleted() //해제
                 case .failure(let error):
-                    print("Sesac Failure", error)
                     observer.onNext(false)
+                    handleStatusCodeError(error)
+
                 }
             }
             return Disposables.create()
         }
     }
     
-    //TODO: 에러핸들링 어떻게 할지
     func fetch(nextCursor: String) -> Observable<ContentsReadResponseDTO>{
         return Observable<ContentsReadResponseDTO>.create { observer in
             print("ContentsManager: fetch()")
@@ -56,11 +56,13 @@ final class ContentsManager{
                     if let decodedResponse = try? JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data){
                         observer.onNext(decodedResponse)
                     }else{
-                        print("Contents: Decoding Failed")
+                        print("Contents: Decoding Failed") //에러시 빈값 전달
+                        observer.onNext(ContentsReadResponseDTO.emptyResponse())
                     }
                 case .failure(let error):
-                    print("FAILURE",error)
-                    observer.onError(error)
+                    observer.onNext(ContentsReadResponseDTO.emptyResponse())
+                    handleStatusCodeError(error)
+
                 }
             }
             return Disposables.create()
@@ -73,22 +75,48 @@ final class ContentsManager{
             print("ContentsManager: fetchPostFile()")
             let provider = MoyaProvider<ContentsServerAPI>()
             provider.request(ContentsServerAPI.getImage(imagePath: path)) { result in
-                //기본 이미지를 전달하여 애러 처리
                 switch result{
                 case .success(let response):
                     if let decodedImage = UIImage(data: response.data){
                         observer.onNext(decodedImage)
                     }else{
-                        observer.onNext(UIImage(systemName: "photo")!)
+                        observer.onNext(UIImage(systemName: "photo")!) //에러시 기본 이미지 전달
                     }
                 case .failure(let error):
-                    print("SESAC Contents FileFAILURE",error)
                     observer.onNext(UIImage(systemName: "photo")!)
+                    handleStatusCodeError(error)
                 }
                 observer.onCompleted()
             }
             return Disposables.create()
         }
+    }
+    
+    func likePost(_ id: String) -> Observable<Bool>{
+        return Observable<Bool>.create { observer in
+            print("ContentsManager:", #function)
+            let provider = MoyaProvider<ContentsServerAPI>()
+            provider.request(ContentsServerAPI.likeTopic(postId: id)) { result in
+                switch result{
+                case .success(let response):
+                    if response.statusCode == 200{
+                        observer.onNext(true)
+                        observer.onCompleted()
+                    }else{
+                        print(response.statusCode)
+                        observer.onNext(false)
+                        observer.onCompleted()
+                    }
+                case .failure(let error):
+                    observer.onNext(false)
+                    handleStatusCodeError(error)
+                    observer.onCompleted()
+                    
+                }
+            }
+            return Disposables.create()
+        }
+
     }
     
 }
