@@ -15,7 +15,8 @@ class HomeViewCell: UITableViewCell {
     var disposeBag = DisposeBag()
     var navigationHandler: (() -> Void)?
     var reloadCompletion: (() -> Void)?
-    var id = ""
+    var isLiked: Bool = false
+    
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person.fill")
@@ -64,12 +65,19 @@ class HomeViewCell: UITableViewCell {
         return imageView
     }()
     
-    //TODO: 좋아요 기능
     let likeButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.setImage(UIImage(systemName: "heart" ), for: .normal)
         button.tintColor = .black
         return button
+    }()
+    
+    private let likeCountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "좋아요 0개"
+        label.font = Design.fontDefault
+        label.textColor = Design.colorTextDefault
+        return label
     }()
     
     //TODO: 댓글 기능
@@ -79,6 +87,8 @@ class HomeViewCell: UITableViewCell {
         button.tintColor = .black
         return button
     }()
+    
+   
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -115,8 +125,9 @@ class HomeViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
-        mainImageView.image = nil
-        contentLabel.text = nil
+//        mainImageView.image = nil
+//        contentLabel.text = nil
+        
     }
     
     func configureCell() {
@@ -130,6 +141,7 @@ class HomeViewCell: UITableViewCell {
         contentView.addSubview(mainImageView)
         contentView.addSubview(likeButton)
         contentView.addSubview(commentButton)
+        contentView.addSubview(likeCountLabel)
         contentView.addSubview(titleLabel)
         contentView.addSubview(contentLabel)
         contentView.addSubview(moreButton)
@@ -170,6 +182,7 @@ class HomeViewCell: UITableViewCell {
             make.height.equalTo(mainImageView.snp.width).multipliedBy(1)
         }
         
+        ///button stack
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
             make.leading.equalToSuperview().offset(Design.paddingDefault)
@@ -178,13 +191,21 @@ class HomeViewCell: UITableViewCell {
         
         commentButton.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
-            make.leading.equalTo(likeButton.snp.trailing).offset(Design.paddingDefault)
+            make.leading.equalTo(likeButton.snp.trailing)
+            make.trailing.equalTo(likeCountLabel.snp.leading).offset(-4)
             make.size.equalTo(25)
         }
         
+        likeCountLabel.snp.makeConstraints { make in
+            make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
+            make.height.equalTo(25)
+        }
+        ///button stack
+
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(likeButton.snp.bottom).offset(Design.paddingDefault)
+            make.top.equalTo(likeButton.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
+            make.height.equalTo(30)
         }
         
         contentLabel.snp.makeConstraints { make in
@@ -233,23 +254,38 @@ class HomeViewCell: UITableViewCell {
         }
         titleLabel.text = cellData.title
         contentLabel.text = cellData.content //TODO: 문단 구별이 되어있지 않아서 추가적인 parsing 필요
-        self.id = cellData.id
-        //DEBUG
-//        contentLabel.text = simulateVariableText(text: cellData.content) //simulate multiple lines
-
-        let postLiked = ContentsManager.shared.likePost(self.id)
-        likeButton.rx.tap
-            .withLatestFrom(postLiked)
-            .bind { isLiked in
-                print("Post",self.id,isLiked)
-                self.likeButton.tintColor = isLiked ? .red : .black
-            }
-            .disposed(by: disposeBag)
+        
+        //처음 조회시 버튼 세팅
+        if let likesArray = cellData.likes{
+            self.isLiked = likesArray.contains(UserDefaultsManager.shared.currentUserID)
+            likeButton.setImage(UIImage(systemName: isLiked ? "heart.fill" : "heart" ), for: .normal)
+            likeButton.tintColor = isLiked ? .red : .black
+            likeCountLabel.text = "좋아요 \(likesArray.count)개"
+        }else{
+            likeCountLabel.text = ""
+        }
+//       //TODO: 버그
+//        //좋아요 버튼 누를시 액션
+//        let postLiked = ContentsManager.shared.likePost(cellData.id)
+//        likeButton.rx.tap
+//            .withLatestFrom(postLiked)
+//            .bind { likeResult in
+//                print("Post",UserDefaultsManager.shared.currentUserID,cellData.id,likeResult)
+//                self.isLiked.toggle()
+//                self.updateCell(isLiked: self.isLiked, likedCount: cellData.likes?.count ?? 0)
+//            }
+//            .disposed(by: disposeBag)
         
            
 
     }
-    
+    func updateCell(isLiked: Bool, likedCount: Int){
+        let updatedValue = isLiked ? likedCount + 1 : max(likedCount - 1, 0)
+        likeCountLabel.text = "좋아요 \(updatedValue)개"
+        likeButton.setImage(UIImage(systemName: isLiked ? "heart.fill" : "heart" ), for: .normal)
+        likeButton.tintColor = isLiked ? .red : .black
+        
+    }
     @objc func movieButtonClicked(){
         navigationHandler?()
     }

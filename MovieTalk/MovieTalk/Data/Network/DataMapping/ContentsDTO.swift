@@ -125,3 +125,8 @@ struct Post: Decodable {
 //MARK: Update
 
 //MARK: Delete
+
+
+struct LikedReponseDTO: Decodable{
+    let like_status: Bool
+}

@@ -46,7 +46,17 @@ final class UserDefaultsManager{
         }
         set{
             standard.set(newValue, forKey: Key.email.rawValue)
-        }    }
+        }
+    }
+    
+    var currentUserID: String{
+        get{
+            return standard.string(forKey: Key.id.rawValue) ?? ""
+        }
+        set{
+            standard.set(newValue, forKey: Key.id.rawValue)
+        }
+    }
     
     
     //사용자 정보 저장

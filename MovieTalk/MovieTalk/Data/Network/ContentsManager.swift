@@ -100,23 +100,28 @@ final class ContentsManager{
                 switch result{
                 case .success(let response):
                     if response.statusCode == 200{
-                        observer.onNext(true)
-                        observer.onCompleted()
+                        if let decodedResponse = try? JSONDecoder().decode(LikedReponseDTO.self, from: response.data){
+                            if decodedResponse.like_status == true{
+                                observer.onNext(true)
+                            }else{
+                                observer.onNext(false)
+                            }
+                        }else{
+                            observer.onNext(false)
+                        }
                     }else{
                         print(response.statusCode)
                         observer.onNext(false)
-                        observer.onCompleted()
                     }
                 case .failure(let error):
                     observer.onNext(false)
                     handleStatusCodeError(error)
-                    observer.onCompleted()
-                    
                 }
             }
             return Disposables.create()
         }
 
     }
+    
     
 }
