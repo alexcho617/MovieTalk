@@ -182,7 +182,7 @@ final class MovieViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
         
-        //https://api.themoviedb.org/3/movie/671/images?api_key=42de580fd67c2991513fc60dfa628a99
+        //https://api.themoviedb.org/3/movie/671/images?api_key=\(Secret.tmdbKey)
         //TODO: 이미지 API 사용해서 이미지 스틸컷들 쭉 보여줘도 좋을듯.
 
     }

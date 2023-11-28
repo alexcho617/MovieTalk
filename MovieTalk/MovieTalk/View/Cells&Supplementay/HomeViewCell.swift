@@ -64,6 +64,7 @@ class HomeViewCell: UITableViewCell {
         return imageView
     }()
     
+    //TODO: 좋아요 기능
     let likeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -71,6 +72,7 @@ class HomeViewCell: UITableViewCell {
         return button
     }()
     
+    //TODO: 댓글 기능
     let commentButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "bubble"), for: .normal)

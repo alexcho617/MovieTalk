@@ -46,8 +46,6 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //todo logout
-        //withdraw
         setView()
         bind()
     }

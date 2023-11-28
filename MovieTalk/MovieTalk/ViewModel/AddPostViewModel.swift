@@ -30,7 +30,6 @@ class AddPostViewModel: ViewModel{
         let postResult = PublishRelay<Bool>()
         
         input.postClicked
-           
             .flatMapLatest {
                 let requestmodel = ContentsCreateRequestDTO(title: self.titleString, content: self.contentsString, file: input.postImageData, product_id: "mtSNS", content1: input.movieID, content2: input.movieTitle, content3: nil, content4: nil, content5: nil)
                 print("PostModel:",requestmodel) //이 시점에서 이미 짤렸음. 내용이 구독이 안되고 있음

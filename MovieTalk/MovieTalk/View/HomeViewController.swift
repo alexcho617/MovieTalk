@@ -13,7 +13,8 @@ import SnapKit
 class HomeViewController: UIViewController{
     let disposeBag = DisposeBag()
     let viewModel = HomeViewModel()
-    
+    let refreshControl = UIRefreshControl()
+
     var contentsData: [Post] = []
     
     //debug
@@ -23,10 +24,12 @@ class HomeViewController: UIViewController{
         button.addTarget(self, action: #selector(reloadTableView), for: .touchUpInside)
         return button
     }()
+    
     @objc
     func reloadTableView(){
         self.contentsTableView.reloadData()
     }
+    
     //view
     let contentsTableView = {
         let view = UITableView()
@@ -36,27 +39,17 @@ class HomeViewController: UIViewController{
         view.register(HomeViewCell.self, forCellReuseIdentifier: HomeViewCell.identifier)
         return view
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
         bind()
     }
-    //
-    //    override func viewIsAppearing(_ animated: Bool) {
-    //        super.viewIsAppearing(animated)
-    //    }
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        print("Home Appeared")
-    //        super.viewDidAppear(animated)
-    //        let appearance = UITabBarAppearance()
-    //        appearance.selectionIndicatorTintColor = .black
-    //        appearance.backgroundColor = .white
-    //        tabBarController?.tabBar.standardAppearance = appearance
-    //        tabBarController?.tabBar.scrollEdgeAppearance = appearance
-    //    }
     
     func setView(){
         self.contentsTableView.delegate = self
+        self.refreshControl.endRefreshing()
+        self.contentsTableView.refreshControl = refreshControl
         view.backgroundColor = .systemBackground
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithTransparentBackground()
@@ -94,10 +87,8 @@ class HomeViewController: UIViewController{
                 
                 cell.moreButton.rx.tap
                     .asDriver()
-//                    .debug("MOREBUTTON TAP \(row)")
                     .drive { [weak self] _ in
-                        //이걸 해줘야 레이블이 늘어나는 기본 애니에이션이 들어감
-                        self?.contentsTableView.beginUpdates()
+                        self?.contentsTableView.beginUpdates() //레이블이 늘어나는 기본 애니메이션
                         cell.contentLabel.numberOfLines = 0
                         cell.moreButton.isHidden = true
                         self?.contentsTableView.endUpdates()
@@ -106,12 +97,21 @@ class HomeViewController: UIViewController{
             }
             .disposed(by: disposeBag)
         
+        refreshControl.rx.controlEvent(.valueChanged)
+            .bind { [weak self] _ in
+                print("PULL TO REFRESH")
+//                self?.viewModel.tempContents = []
+//                self?.viewModel.nextCursor = ""
+                self?.viewModel.fetch(isRefreshing: true)
+                self?.refreshControl.endRefreshing() //TODO: closure 처리
+            }.disposed(by: disposeBag)
     }
     
 }
 
 
 extension HomeViewController: UITableViewDelegate{
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //마지막 부분 n픽셀 전 다음 컨텐츠 호출
         if (self.contentsTableView.contentOffset.y + 800) > contentsTableView.contentSize.height - contentsTableView.bounds.size.height {

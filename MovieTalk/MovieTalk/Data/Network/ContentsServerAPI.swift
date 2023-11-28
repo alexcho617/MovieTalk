@@ -98,7 +98,7 @@ extension ContentsServerAPI: TargetType{
 //            })
             
             return .uploadMultipart(multiPartData)
-        case .readTopic(let next): //TODO: next limit parameter, 사용하여 페이지네이션
+        case .readTopic(let next):
             let queryParameters = [
                 "product_id" : "mtSNS",
                 "limit" : "10",
