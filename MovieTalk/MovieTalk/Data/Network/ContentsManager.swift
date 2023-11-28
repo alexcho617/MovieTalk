@@ -44,11 +44,11 @@ final class ContentsManager{
     }
     
     //TODO: 에러핸들링 어떻게 할지
-    func fetch() -> Observable<ContentsReadResponseDTO>{
+    func fetch(nextCursor: String) -> Observable<ContentsReadResponseDTO>{
         return Observable<ContentsReadResponseDTO>.create { observer in
             print("ContentsManager: fetch()")
             let provider = MoyaProvider<ContentsServerAPI>()
-            provider.request(ContentsServerAPI.readTopic) { result in
+            provider.request(ContentsServerAPI.readTopic(next: nextCursor)) { result in
                 switch result{
                 case .success(let response):
                     print("SESAC Contents SUCCESS",response.statusCode)

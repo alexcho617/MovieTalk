@@ -10,7 +10,7 @@ import Moya
 
 enum ContentsServerAPI{
     case createTopic(model: ContentsCreateRequestDTO)
-    case readTopic
+    case readTopic(next: String)
     case getImage(imagePath: String)
 
     //나중에 추가 될 수 있는 루트들
@@ -98,8 +98,13 @@ extension ContentsServerAPI: TargetType{
 //            })
             
             return .uploadMultipart(multiPartData)
-        case .readTopic: //TODO: next limit parameter, 사용하여 페이지네이션
-            return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
+        case .readTopic(let next): //TODO: next limit parameter, 사용하여 페이지네이션
+            let queryParameters = [
+                "product_id" : "mtSNS",
+                "limit" : "10",
+                "next" : next
+            ]
+            return .requestParameters(parameters: queryParameters, encoding: URLEncoding.default)
         case .getImage:
             return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
         }

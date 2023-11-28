@@ -56,6 +56,7 @@ class HomeViewController: UIViewController{
     //    }
     
     func setView(){
+        self.contentsTableView.delegate = self
         view.backgroundColor = .systemBackground
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithTransparentBackground()
@@ -93,7 +94,7 @@ class HomeViewController: UIViewController{
                 
                 cell.moreButton.rx.tap
                     .asDriver()
-                    .debug("MOREBUTTON TAP \(row)")
+//                    .debug("MOREBUTTON TAP \(row)")
                     .drive { [weak self] _ in
                         //이걸 해줘야 레이블이 늘어나는 기본 애니에이션이 들어감
                         self?.contentsTableView.beginUpdates()
@@ -107,4 +108,14 @@ class HomeViewController: UIViewController{
         
     }
     
+}
+
+
+extension HomeViewController: UITableViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //마지막 부분 n픽셀 전 다음 컨텐츠 호출
+        if (self.contentsTableView.contentOffset.y + 800) > contentsTableView.contentSize.height - contentsTableView.bounds.size.height {
+            viewModel.fetch()
+        }
+    }
 }
