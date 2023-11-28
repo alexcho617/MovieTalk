@@ -23,8 +23,8 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     let title = {
         let view = UILabel()
-        view.font = Design.fontAccentDefault
-        view.textColor = Design.colorTextTitle
+        view.font = Design.fontDefault
+        view.textColor = .label
         view.numberOfLines = 2
         return view
     }()

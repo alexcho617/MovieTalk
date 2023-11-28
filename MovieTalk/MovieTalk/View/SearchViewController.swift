@@ -16,8 +16,11 @@ final class SearchViewController: UIViewController {
     let disposeBag = DisposeBag()
     let searchBar = {
         let view = UISearchBar()
-        view.barTintColor = .clear
-        view.searchTextField.textColor = .white
+        view.layer.cornerRadius = Design.paddingDefault
+        view.barTintColor = .white.withAlphaComponent(0.5)
+        view.placeholder = "영화를 검색하세요"
+        view.clipsToBounds = true
+        view.searchTextField.textColor = .label
         return view
     }()
     
@@ -30,7 +33,7 @@ final class SearchViewController: UIViewController {
     
     lazy var collectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: getCollectionViewLayout())
-        view.backgroundColor = .black
+        view.backgroundColor = .clear
         return view
     }()
     
@@ -47,8 +50,18 @@ final class SearchViewController: UIViewController {
         bind()
     }
     
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        print("Search Appeared")
+//        let appearance = UITabBarAppearance()
+//        appearance.selectionIndicatorTintColor = .red
+//        appearance.backgroundColor = .black
+//        tabBarController?.tabBar.standardAppearance = appearance
+//        tabBarController?.tabBar.scrollEdgeAppearance = appearance
+//    }
+    
     func setView(){
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         view.addSubview(searchBar)
         view.addSubview(collectionView)
         collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
@@ -60,7 +73,7 @@ final class SearchViewController: UIViewController {
     func setConstraints(){
         searchBar.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(40)
+            make.height.equalTo(48)
         }
         
         collectionView.snp.makeConstraints { make in

@@ -12,11 +12,10 @@ import UIKit
 
 class AddPostViewModel: ViewModel{
     var disposeBag = DisposeBag()
+    var titleString = ""
+    var contentsString = ""
     struct Input{
         let postClicked: ControlEvent<Void>
-        
-        let title: ControlProperty<String>
-        let contents: ControlProperty<String>
         
         let movieID: String
         let movieTitle: String
@@ -29,11 +28,12 @@ class AddPostViewModel: ViewModel{
     
     func transform(input: Input) -> Output {
         let postResult = PublishRelay<Bool>()
-       
+        
         input.postClicked
-            .withLatestFrom(Observable.zip(input.title, input.contents))
-            .flatMapLatest {title, content in                
-                let requestmodel = ContentsCreateRequestDTO(title: title, content: content, file: input.postImageData, product_id: "mtSNS", content1: input.movieID, content2: input.movieTitle, content3: nil, content4: nil, content5: nil)
+           
+            .flatMapLatest {
+                let requestmodel = ContentsCreateRequestDTO(title: self.titleString, content: self.contentsString, file: input.postImageData, product_id: "mtSNS", content1: input.movieID, content2: input.movieTitle, content3: nil, content4: nil, content5: nil)
+                print("PostModel:",requestmodel) //이 시점에서 이미 짤렸음. 내용이 구독이 안되고 있음
                 return ContentsManager.shared.post(requestmodel)
             }
             .bind { result in
@@ -41,8 +41,6 @@ class AddPostViewModel: ViewModel{
             }
             .disposed(by: disposeBag)
         
-        
-
         return Output(postResult: postResult)
     }
 }

@@ -14,6 +14,8 @@ class HomeViewCell: UITableViewCell {
     static let identifier  = "HomeViewCell"
     var disposeBag = DisposeBag()
     var navigationHandler: (() -> Void)?
+    var reloadCompletion: (() -> Void)?
+//    var isExpanded: Bool
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -85,9 +87,9 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
     
-    let contentLabel: UILabel = {
+    var contentLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 2
+        label.numberOfLines = 2 //isExpanded ? 2 : 0
         label.font = Design.fontDefault
         label.textColor = Design.colorTextDefault
         return label
@@ -102,7 +104,7 @@ class HomeViewCell: UITableViewCell {
         return button
     }()
     
-    let lookCommentsButton = {
+    let allCommentsButton = {
         let view = UIButton()
         view.setTitle("댓글 모두 보기", for: .normal)
         view.setTitleColor(.systemGray, for: .normal)
@@ -131,16 +133,18 @@ class HomeViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(contentLabel)
         contentView.addSubview(moreButton)
-        contentView.addSubview(lookCommentsButton)
+//        moreButton.addTarget(self, action: #selector(moreButtonClicked), for: .touchUpInside)
+        contentView.addSubview(allCommentsButton)
         
         profileImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(Design.paddingDefault)
-            make.size.equalTo(30)
             profileImageView.layer.cornerRadius = 15
+            make.size.equalTo(30)
         }
         
         nickLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15)
+            make.top.equalToSuperview().inset(Design.paddingDefault)
+            make.height.equalTo(30)
             make.leading.equalTo(profileImageView.snp.trailing).offset(Design.paddingDefault)
         }
         
@@ -156,7 +160,7 @@ class HomeViewCell: UITableViewCell {
         }
         
         movieButton.snp.makeConstraints { make in
-            make.top.equalTo(movieLabel.snp.top)
+            make.centerY.equalTo(movieLabel)
             
             make.trailing.equalToSuperview().offset(-Design.paddingDefault)
             make.bottom.equalTo(mainImageView.snp.top)
@@ -170,11 +174,13 @@ class HomeViewCell: UITableViewCell {
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
             make.leading.equalToSuperview().offset(Design.paddingDefault)
+            make.size.equalTo(25)
         }
         
         commentButton.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
             make.leading.equalTo(likeButton.snp.trailing).offset(Design.paddingDefault)
+            make.size.equalTo(25)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -185,17 +191,18 @@ class HomeViewCell: UITableViewCell {
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
+            make.bottom.equalTo(allCommentsButton.snp.top)
         }
         
         moreButton.snp.makeConstraints { make in
             make.top.equalTo(contentLabel.snp.bottom).offset(4)
             make.trailing.equalToSuperview().inset(Design.paddingDefault)
-            make.bottom.equalToSuperview().priority(.high)
+            make.height.equalTo(30)
         }
         
-        lookCommentsButton.snp.makeConstraints { make in
-            make.top.equalTo(contentLabel.snp.bottom)
+        allCommentsButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(Design.paddingDefault)
+            make.bottom.equalToSuperview()
         }
     }
     
@@ -234,6 +241,12 @@ class HomeViewCell: UITableViewCell {
     @objc func movieButtonClicked(){
         navigationHandler?()
     }
+    
+//    @objc func moreButtonClicked(){
+//        print("More Clicked")
+//        self.isExpanded = true
+//        reloadCompletion?()
+//    }
     
     private func getRequestModifier() -> AnyModifier{
         let imageDownloadRequest = AnyModifier { request in

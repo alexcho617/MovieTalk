@@ -152,7 +152,6 @@ final class AddPostViewController: UIViewController {
             make.horizontalEdges.equalToSuperview().inset(Design.paddingDefault)
             make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
         }
-
     }
     
     func bind(_ movieData: MovieResponseDTO, _ backdropImage: UIImage){
@@ -161,7 +160,7 @@ final class AddPostViewController: UIViewController {
         posterImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.posterPath ?? ""))
         movieTitleLabel.text = movieData.title ?? ""
         
-        lazy var input = AddPostViewModel.Input(postClicked: postButton.rx.tap, title: titleTextField.rx.text.orEmpty, contents: contentsTextView.rx.text.orEmpty, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImageData: posterImageView.image?.pngData() ?? Data())
+        lazy var input = AddPostViewModel.Input(postClicked: postButton.rx.tap, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImageData: posterImageView.image?.pngData() ?? Data())
        
         let output = viewModel.transform(input: input)
         
@@ -174,5 +173,17 @@ final class AddPostViewController: UIViewController {
                     print("Post Failed")
                 }
             }.disposed(by: disposeBag)
+        
+        titleTextField.rx.text.orEmpty
+            .bind { title in
+                self.viewModel.titleString = title
+            }
+            .disposed(by: disposeBag)
+        
+        contentsTextView.rx.text.orEmpty
+            .bind { contents in
+                self.viewModel.contentsString = contents
+            }
+            .disposed(by: disposeBag)
     }
 }

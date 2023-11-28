@@ -97,7 +97,7 @@ final class LoginViewController: UIViewController {
                     let devVC = UINavigationController(rootViewController: SettingsViewController())
                     
                     tabBarController.setViewControllers([homeVC, addVC, devVC], animated: true)
-                    tabBarController.tabBar.tintColor = .systemIndigo
+                    tabBarController.tabBar.tintColor = .label
                     
                     let tabBarAppearance = UITabBarAppearance()
                     tabBarAppearance.backgroundColor = .systemBackground
