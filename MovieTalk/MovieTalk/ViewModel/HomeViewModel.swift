@@ -40,7 +40,7 @@ final class HomeViewModel: ViewModel{
         return Output(contents: snsContents)
     }
     
-    func fetch(isRefreshing: Bool = false){
+    func fetch(isRefreshing: Bool = false, completion: @escaping (() -> Void)){
         if isRefreshing{
             tempContents = []
             nextCursor = "" //밑에 가드문 우회
@@ -58,5 +58,6 @@ final class HomeViewModel: ViewModel{
                 owner.isLoading = false
             }
             .disposed(by: disposeBag)
+        completion()
     }
 }

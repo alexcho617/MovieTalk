@@ -16,6 +16,7 @@ class HomeViewCell: UITableViewCell {
     var navigationHandler: (() -> Void)?
     var reloadCompletion: (() -> Void)?
     var isLiked: Bool = false
+    var likeCount: Int = 0
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -46,12 +47,12 @@ class HomeViewCell: UITableViewCell {
     let movieLabel: UILabel = {
         let label = UILabel()
         label.text = "-"
-        label.font = Design.fontDefault
+        label.font = Design.fontAccentDefault
         label.textColor = Design.colorTextDefault
         return label
     }()
     
-    let movieButton: UIButton = {
+    let movieInfoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("영화정보", for: .normal)
         return button
@@ -89,7 +90,6 @@ class HomeViewCell: UITableViewCell {
     }()
     
    
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = Design.fontAccentDefault
@@ -125,8 +125,8 @@ class HomeViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
-//        mainImageView.image = nil
-//        contentLabel.text = nil
+        mainImageView.image = nil
+        contentLabel.text = nil
         
     }
     
@@ -135,8 +135,8 @@ class HomeViewCell: UITableViewCell {
         contentView.addSubview(nickLabel)
         contentView.addSubview(dateLabel)
         contentView.addSubview(movieLabel)
-        contentView.addSubview(movieButton)
-        movieButton.addTarget(self, action: #selector(movieButtonClicked), for: .touchUpInside)
+        contentView.addSubview(movieInfoButton)
+        movieInfoButton.addTarget(self, action: #selector(movieButtonClicked), for: .touchUpInside)
         
         contentView.addSubview(mainImageView)
         contentView.addSubview(likeButton)
@@ -167,10 +167,10 @@ class HomeViewCell: UITableViewCell {
         movieLabel.snp.makeConstraints { make in
             make.top.equalTo(dateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(Design.paddingDefault)
-            make.trailing.lessThanOrEqualTo(movieButton.snp.leading).offset(-Design.paddingDefault)
+            make.trailing.lessThanOrEqualTo(movieInfoButton.snp.leading).offset(-Design.paddingDefault)
         }
         
-        movieButton.snp.makeConstraints { make in
+        movieInfoButton.snp.makeConstraints { make in
             make.centerY.equalTo(movieLabel)
             
             make.trailing.equalToSuperview().offset(-Design.paddingDefault)
@@ -186,14 +186,14 @@ class HomeViewCell: UITableViewCell {
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
             make.leading.equalToSuperview().offset(Design.paddingDefault)
-            make.size.equalTo(25)
+            make.size.equalTo(30)
         }
         
         commentButton.snp.makeConstraints { make in
             make.top.equalTo(mainImageView.snp.bottom).offset(Design.paddingDefault)
             make.leading.equalTo(likeButton.snp.trailing)
             make.trailing.equalTo(likeCountLabel.snp.leading).offset(-4)
-            make.size.equalTo(25)
+            make.size.equalTo(30)
         }
         
         likeCountLabel.snp.makeConstraints { make in
@@ -237,35 +237,51 @@ class HomeViewCell: UITableViewCell {
         dateLabel.text = cellData.time
         movieLabel.text = cellData.movieTitle
         
+        //image
         if let fileArray = cellData.image{
             if fileArray.count != 0{
-                
                 //MARK: using moya api
-//                ContentsManager.shared.fetchPostFile(fileArray.first ?? "")
-//                    .bind { fetchedImage in
-//                        self.mainImageView.image = fetchedImage
-//                    }.disposed(by: disposeBag)
-                
+                //                ContentsManager.shared.fetchPostFile(fileArray.first ?? "")
+                //                    .bind { fetchedImage in
+                //                        self.mainImageView.image = fetchedImage
+                //                    }.disposed(by: disposeBag)
                 //MARK: Using kingfisher request modifier
                 let imageRequestString = Secret.baseURLString + (fileArray.first ?? "") + Secret.imageQuery
-                
                 mainImageView.kf.setImage(with: URL(string: imageRequestString),options: [.requestModifier(getRequestModifier()), .cacheOriginalImage])
             }
         }
         titleLabel.text = cellData.title
         contentLabel.text = cellData.content //TODO: 문단 구별이 되어있지 않아서 추가적인 parsing 필요
         
-        //처음 조회시 버튼 세팅
+        //셀 로딩시 좋아요 버튼 세팅
+        //TODO: LieksArray를 가져와서 분기처리를 할 수가 없음. 서버에 저장하는 사용자의 아이디값과 내 아이디 값이 다른데 이건 UD에 저장되어있는 내 문제인가?
         if let likesArray = cellData.likes{
-            self.isLiked = likesArray.contains(UserDefaultsManager.shared.currentUserID)
-            likeButton.setImage(UIImage(systemName: isLiked ? "heart.fill" : "heart" ), for: .normal)
-            likeButton.tintColor = isLiked ? .red : .black
-            likeCountLabel.text = "좋아요 \(likesArray.count)개"
-        }else{
-            likeCountLabel.text = ""
+//            print("좋아요 배열",likesArray)
+//            print("현재 로그인된 아이디",UserDefaultsManager.shared.currentUserID)
+            isLiked = likesArray.contains(UserDefaultsManager.shared.currentUserID)
+            likeCount = likesArray.count
         }
-//       //TODO: 버그
-//        //좋아요 버튼 누를시 액션
+        updateLikeInfo()
+        
+        likeButton.rx.tap
+            .throttle(.seconds(2), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.isLiked.toggle()
+                if owner.isLiked {
+                    owner.likeCount += 1
+                }else{
+                    owner.likeCount = max(owner.likeCount - 1, 0)
+                }
+//                print("뷰 좋아요  상태", self.isLiked)
+                ContentsManager.shared.likePost(cellData.id, completion: { isNetworkSuccessful in
+//                    print("통신성공?:", isNetworkSuccessful)
+                    isNetworkSuccessful ? owner.updateLikeInfo() : ()
+                })
+            }
+            .disposed(by: disposeBag)
+        
+        //TODO: 버그
+        //좋아요 버튼 누를시 액션
 //        let postLiked = ContentsManager.shared.likePost(cellData.id)
 //        likeButton.rx.tap
 //            .withLatestFrom(postLiked)
@@ -276,16 +292,15 @@ class HomeViewCell: UITableViewCell {
 //            }
 //            .disposed(by: disposeBag)
         
-           
 
     }
-    func updateCell(isLiked: Bool, likedCount: Int){
-        let updatedValue = isLiked ? likedCount + 1 : max(likedCount - 1, 0)
-        likeCountLabel.text = "좋아요 \(updatedValue)개"
+    private func updateLikeInfo(){
+       
         likeButton.setImage(UIImage(systemName: isLiked ? "heart.fill" : "heart" ), for: .normal)
         likeButton.tintColor = isLiked ? .red : .black
-        
+        likeCountLabel.text = likeCount > 0 ? "좋아요 \(likeCount)개" : ""
     }
+    
     @objc func movieButtonClicked(){
         navigationHandler?()
     }

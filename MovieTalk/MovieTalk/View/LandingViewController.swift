@@ -67,7 +67,7 @@ final class LandingViewController: UIViewController {
                     self.navigator(tabBarController)
                 default:
                     //                    print("Login")
-                    self.navigator(LoginViewController())
+                    self.navigator(UINavigationController(rootViewController: LoginViewController()))
                     
                 }
             }.disposed(by: disposeBag)

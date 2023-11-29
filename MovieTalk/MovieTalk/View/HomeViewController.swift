@@ -102,8 +102,9 @@ class HomeViewController: UIViewController{
                 print("PULL TO REFRESH")
 //                self?.viewModel.tempContents = []
 //                self?.viewModel.nextCursor = ""
-                self?.viewModel.fetch(isRefreshing: true)
-                self?.refreshControl.endRefreshing() //TODO: closure 처리
+                self?.viewModel.fetch(isRefreshing: true){
+                    self?.refreshControl.endRefreshing() //TODO: closure 처리
+                }
             }.disposed(by: disposeBag)
     }
     
@@ -115,7 +116,7 @@ extension HomeViewController: UITableViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //마지막 부분 n픽셀 전 다음 컨텐츠 호출
         if (self.contentsTableView.contentOffset.y + 800) > contentsTableView.contentSize.height - contentsTableView.bounds.size.height {
-            viewModel.fetch()
+            viewModel.fetch(completion: {})
         }
     }
 }

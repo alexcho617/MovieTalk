@@ -125,6 +125,8 @@ final class LoginViewController: UIViewController {
     }
     
     @objc func signUpRouterClicked(){
+        print("Go to sign up")
+        //nc가 없어서 그런가?
         navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
     

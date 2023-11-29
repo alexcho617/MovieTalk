@@ -92,36 +92,31 @@ final class ContentsManager{
         }
     }
     
-    func likePost(_ id: String) -> Observable<Bool>{
-        return Observable<Bool>.create { observer in
-            print("ContentsManager:", #function)
-            let provider = MoyaProvider<ContentsServerAPI>()
-            provider.request(ContentsServerAPI.likeTopic(postId: id)) { result in
-                switch result{
-                case .success(let response):
-                    if response.statusCode == 200{
-                        if let decodedResponse = try? JSONDecoder().decode(LikedReponseDTO.self, from: response.data){
-                            if decodedResponse.like_status == true{
-                                observer.onNext(true)
-                            }else{
-                                observer.onNext(false)
-                            }
-                        }else{
-                            observer.onNext(false)
-                        }
-                    }else{
-                        print(response.statusCode)
-                        observer.onNext(false)
-                    }
-                case .failure(let error):
-                    observer.onNext(false)
-                    handleStatusCodeError(error)
+    func likePost(_ id: String, completion: @escaping (Bool) -> Void ){
+        print("ContentsManager:", #function)
+        var likedResult: Bool = false
+        let provider = MoyaProvider<ContentsServerAPI>()
+        
+        provider.request(ContentsServerAPI.likeTopic(postId: id)) { result in
+            switch result{
+            case .success(let response):
+//                print(response.statusCode, String(data: response.data, encoding: .utf8))
+                if response.statusCode == 200{
+                    //토글방식이기 때문에 어차피 200 이면 정상 처리 된거라 디코딩 값이 필요없음
+                    let decodedResponse = try? JSONDecoder().decode(LikedReponseDTO.self, from: response.data)
+                    print("Server: Does this use Like the post?", decodedResponse?.like_status)
+                    likedResult = true
+                }else{
+                    print(response.statusCode)
+                    likedResult = false
                 }
+            case .failure(let error):
+                likedResult = false
+                handleStatusCodeError(error)
             }
-            return Disposables.create()
+            completion(likedResult)
         }
-
     }
     
     
-}
+}// End of Class

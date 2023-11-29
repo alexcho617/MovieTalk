@@ -8,7 +8,8 @@
 import UIKit
 
 class CommentsViewController: UIViewController {
-
+    
+    var postID: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Comments VC", #function)
