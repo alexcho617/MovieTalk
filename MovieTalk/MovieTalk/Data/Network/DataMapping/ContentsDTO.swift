@@ -56,7 +56,6 @@ struct ContentsCreateResponseDTO: Decodable{
 
 
 //MARK: Read
-//Hashable 해야함
 //read request
 
 //read response
@@ -95,7 +94,7 @@ struct ContentsReadResponseDTO: Decodable {
 
 struct Post: Decodable {
     let id: String
-    let comments: [Comment?]
+    let comments: [Comment]?
     let content: String
     let movieID: String?
     let movieTitle: String?
@@ -127,6 +126,13 @@ struct Post: Decodable {
 //MARK: Delete
 
 
+//MARK: Like Post
 struct LikedReponseDTO: Decodable{
     let like_status: Bool
+}
+
+//MARK: Comment
+struct createCommentRequestDTO: Decodable{
+    let postID: String
+    let content: String
 }

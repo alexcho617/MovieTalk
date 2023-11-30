@@ -84,6 +84,20 @@ class HomeViewController: UIViewController{
                     vc.bind(element.movieID ?? "")
                     self.navigationController?.pushViewController(vc, animated: true) //Rx 사용 안했기 때문에 구독이 끊길 일이 없음
                 }
+                cell.presentationHandler = {
+                    let vc = CommentsViewController()
+                    //TODO: 일단은 댓글화면 목 데이터로 뷰 구성
+//                    vc.postID = element.id
+                    vc.comments = element.comments ?? []
+                    
+                    if let sheet = vc.sheetPresentationController{
+                        sheet.detents = [.custom(resolver: { context in
+                            return (self.view.window?.windowScene?.screen.bounds.height ?? 800) * 0.66
+                        }), .large()] //화면 2/3 지점, 그리고 전체화면
+                        sheet.prefersGrabberVisible = true
+                    }
+                    self.present(vc, animated: true, completion: nil)
+                }
                 
                 cell.moreButton.rx.tap
                     .asDriver()

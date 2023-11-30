@@ -12,11 +12,14 @@ import RxCocoa
 
 class HomeViewCell: UITableViewCell {
     static let identifier  = "HomeViewCell"
-    var disposeBag = DisposeBag()
-    var navigationHandler: (() -> Void)?
-    var reloadCompletion: (() -> Void)?
+    
     var isLiked: Bool = false
     var likeCount: Int = 0
+    
+    var navigationHandler: (() -> Void)?
+    var presentationHandler: (() -> Void)?
+    var reloadCompletion: (() -> Void)?
+    var disposeBag = DisposeBag()
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -81,7 +84,7 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
     
-    //TODO: 댓글 기능
+    //TODO: 댓글화면 sheet presentation 후 textfield에 바로 포커스
     let commentButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "bubble"), for: .normal)
@@ -114,6 +117,7 @@ class HomeViewCell: UITableViewCell {
         return button
     }()
     
+    //TODO: 댓글화면 sheet presentation
     let allCommentsButton = {
         let view = UIButton()
         view.setTitle("댓글 모두 보기", for: .normal)
@@ -226,11 +230,6 @@ class HomeViewCell: UITableViewCell {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-    }
-    
     func configureCellData(_ cellData: Post) {
         
         nickLabel.text = cellData.creator.nick
@@ -263,6 +262,7 @@ class HomeViewCell: UITableViewCell {
         }
         updateLikeInfo()
         
+        //좋아요 기능
         likeButton.rx.tap
             .throttle(.seconds(2), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
@@ -280,19 +280,12 @@ class HomeViewCell: UITableViewCell {
             }
             .disposed(by: disposeBag)
         
-        //TODO: 버그
-        //좋아요 버튼 누를시 액션
-//        let postLiked = ContentsManager.shared.likePost(cellData.id)
-//        likeButton.rx.tap
-//            .withLatestFrom(postLiked)
-//            .bind { likeResult in
-//                print("Post",UserDefaultsManager.shared.currentUserID,cellData.id,likeResult)
-//                self.isLiked.toggle()
-//                self.updateCell(isLiked: self.isLiked, likedCount: cellData.likes?.count ?? 0)
-//            }
-//            .disposed(by: disposeBag)
-        
-
+        //댓글 창
+        allCommentsButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.presentationHandler?()
+            }
+            .disposed(by: disposeBag)
     }
     private func updateLikeInfo(){
        
