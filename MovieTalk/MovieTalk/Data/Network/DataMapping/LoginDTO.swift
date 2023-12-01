@@ -15,4 +15,5 @@ struct LoginRequestDTO: Encodable{
 struct LoginResponseDTO: Decodable{
     let token: String
     let refreshToken: String
+    let _id: String
 }

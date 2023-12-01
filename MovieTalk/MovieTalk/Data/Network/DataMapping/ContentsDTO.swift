@@ -24,20 +24,20 @@ struct Creator: Codable{
 //MARK: Create
 //create request
 /*
+ file = 포스터나 백드롭 이미지
  content1 = 영화 아이디
  content2 = 영화 제목
- content3 = 영화 포스터 TMDB 주소
  */
 struct ContentsCreateRequestDTO: Encodable{
-    let title: String
-    let content: String
-    let file: Data?
-    let product_id: String
-    let content1: String? // movie id
-    let content2: String? // movie title
-    let content3: String? // movie poster
-    let content4: String?
-    let content5: String?
+    let title: String //글 제목
+    let content: String //글 내용
+    let file: Data? //영화 이미지 Data
+    let product_id: String //mtSNS
+    let content1: String? // 영화 아이디
+    let content2: String? // 영화 제목
+    let content3: String? // 안씀
+    let content4: String? // 안씀
+    let content5: String? // 안씀
 }
 
 //create response

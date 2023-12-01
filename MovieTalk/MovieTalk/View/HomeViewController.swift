@@ -86,9 +86,10 @@ class HomeViewController: UIViewController{
                 }
                 cell.presentationHandler = {
                     let vc = CommentsViewController()
-                    //TODO: 일단은 댓글화면 목 데이터로 뷰 구성
-//                    vc.postID = element.id
+                    vc.postID = element.id
                     vc.comments = element.comments ?? []
+                    vc.setView()
+                    vc.bind()
                     
                     if let sheet = vc.sheetPresentationController{
                         sheet.detents = [.custom(resolver: { context in

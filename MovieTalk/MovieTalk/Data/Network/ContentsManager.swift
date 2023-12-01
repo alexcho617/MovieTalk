@@ -104,10 +104,8 @@ final class ContentsManager{
                 if response.statusCode == 200{
                     //토글방식이기 때문에 어차피 200 이면 정상 처리 된거라 디코딩 값이 필요없음
                     let decodedResponse = try? JSONDecoder().decode(LikedReponseDTO.self, from: response.data)
-                    print("Server: Does this use Like the post?", decodedResponse?.like_status)
                     likedResult = true
                 }else{
-                    print(response.statusCode)
                     likedResult = false
                 }
             case .failure(let error):
@@ -117,6 +115,9 @@ final class ContentsManager{
             completion(likedResult)
         }
     }
+    //TODO: Add Comment
+    func addComment(){
+        
+    }
     
-    
-}// End of Class
+}// End of Class Declaration

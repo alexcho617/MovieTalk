@@ -272,9 +272,7 @@ class HomeViewCell: UITableViewCell {
                 }else{
                     owner.likeCount = max(owner.likeCount - 1, 0)
                 }
-//                print("뷰 좋아요  상태", self.isLiked)
                 ContentsManager.shared.likePost(cellData.id, completion: { isNetworkSuccessful in
-//                    print("통신성공?:", isNetworkSuccessful)
                     isNetworkSuccessful ? owner.updateLikeInfo() : ()
                 })
             }

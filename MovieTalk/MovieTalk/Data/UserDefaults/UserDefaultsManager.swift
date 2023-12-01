@@ -73,6 +73,8 @@ final class UserDefaultsManager{
     func saveLoginCredentional(model: LoginResponseDTO){
         standard.setValue(model.token, forKey: Key.token.rawValue)
         standard.setValue(model.refreshToken, forKey: Key.refresh.rawValue)
+        standard.setValue(model._id, forKey: Key.id.rawValue)
+
     }
     
     func printAllData(){

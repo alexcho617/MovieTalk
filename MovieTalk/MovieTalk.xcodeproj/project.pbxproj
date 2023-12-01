@@ -56,6 +56,7 @@
 		57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCF4192B030607001040A5 /* UserDefaultsManager.swift */; };
 		57BCF41F2B033218001040A5 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF41E2B033218001040A5 /* RxCocoa */; };
 		57BCF4212B033218001040A5 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF4202B033218001040A5 /* RxSwift */; };
+		57C507092B184BF000F76B8D /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C507082B184BF000F76B8D /* CommentsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		57BCF4132B027280001040A5 /* AuthServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServerAPI.swift; sourceTree = "<group>"; };
 		57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
 		57BCF4192B030607001040A5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		57C507082B184BF000F76B8D /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 			children = (
 				57877FD72B0F142E00046F9B /* HomeViewCell.swift */,
 				5740B0962B11D9C9008A7808 /* SearchCollectionViewCell.swift */,
+				57C507082B184BF000F76B8D /* CommentsTableViewCell.swift */,
 				5740B0AC2B14E263008A7808 /* PaddedTextField.swift */,
 			);
 			path = "Cells&Supplementay";
@@ -474,6 +477,7 @@
 				574B8BEE2B0A537B00018EBD /* ContentsDTO.swift in Sources */,
 				57877FED2B0FA84200046F9B /* SearchViewController.swift in Sources */,
 				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,
+				57C507092B184BF000F76B8D /* CommentsTableViewCell.swift in Sources */,
 				57BCF3FB2B026126001040A5 /* SettingsViewController.swift in Sources */,
 				574B8C2E2B0B776C00018EBD /* Secret.swift in Sources */,
 				57877FE12B0F80E400046F9B /* MovieViewModel.swift in Sources */,
