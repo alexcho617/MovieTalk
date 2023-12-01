@@ -17,11 +17,10 @@ enum ContentsServerAPI{
 //    case editTopic
 //    case deleteTopic
     
-//    case createComment
+    case createComment(model: CommentCreateRequestDTO, postId: String)
 //    case editComment
 //    case deleteComment
     
-    //toggle like<>dislike
     case likeTopic(postId: String)
 }
 
@@ -38,12 +37,18 @@ extension ContentsServerAPI: TargetType{
             return imagePath
         case .likeTopic(postId: let postId):
             return "post/like/\(postId)"
+        case .createComment(model: _, postId: let id):
+            let completeURL = "post/\(id)/comment"
+            print("ContentsAPI, Path", completeURL)
+
+            print(completeURL)
+            return completeURL
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .createTopic, .likeTopic:
+        case .createTopic, .likeTopic, .createComment:
             return .post
         case .readTopic, .getImage:
             return .get
@@ -112,6 +117,9 @@ extension ContentsServerAPI: TargetType{
             
         case .likeTopic:
             return .requestPlain
+        case .createComment(model: let model , postId: let id):
+            print("ContentsAPI, received", model,id)
+            return .requestJSONEncodable(model)
         }
     }
     
@@ -126,6 +134,12 @@ extension ContentsServerAPI: TargetType{
         case .readTopic, .getImage, .likeTopic:
             return [
                 "Authorization" : UserDefaultsManager.shared.currentToken,
+                "SesacKey" : Secret.key
+            ]
+        case .createComment:
+            return [
+                "Authorization" : UserDefaultsManager.shared.currentToken,
+                "Content-Type" : "application/json",
                 "SesacKey" : Secret.key
             ]
         }

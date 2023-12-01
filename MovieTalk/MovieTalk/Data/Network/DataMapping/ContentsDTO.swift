@@ -132,7 +132,16 @@ struct LikedReponseDTO: Decodable{
 }
 
 //MARK: Comment
-struct createCommentRequestDTO: Decodable{
-    let postID: String
+struct CommentCreateRequestDTO: Encodable{
     let content: String
 }
+
+struct CommentCreateResponseDTO: Decodable{
+    let comment: Comment
+    
+    static func emptyResponse() -> Comment{
+        return Comment(_id: "", content: "", time: "", creator: Creator(_id: "", nick: ""))
+    }
+}
+//Update
+//Delete

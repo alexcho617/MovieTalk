@@ -12,8 +12,9 @@ import RxCocoa
 
 class CommentsViewController: UIViewController {
     var postID: String = ""
-    var comments: [Comment] = []
+    var comments: [Comment] = [] //local변수 for view
     var disposeBag = DisposeBag()
+    lazy var commentsSubject = BehaviorSubject<[Comment]>(value: comments)
     //views
     let titleLabel = {
         let view = UILabel()
@@ -70,8 +71,8 @@ class CommentsViewController: UIViewController {
     
     func bind(){
         print(#function)
-        Observable.just(comments).bind(to: commentsTableView.rx.items(cellIdentifier: CommentsTableViewCell.identifier , cellType: CommentsTableViewCell.self)){ row, element, cell in
-
+        commentsSubject
+            .bind(to: commentsTableView.rx.items(cellIdentifier: CommentsTableViewCell.identifier , cellType: CommentsTableViewCell.self)){ row, element, cell in
 //            cell.profileImageView.image = UIImage from element.creator.profile
             cell.selectionStyle = .none
             cell.profileImageView.image = UIImage(systemName: "person")?.withTintColor(UIColor.blue.withAlphaComponent(CGFloat.random(in: 0...1)))
@@ -90,11 +91,18 @@ class CommentsViewController: UIViewController {
         
         postButton.rx.tap
             .withLatestFrom(textField.rx.text.orEmpty)
-            .subscribe(with: self, onNext: { owner, commentContent in
-                print(commentContent)
-                //Network 통신
-                //성공 유무에 따라 네비게이션 처리
-                //성공이면 뷰 나간 후 홈 리로드
+            .flatMapLatest{ textFieldContent in
+                return ContentsManager.shared.addComment(CommentCreateRequestDTO(content: textFieldContent), self.postID)
+            }
+            .subscribe(with: self, onNext: { owner, comment in
+                if comment._id != ""{
+                    print("Comment Added")
+                    owner.comments.insert(comment, at: 0)
+                    //TODO: 들어왔는데 뷰에 보여지지 않음
+                    owner.commentsSubject.onNext(owner.comments)
+                }else{
+                    print("Invalid Empty Comment")
+                }
             })
             .disposed(by: disposeBag)
         

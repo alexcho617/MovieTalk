@@ -115,9 +115,36 @@ final class ContentsManager{
             completion(likedResult)
         }
     }
+    
     //TODO: Add Comment
-    func addComment(){
-        
+    func addComment(_ model: CommentCreateRequestDTO, _ postId: String) -> Observable<Comment>{
+        print(#function, model, postId)
+        return Observable<Comment>.create { observer in
+            let provider = MoyaProvider<ContentsServerAPI>()
+            provider.request(ContentsServerAPI.createComment(model: model, postId: postId)) { result in
+                switch result{
+                case .success(let response):
+                    if response.statusCode == 200{
+                        if let decodedComment = try? JSONDecoder().decode(Comment.self, from: response.data){
+                            observer.onNext(decodedComment)
+                        }else{
+                            print("Decoding Failed: Status code:", response.statusCode)
+                            observer.onNext(CommentCreateResponseDTO.emptyResponse())
+                        }
+                        
+                    }else{
+                        print("Server Failed: Status code:", response.statusCode)
+                        print(String(data: response.data, encoding: .utf8) ?? "")
+                        observer.onNext(CommentCreateResponseDTO.emptyResponse())
+                    }
+                case .failure(let error):
+                    handleStatusCodeError(error)
+                    observer.onNext(CommentCreateResponseDTO.emptyResponse())
+                }
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
     }
     
 }// End of Class Declaration
