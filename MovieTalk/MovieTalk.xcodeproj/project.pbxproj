@@ -57,6 +57,8 @@
 		57BCF41F2B033218001040A5 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF41E2B033218001040A5 /* RxCocoa */; };
 		57BCF4212B033218001040A5 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 57BCF4202B033218001040A5 /* RxSwift */; };
 		57C507092B184BF000F76B8D /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C507082B184BF000F76B8D /* CommentsTableViewCell.swift */; };
+		57C507472B1A3BB900F76B8D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C507462B1A3BB900F76B8D /* ProfileViewController.swift */; };
+		57C507492B1A3C0200F76B8D /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C507482B1A3C0200F76B8D /* ProfileViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,8 @@
 		57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponseDTO.swift; sourceTree = "<group>"; };
 		57BCF4192B030607001040A5 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		57C507082B184BF000F76B8D /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
+		57C507462B1A3BB900F76B8D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		57C507482B1A3C0200F76B8D /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +246,7 @@
 				57877FD22B0F10DD00046F9B /* HomeViewController.swift */,
 				5740B0922B11D10E008A7808 /* CommentsViewController.swift */,
 				57BCF3FA2B026126001040A5 /* SettingsViewController.swift */,
+				57C507462B1A3BB900F76B8D /* ProfileViewController.swift */,
 				57877FD62B0F13F700046F9B /* Cells&Supplementay */,
 			);
 			path = View;
@@ -257,6 +262,7 @@
 				57877FE02B0F80E400046F9B /* MovieViewModel.swift */,
 				57BCF3F32B0260C8001040A5 /* SignUpViewModel.swift */,
 				57BCF3FC2B02612E001040A5 /* SettingsViewModel.swift */,
+				57C507482B1A3C0200F76B8D /* ProfileViewModel.swift */,
 				571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */,
 			);
 			path = ViewModel;
@@ -474,6 +480,8 @@
 				57877FD32B0F10DD00046F9B /* HomeViewController.swift in Sources */,
 				57877FDF2B0F80B600046F9B /* MovieViewController.swift in Sources */,
 				5740B0972B11D9C9008A7808 /* SearchCollectionViewCell.swift in Sources */,
+				57C507472B1A3BB900F76B8D /* ProfileViewController.swift in Sources */,
+				57C507492B1A3C0200F76B8D /* ProfileViewModel.swift in Sources */,
 				574B8BEE2B0A537B00018EBD /* ContentsDTO.swift in Sources */,
 				57877FED2B0FA84200046F9B /* SearchViewController.swift in Sources */,
 				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,

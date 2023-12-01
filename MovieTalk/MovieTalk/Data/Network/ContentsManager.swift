@@ -15,8 +15,7 @@ final class ContentsManager{
     static let shared = ContentsManager()
     private init(){}
     let disposeBag = DisposeBag()
-    
-    //TODO: Add error handling codes
+    //TODO: Add error handling codes -> 각 함수에 token refresh 넣기. 전부 refresh 호출해버리면 되는거 아닌가? 갱신 성공, 만료 안됨 말고는싹다 리턴
     func post(_ model: ContentsCreateRequestDTO) -> Observable<Bool>{
         return Observable<Bool>.create { observer in
             print("ContentsManager: post()")
@@ -37,7 +36,6 @@ final class ContentsManager{
                 case .failure(let error):
                     observer.onNext(false)
                     handleStatusCodeError(error)
-
                 }
             }
             return Disposables.create()

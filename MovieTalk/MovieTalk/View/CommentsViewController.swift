@@ -81,10 +81,11 @@ class CommentsViewController: UIViewController {
             cell.commentLabel.text = element.content
             
             //내가 쓴 댓글인지 확인
+            //TODO: trailing action 분기처리
             if element.creator._id == UserDefaultsManager.shared.currentUserID{
-                cell.backgroundColor = Design.debugPink
+//                cell.backgroundColor = Design.debugPink
             }else{
-                cell.backgroundColor = .white
+//                cell.backgroundColor = .white
             }
         }
         .disposed(by: disposeBag)
@@ -96,7 +97,7 @@ class CommentsViewController: UIViewController {
             }
             .subscribe(with: self, onNext: { owner, comment in
                 if comment._id != ""{
-                    print("Comment Added")
+//                    print("Comment Added")
                     owner.comments.insert(comment, at: 0)
                     //TODO: 들어왔는데 뷰에 보여지지 않음
                     owner.commentsSubject.onNext(owner.comments)
