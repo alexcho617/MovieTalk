@@ -13,6 +13,8 @@ enum Design{
     static let colorTextTitle = UIColor.white
     static let colorTextSubTitle = UIColor.lightGray
     static let colorTextDefault = UIColor.label
+    static let colorBlack = UIColor.black
+    static let colorGray = UIColor.systemGray.withAlphaComponent(0.8)
     
     static let fontTitle: UIFont = .systemFont(ofSize: 20, weight: .bold)
     static let fontSubTitle: UIFont = .systemFont(ofSize: 18, weight: .semibold)

@@ -42,10 +42,11 @@ final class LandingViewController: UIViewController {
                     
                     let tabBarController = UITabBarController()
                     let homeVC = UINavigationController(rootViewController: HomeViewController())
-                    let addVC = UINavigationController(rootViewController: SearchViewController())
+                    let searchVC = UINavigationController(rootViewController: SearchViewController())
+                    let profileVC = UINavigationController(rootViewController: ProfileViewController())
                     let devVC = UINavigationController(rootViewController: SettingsViewController())
                     
-                    tabBarController.setViewControllers([homeVC, addVC, devVC], animated: true)
+                    tabBarController.setViewControllers([homeVC, searchVC, profileVC, devVC], animated: true)
                     tabBarController.tabBar.tintColor = .label
                     
                     let tabBarAppearance = UITabBarAppearance()
@@ -55,13 +56,16 @@ final class LandingViewController: UIViewController {
                     
                     if let items = tabBarController.tabBar.items{
                         items[0].image = UIImage(systemName: "house.fill")
-                        items[0].title = "홈"
+//                        items[0].title = "홈"
                         
-                        items[1].image = UIImage(systemName: "plus")
-                        items[1].title = "Add"
+                        items[1].image = UIImage(systemName: "movieclapper")
+//                        items[1].title = "추가"
                         
                         items[2].image = UIImage(systemName: "person")
-                        items[2].title = "개발"
+//                        items[2].title = "프로필"
+                        
+                        items[3].image = UIImage(systemName: "hammer")
+//                        items[3].title = "개발"
                     }
                     //                    print("Go to home")
                     self.navigator(tabBarController)
