@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		570057732B1E027E00E28F87 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 570057722B1E027E00E28F87 /* Tabman */; };
 		571154B42B034C1F00FD26A2 /* ViewModel + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */; };
 		571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B52B03623300FD26A2 /* LandingViewController.swift */; };
 		5740B0932B11D10E008A7808 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740B0922B11D10E008A7808 /* CommentsViewController.swift */; };
@@ -138,6 +139,7 @@
 			files = (
 				57877FDD2B0F4D1800046F9B /* Kingfisher in Frameworks */,
 				57BCF3F92B02610C001040A5 /* SnapKit in Frameworks */,
+				570057732B1E027E00E28F87 /* Tabman in Frameworks */,
 				57BCF3EB2B025FC0001040A5 /* RxMoya in Frameworks */,
 				57BCF4212B033218001040A5 /* RxSwift in Frameworks */,
 				57BCF41F2B033218001040A5 /* RxCocoa in Frameworks */,
@@ -337,6 +339,7 @@
 				57BCF41E2B033218001040A5 /* RxCocoa */,
 				57BCF4202B033218001040A5 /* RxSwift */,
 				57877FDC2B0F4D1800046F9B /* Kingfisher */,
+				570057722B1E027E00E28F87 /* Tabman */,
 			);
 			productName = MovieTalk;
 			productReference = 57BCF3B42B023A0D001040A5 /* MovieTalk.app */;
@@ -415,6 +418,7 @@
 				57BCF3F72B02610C001040A5 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				57BCF41D2B033218001040A5 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				57877FDB2B0F4D1800046F9B /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				570057712B1E027E00E28F87 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = 57BCF3B52B023A0D001040A5 /* Products */;
 			projectDirPath = "";
@@ -842,6 +846,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		570057712B1E027E00E28F87 /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
 		57877FDB2B0F4D1800046F9B /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -877,6 +889,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		570057722B1E027E00E28F87 /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 570057712B1E027E00E28F87 /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
+		};
 		57877FDC2B0F4D1800046F9B /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 57877FDB2B0F4D1800046F9B /* XCRemoteSwiftPackageReference "Kingfisher" */;

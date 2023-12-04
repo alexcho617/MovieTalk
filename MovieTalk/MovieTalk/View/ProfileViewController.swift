@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Tabman
 
 class ProfileViewController: UIViewController {
     let disposeBag = DisposeBag()
