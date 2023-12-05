@@ -27,3 +27,28 @@ enum Design{
     static let debugGray = UIColor.systemGray.withAlphaComponent(0.5)
 
 }
+
+extension UIColor{
+    static func random() -> UIColor{
+        return UIColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: .random(in: 0.4...0.9))
+    }
+}
+
+extension DateFormatter {
+    static func localizedDateString(fromTimestampString timestampString: String, format: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", localeIdentifier: String = "ko_KR") -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let date = dateFormatter.date(from: timestampString) {
+            let outputDateFormatter = DateFormatter()
+            outputDateFormatter.locale = Locale(identifier: localeIdentifier)
+            outputDateFormatter.dateStyle = .short
+            outputDateFormatter.timeStyle = .short
+
+            return outputDateFormatter.string(from: date)
+        } else {
+            return nil
+        }
+    }
+}

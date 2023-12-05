@@ -89,7 +89,6 @@ final class MovieViewController: UIViewController {
         return view
     }()
     
-    //TODO: \n\n 처리를 어떻게 해줄 것인가?
     let expandableDescriptionLabel = {
         let view = UILabel()
         view.text = "-"

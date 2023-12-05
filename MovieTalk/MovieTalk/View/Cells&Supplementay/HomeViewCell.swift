@@ -23,8 +23,6 @@ class HomeViewCell: UITableViewCell {
     
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill")
-        imageView.backgroundColor = .black
         imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 1
@@ -47,17 +45,18 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
     
-    let movieLabel: UILabel = {
-        let label = UILabel()
-        label.text = "-"
-        label.font = Design.fontAccentDefault
-        label.textColor = Design.colorTextDefault
-        return label
-    }()
+//    let movieLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "-"
+//        label.font = Design.fontAccentDefault
+//        label.textColor = Design.colorTextDefault
+//        return label
+//    }()
     
     let movieInfoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("영화정보", for: .normal)
+        button.titleLabel?.font = Design.fontAccentDefault
         return button
     }()
     
@@ -129,8 +128,8 @@ class HomeViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
-        mainImageView.image = nil
-        contentLabel.text = nil
+//        mainImageView.image = nil
+//        contentLabel.text = nil
         
     }
     
@@ -138,7 +137,7 @@ class HomeViewCell: UITableViewCell {
         contentView.addSubview(profileImageView)
         contentView.addSubview(nickLabel)
         contentView.addSubview(dateLabel)
-        contentView.addSubview(movieLabel)
+//        contentView.addSubview(movieLabel)
         contentView.addSubview(movieInfoButton)
         movieInfoButton.addTarget(self, action: #selector(movieButtonClicked), for: .touchUpInside)
         
@@ -153,35 +152,42 @@ class HomeViewCell: UITableViewCell {
         
         profileImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().inset(Design.paddingDefault)
-            profileImageView.layer.cornerRadius = 15
-            make.size.equalTo(30)
+            profileImageView.layer.cornerRadius = 20
+            make.size.equalTo(40)
         }
         
         nickLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(Design.paddingDefault)
+            make.centerY.equalTo(profileImageView.snp.centerY)
             make.height.equalTo(30)
             make.leading.equalTo(profileImageView.snp.trailing).offset(Design.paddingDefault)
         }
         
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(nickLabel.snp.bottom).offset(Design.paddingDefault)
+            make.top.equalTo(profileImageView.snp.bottom).offset(Design.paddingDefault)
             make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
         }
         
-        movieLabel.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom)
-            make.leading.equalToSuperview().offset(Design.paddingDefault)
-            make.trailing.lessThanOrEqualTo(movieInfoButton.snp.leading).offset(-Design.paddingDefault)
-        }
+//        movieLabel.snp.makeConstraints { make in
+//            make.top.equalTo(dateLabel.snp.bottom)
+//            make.leading.equalToSuperview().offset(Design.paddingDefault)
+//            make.trailing.lessThanOrEqualTo(movieInfoButton.snp.leading).offset(-Design.paddingDefault)
+//        }
         
         movieInfoButton.snp.makeConstraints { make in
-            make.centerY.equalTo(movieLabel)
-            
-            make.trailing.equalToSuperview().offset(-Design.paddingDefault)
-            make.bottom.equalTo(mainImageView.snp.top)
+            make.top.equalTo(dateLabel.snp.bottom)
+            make.leading.equalToSuperview().offset(Design.paddingDefault).priority(.high)
+            make.trailing.lessThanOrEqualToSuperview().inset(Design.paddingDefault)
         }
+        
+        
+//        movieInfoButton.snp.makeConstraints { make in
+//            make.centerY.equalTo(movieLabel)
+//            
+//            make.trailing.equalToSuperview().offset(-Design.paddingDefault)
+//            make.bottom.equalTo(mainImageView.snp.top)
+//        }
         mainImageView.snp.makeConstraints { make in
-            make.top.equalTo(movieLabel.snp.bottom)
+            make.top.equalTo(movieInfoButton.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(mainImageView.snp.width).multipliedBy(1)
         }
@@ -233,8 +239,22 @@ class HomeViewCell: UITableViewCell {
     func configureCellData(_ cellData: Post) {
         
         nickLabel.text = cellData.creator.nick
-        dateLabel.text = cellData.time
-        movieLabel.text = cellData.movieTitle
+        //profile image
+        if let profileURL = cellData.creator.profile{
+            print("profile image url:", profileURL)
+            let imageRequestString = Secret.baseURLString + profileURL + Secret.imageQuery
+            profileImageView.kf.setImage(
+                with: URL(string: imageRequestString),
+                placeholder: UIImage(systemName: "star"),
+                options: [.requestModifier(getRequestModifier()), .cacheOriginalImage]
+            )
+        }else{
+            profileImageView.image = UIImage(systemName: "person.fill")
+            profileImageView.tintColor = UIColor.random()
+        }
+        dateLabel.text = DateFormatter.localizedDateString(fromTimestampString: cellData.time)
+//        movieLabel.text = cellData.movieTitle
+        movieInfoButton.setTitle(cellData.movieTitle, for: .normal)
         
         //image
         if let fileArray = cellData.image{
@@ -250,10 +270,9 @@ class HomeViewCell: UITableViewCell {
             }
         }
         titleLabel.text = cellData.title
-        contentLabel.text = cellData.content //TODO: 문단 구별이 되어있지 않아서 추가적인 parsing 필요
+        contentLabel.text = cellData.content
         
         //셀 로딩시 좋아요 버튼 세팅
-        //TODO: LieksArray를 가져와서 분기처리를 할 수가 없음. 서버에 저장하는 사용자의 아이디값과 내 아이디 값이 다른데 이건 UD에 저장되어있는 내 문제인가?
         if let likesArray = cellData.likes{
 //            print("좋아요 배열",likesArray)
 //            print("현재 로그인된 아이디",UserDefaultsManager.shared.currentUserID)

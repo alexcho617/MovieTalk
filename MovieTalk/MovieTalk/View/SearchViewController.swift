@@ -48,16 +48,12 @@ final class SearchViewController: UIViewController {
         setView()
         setConstraints()
         bind()
+        
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
 //        super.viewDidAppear(animated)
 //        print("Search Appeared")
-//        let appearance = UITabBarAppearance()
-//        appearance.selectionIndicatorTintColor = .red
-//        appearance.backgroundColor = .black
-//        tabBarController?.tabBar.standardAppearance = appearance
-//        tabBarController?.tabBar.scrollEdgeAppearance = appearance
 //    }
     
     func setView(){

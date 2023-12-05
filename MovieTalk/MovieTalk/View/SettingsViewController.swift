@@ -94,10 +94,10 @@ class SettingsViewController: UIViewController {
     
     @objc
     func postData(){
-        let image = UIImage(named: "stone") ?? UIImage(systemName: "star")!
-        
-        let model = ContentsCreateRequestDTO(title: "\(Int.random(in: 1...100))해리포터를 봤다", content: "해리포터는 정말 명작이야 보고 또 봐도 질리지 않아.", file: image.pngData(), product_id: "mtSNS", content1: "671", content2: "해리 포터와 마법사의 돌", content3: "/unEtC8uWn2lcQLnwKG9PZJX0h0c.jpg", content4: nil, content5: nil)
-            ContentsManager.shared.post(model)
+//        let image = UIImage(named: "stone") ?? UIImage(systemName: "star")!
+//        
+//        let model = ContentsCreateRequestDTO(title: "\(Int.random(in: 1...100))해리포터를 봤다", content: "해리포터는 정말 명작이야 보고 또 봐도 질리지 않아.", file: image.pngData(), product_id: "mtSNS", content1: "671", content2: "해리 포터와 마법사의 돌", content3: "/unEtC8uWn2lcQLnwKG9PZJX0h0c.jpg", content4: nil, content5: nil)
+//            ContentsManager.shared.post(model)
     }
      func logout(){
          //delete all token

@@ -16,9 +16,9 @@ struct Comment: Codable{
 }
 
 struct Creator: Codable{
-    //TODO: profile picture 있는지 확인
     let _id: String
     let nick: String
+    let profile: String?
 }
 
 //MARK: Create
@@ -140,7 +140,7 @@ struct CommentCreateResponseDTO: Decodable{
     let comment: Comment
     
     static func emptyResponse() -> Comment{
-        return Comment(_id: "", content: "", time: "", creator: Creator(_id: "", nick: ""))
+        return Comment(_id: "", content: "", time: "", creator: Creator(_id: "", nick: "", profile: nil))
     }
 }
 //Update

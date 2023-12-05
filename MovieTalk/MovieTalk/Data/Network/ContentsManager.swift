@@ -101,7 +101,7 @@ final class ContentsManager{
 //                print(response.statusCode, String(data: response.data, encoding: .utf8))
                 if response.statusCode == 200{
                     //토글방식이기 때문에 어차피 200 이면 정상 처리 된거라 디코딩 값이 필요없음
-                    let decodedResponse = try? JSONDecoder().decode(LikedReponseDTO.self, from: response.data)
+//                    let decodedResponse = try? JSONDecoder().decode(LikedReponseDTO.self, from: response.data)
                     likedResult = true
                 }else{
                     likedResult = false
@@ -114,7 +114,6 @@ final class ContentsManager{
         }
     }
     
-    //TODO: Add Comment
     func addComment(_ model: CommentCreateRequestDTO, _ postId: String) -> Observable<Comment>{
         print(#function, model, postId)
         return Observable<Comment>.create { observer in

@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class CommentsViewController: UIViewController {
     var postID: String = ""
@@ -73,11 +74,25 @@ class CommentsViewController: UIViewController {
         print(#function)
         commentsSubject
             .bind(to: commentsTableView.rx.items(cellIdentifier: CommentsTableViewCell.identifier , cellType: CommentsTableViewCell.self)){ row, element, cell in
-//            cell.profileImageView.image = UIImage from element.creator.profile
             cell.selectionStyle = .none
-            cell.profileImageView.image = UIImage(systemName: "person")?.withTintColor(UIColor.blue.withAlphaComponent(CGFloat.random(in: 0...1)))
+                
+            if let profileURL = element.creator.profile{
+                print("profile image url:", profileURL)
+                let imageRequestString = Secret.baseURLString + profileURL + Secret.imageQuery
+                cell.profileImageView.kf.setImage(
+                    with: URL(string: imageRequestString),
+                    placeholder: UIImage(systemName: "star"),
+                    options: [.requestModifier(self.getRequestModifier()), .cacheOriginalImage]
+                )
+            }else{
+                cell.profileImageView.image = UIImage(systemName: "person.fill")
+                cell.profileImageView.tintColor = .random()
+            }
+            
             cell.nameLabel.text = element.creator.nick
-            cell.timeLabel.text = element.time
+            
+            cell.timeLabel.text = DateFormatter.localizedDateString(fromTimestampString: element.time)
+
             cell.commentLabel.text = element.content
             
             //내가 쓴 댓글인지 확인
@@ -90,7 +105,15 @@ class CommentsViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
+        textField.rx.text.orEmpty
+            .bind(with: self) { owner, content in
+                owner.postButton.rx.isEnabled.onNext(content.count > 0 ? true : false)
+                owner.postButton.setTitleColor(content.count > 0 ? .systemBlue : .systemGray, for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
         postButton.rx.tap
+            .throttle(.seconds(3), scheduler: MainScheduler.instance) //3초 제한
             .withLatestFrom(textField.rx.text.orEmpty)
             .flatMapLatest{ textFieldContent in
                 return ContentsManager.shared.addComment(CommentCreateRequestDTO(content: textFieldContent), self.postID)
@@ -99,22 +122,25 @@ class CommentsViewController: UIViewController {
                 if comment._id != ""{
 //                    print("Comment Added")
                     owner.comments.insert(comment, at: 0)
-                    //TODO: 들어왔는데 뷰에 보여지지 않음
                     owner.commentsSubject.onNext(owner.comments)
+                    owner.textField.text = ""
                 }else{
                     print("Invalid Empty Comment")
                 }
             })
             .disposed(by: disposeBag)
         
-        Observable.just(comments.isEmpty) //if comments empty, return false so
-            .bind(with: self, onNext: { [self] owner, commentIsEmpty in
-                if commentIsEmpty{
+        //multi cast
+        commentsSubject //if comments empty, return false so
+            .bind(with: self, onNext: {owner, comments in
+                if comments.isEmpty{
+                    print("Comment is empty")
                     //show placeholder
-                    placeholderLabel.isHidden = false
+                    owner.placeholderLabel.isHidden = false
                 }else{
+                    print("Comment is not empty")
                     //hide placeholder
-                    placeholderLabel.isHidden = true
+                    owner.placeholderLabel.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
@@ -163,6 +189,16 @@ class CommentsViewController: UIViewController {
             make.trailing.equalToSuperview().inset(Design.paddingDefault)
         }
         
+    }
+    
+    private func getRequestModifier() -> AnyModifier{
+        let imageDownloadRequest = AnyModifier { request in
+            var requestBody = request
+            requestBody.setValue(Secret.key, forHTTPHeaderField: "SesacKey")
+            requestBody.setValue(UserDefaultsManager.shared.currentToken, forHTTPHeaderField: "Authorization")
+            return requestBody
+        }
+        return imageDownloadRequest
     }
 
 }

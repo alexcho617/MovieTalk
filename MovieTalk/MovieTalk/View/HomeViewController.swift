@@ -77,6 +77,7 @@ class HomeViewController: UIViewController{
             .drive(contentsTableView.rx.items(cellIdentifier: HomeViewCell.identifier, cellType: HomeViewCell.self)){
                 row, element, cell in
                 //configure cell
+                //TODO: Cell reuse 좋아요 버그, diffable data source or rx datasource 사용하면 해결 될지도
                 cell.configureCellData(element)
                 cell.selectionStyle = .none
                 cell.navigationHandler = {

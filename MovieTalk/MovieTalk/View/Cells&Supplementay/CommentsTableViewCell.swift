@@ -16,6 +16,7 @@ class CommentsTableViewCell: UITableViewCell {
     let profileImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "person.fill")
+        view.tintColor = UIColor.random()
         view.layer.cornerRadius = 12
         view.clipsToBounds = true
         return view
@@ -31,7 +32,7 @@ class CommentsTableViewCell: UITableViewCell {
     
     let timeLabel = {
         let view = UILabel()
-        view.font = Design.fontDefault
+        view.font = Design.fontSmall
         view.textColor = Design.colorTextSubTitle
         view.numberOfLines = 1
         return view

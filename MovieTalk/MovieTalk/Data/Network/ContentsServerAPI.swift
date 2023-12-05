@@ -39,9 +39,8 @@ extension ContentsServerAPI: TargetType{
             return "post/like/\(postId)"
         case .createComment(model: _, postId: let id):
             let completeURL = "post/\(id)/comment"
-            print("ContentsAPI, Path", completeURL)
-
-            print(completeURL)
+//            print("ContentsAPI, Path", completeURL)
+//            print(completeURL)
             return completeURL
         }
     }
@@ -118,7 +117,6 @@ extension ContentsServerAPI: TargetType{
         case .likeTopic:
             return .requestPlain
         case .createComment(model: let model , postId: let id):
-            print("ContentsAPI, received", model,id)
             return .requestJSONEncodable(model)
         }
     }
