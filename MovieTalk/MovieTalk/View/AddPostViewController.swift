@@ -158,7 +158,8 @@ final class AddPostViewController: UIViewController {
 
         mainImageView.image = backdropImage
         posterImageView.kf.setImage(with: Secret.getEndPointImageURL(movieData.posterPath ?? ""))
-        movieTitleLabel.text = movieData.title ?? ""
+        movieTitleLabel.text = "\(movieData.title ?? "") (\(DateFormatter.movieYear(fromReleaseDateString: movieData.releaseDate ?? "9999-99-99") ?? ""))"
+
         
         lazy var input = AddPostViewModel.Input(postClicked: postButton.rx.tap, movieID: "\(movieData.id ?? 0)" , movieTitle: movieData.title ?? "", postImageData: posterImageView.image?.pngData() ?? Data())
        

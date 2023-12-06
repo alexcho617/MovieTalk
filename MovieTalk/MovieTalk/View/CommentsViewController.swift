@@ -130,16 +130,12 @@ class CommentsViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        //multi cast
+        //댓글 placeholder label 처리
         commentsSubject //if comments empty, return false so
             .bind(with: self, onNext: {owner, comments in
-                if comments.isEmpty{
-                    print("Comment is empty")
-                    //show placeholder
+                if comments.count == 0{
                     owner.placeholderLabel.isHidden = false
                 }else{
-                    print("Comment is not empty")
-                    //hide placeholder
                     owner.placeholderLabel.isHidden = true
                 }
             })

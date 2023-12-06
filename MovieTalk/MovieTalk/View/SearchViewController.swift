@@ -84,7 +84,6 @@ final class SearchViewController: UIViewController {
         }
     }
     
-    //TODO: 비어있을때 tmdb trend api 써서 미리 보여줌.
     func bind(){
         let input = SearchViewModel.Input(searchQueryEntered: searchBar.rx.text.orEmpty, searchButtonClicked: searchBar.rx.searchButtonClicked)
         

@@ -16,8 +16,8 @@ class HomeViewCell: UITableViewCell {
     var isLiked: Bool = false
     var likeCount: Int = 0
     
-    var navigationHandler: (() -> Void)?
-    var presentationHandler: (() -> Void)?
+    var navigationHandler: (() -> Void)? //for movie VC
+    var presentationHandler: (() -> Void)? //for comments VC
     var reloadCompletion: (() -> Void)?
     var disposeBag = DisposeBag()
     
@@ -83,7 +83,6 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
     
-    //TODO: 댓글화면 sheet presentation 후 textfield에 바로 포커스
     let commentButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "bubble"), for: .normal)
@@ -116,7 +115,6 @@ class HomeViewCell: UITableViewCell {
         return button
     }()
     
-    //TODO: 댓글화면 sheet presentation
     let allCommentsButton = {
         let view = UIButton()
         view.setTitle("댓글 모두 보기", for: .normal)
@@ -167,12 +165,6 @@ class HomeViewCell: UITableViewCell {
             make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
         }
         
-//        movieLabel.snp.makeConstraints { make in
-//            make.top.equalTo(dateLabel.snp.bottom)
-//            make.leading.equalToSuperview().offset(Design.paddingDefault)
-//            make.trailing.lessThanOrEqualTo(movieInfoButton.snp.leading).offset(-Design.paddingDefault)
-//        }
-        
         movieInfoButton.snp.makeConstraints { make in
             make.top.equalTo(dateLabel.snp.bottom)
             make.leading.equalToSuperview().offset(Design.paddingDefault).priority(.high)
@@ -180,12 +172,6 @@ class HomeViewCell: UITableViewCell {
         }
         
         
-//        movieInfoButton.snp.makeConstraints { make in
-//            make.centerY.equalTo(movieLabel)
-//            
-//            make.trailing.equalToSuperview().offset(-Design.paddingDefault)
-//            make.bottom.equalTo(mainImageView.snp.top)
-//        }
         mainImageView.snp.makeConstraints { make in
             make.top.equalTo(movieInfoButton.snp.bottom)
             make.leading.trailing.equalToSuperview()
@@ -253,9 +239,8 @@ class HomeViewCell: UITableViewCell {
             profileImageView.tintColor = UIColor.random()
         }
         dateLabel.text = DateFormatter.localizedDateString(fromTimestampString: cellData.time)
-//        movieLabel.text = cellData.movieTitle
         movieInfoButton.setTitle(cellData.movieTitle, for: .normal)
-        
+
         //image
         if let fileArray = cellData.image{
             if fileArray.count != 0{
@@ -294,6 +279,12 @@ class HomeViewCell: UITableViewCell {
                 ContentsManager.shared.likePost(cellData.id, completion: { isNetworkSuccessful in
                     isNetworkSuccessful ? owner.updateLikeInfo() : ()
                 })
+            }
+            .disposed(by: disposeBag)
+        
+        commentButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.presentationHandler?()
             }
             .disposed(by: disposeBag)
         

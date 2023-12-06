@@ -15,6 +15,9 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     let posterImage = {
         let view = UIImageView()
+        view.backgroundColor = .black
+        view.tintColor = .white
+        view.image = UIImage(systemName: "popcorn")
         view.layer.cornerRadius = Design.paddingDefault
         view.contentMode = .scaleAspectFit
         view.clipsToBounds = true
@@ -52,7 +55,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
     
     func configureCellData(_ cellData: MovieResponseDTO) {
         title.text = "\(cellData.title ?? "") (\(DateFormatter.movieYear(fromReleaseDateString: cellData.releaseDate ?? "9999-99-99") ?? ""))"
-        posterImage.kf.setImage(with: Secret.getEndPointImageURL(cellData.posterPath ?? ""), options: [.cacheOriginalImage])
+        posterImage.kf.setImage(with: Secret.getEndPointImageURL(cellData.posterPath ?? ""),placeholder: UIImage(systemName: "popcorn") ,options: [.cacheOriginalImage])
     }
     
     //Codebase initialize
