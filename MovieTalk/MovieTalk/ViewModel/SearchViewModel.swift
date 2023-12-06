@@ -26,7 +26,7 @@ class SearchViewModel: ViewModel {
         let searchResult = BehaviorRelay<[MovieResponseDTO]>(value: [])
         let scrollToTop = PublishRelay<Void>()
 
-        let searchButtonObservable = input.searchButtonClicked
+        let movieSearchObservable = input.searchButtonClicked
             .withLatestFrom(input.searchQueryEntered.asObservable())
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
@@ -35,13 +35,22 @@ class SearchViewModel: ViewModel {
             }
             .asDriver(onErrorDriveWith: .empty())
       
-        searchButtonObservable
+        movieSearchObservable
             .drive(onNext: { movies in
                 searchResult.accept(movies)
                 if !movies.isEmpty {
                     scrollToTop.accept(())
                 }
             })
+            .disposed(by: disposeBag)
+        
+        //create another observalbe from trends api and send it to movies
+        let movieTrendObservable = fetchTrendingMovies()
+        movieTrendObservable
+            .asDriver(onErrorJustReturn: [])
+            .drive(with: self) { owner, movies in
+                searchResult.accept(movies)
+            }
             .disposed(by: disposeBag)
         
         return Output(searchResult: searchResult.asDriver(onErrorJustReturn: []), scrollToTop: scrollToTop.asDriver(onErrorDriveWith: .empty()))
@@ -51,6 +60,36 @@ class SearchViewModel: ViewModel {
         return Observable.create { observer in
             let provider = MoyaProvider<MovieAPI>()
             provider.request(MovieAPI.search(query: query)) { result in
+                switch result {
+                case .success(let response):
+                    if response.statusCode == 200 {
+                        if let decodedResponse = try? JSONDecoder().decode(MovieSearchReponseDTO.self, from: response.data) {
+                            print(decodedResponse.results.count, "movies fetched")
+                            observer.onNext(decodedResponse.results)
+                        } else {
+                            print("Movie Decoding Failed")
+                            observer.onNext([])
+                        }
+                    } else {
+                        print("TMDB Failure", response.statusCode)
+                        print(String(data: response.data, encoding: .utf8) ?? "")
+                        observer.onNext([])
+                    }
+                case .failure(let error):
+                    print("TMDB Failure", error)
+                    observer.onNext([])
+                }
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+    
+    private func fetchTrendingMovies() -> Observable<[MovieResponseDTO]> {
+        print("TREND",#function)
+        return Observable.create { observer in
+            let provider = MoyaProvider<MovieAPI>()
+            provider.request(MovieAPI.trend) { result in
                 switch result {
                 case .success(let response):
                     if response.statusCode == 200 {

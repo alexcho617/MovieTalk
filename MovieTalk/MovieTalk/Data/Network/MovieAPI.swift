@@ -11,6 +11,7 @@ import Moya
 enum MovieAPI{
     case lookUp(id: String)
     case search(query: String)
+    case trend
 }
 
 extension MovieAPI: TargetType{
@@ -24,6 +25,8 @@ extension MovieAPI: TargetType{
             return "movie/\(id)"
         case .search:
             return "search/movie"
+        case .trend:
+            return "trending/movie/week"
         }
     }
     
@@ -33,7 +36,7 @@ extension MovieAPI: TargetType{
     
     var task: Moya.Task {
         switch self {
-        case .lookUp:
+        case .lookUp, .trend:
             let parameters = [
                 "api_key" : Secret.tmdbKey,
                 "language" : "ko-KR"

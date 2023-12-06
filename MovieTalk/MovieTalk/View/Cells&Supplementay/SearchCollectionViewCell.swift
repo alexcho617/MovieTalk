@@ -51,7 +51,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCellData(_ cellData: MovieResponseDTO) {
-        title.text = cellData.title
+        title.text = "\(cellData.title ?? "") (\(DateFormatter.movieYear(fromReleaseDateString: cellData.releaseDate ?? "9999-99-99") ?? ""))"
         posterImage.kf.setImage(with: Secret.getEndPointImageURL(cellData.posterPath ?? ""), options: [.cacheOriginalImage])
     }
     

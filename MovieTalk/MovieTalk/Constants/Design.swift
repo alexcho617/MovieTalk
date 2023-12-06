@@ -51,4 +51,17 @@ extension DateFormatter {
             return nil
         }
     }
+    
+    static func movieYear(fromReleaseDateString releaseDateString: String, inputFormat: String = "yyyy-MM-dd", outputFormat: String = "yyyy") -> String? {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = inputFormat
+
+            if let date = dateFormatter.date(from: releaseDateString) {
+                let outputDateFormatter = DateFormatter()
+                outputDateFormatter.dateFormat = outputFormat
+                return outputDateFormatter.string(from: date)
+            } else {
+                return nil
+            }
+        }
 }
