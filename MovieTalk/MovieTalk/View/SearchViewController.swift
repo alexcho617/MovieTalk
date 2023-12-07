@@ -14,6 +14,8 @@ import Kingfisher
 final class SearchViewController: UIViewController {
     let viewModel = SearchViewModel()
     let disposeBag = DisposeBag()
+    //TODO: navigationItem.titleView = bar 로 변경하여 공간 확보 하기
+
     let searchBar = {
         let view = UISearchBar()
         view.layer.cornerRadius = Design.paddingDefault
@@ -36,12 +38,6 @@ final class SearchViewController: UIViewController {
         view.backgroundColor = .clear
         return view
     }()
-    
-    func getCollectionViewLayout() -> UICollectionViewLayout{
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2 - 16, height: 300)
-        return layout
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,5 +129,11 @@ final class SearchViewController: UIViewController {
                 print("Cannot get movie image Error", error)
             }
         }
+    }
+    
+    private func getCollectionViewLayout() -> UICollectionViewLayout{
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2 - 16, height: 300)
+        return layout
     }
 }

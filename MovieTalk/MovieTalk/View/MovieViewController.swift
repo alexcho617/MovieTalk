@@ -9,11 +9,13 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class MovieViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel = MovieViewModel()
-    
+    var dataSource: UICollectionViewDiffableDataSource<Int, MovieImage>!
+
     //MARK: View Component
     let backdropImageView = {
         let view = UIImageView()
@@ -30,7 +32,6 @@ final class MovieViewController: UIViewController {
     let contentsView = {
         return UIView()
     }()
-    
     
     let posterImageView = {
         let view = UIImageView()
@@ -104,16 +105,18 @@ final class MovieViewController: UIViewController {
         return view
     }()
     
-    let footerView = {
-        let view = UIView()
-        view.backgroundColor = .green
+    lazy var imageCollectionView = {
+        let view = BaseCollectionView(frame: .zero, collectionViewLayout: getPlaceholderLayout())
+        view.isScrollEnabled = false
         return view
     }()
+    
     //MARK: End of View Component
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+        configureDataSource()
     }
     
     override func viewDidLayoutSubviews() {
@@ -144,7 +147,7 @@ final class MovieViewController: UIViewController {
         contentsView.addSubview(infoStackView)
         contentsView.addSubview(expandableDescriptionLabel)
         contentsView.addSubview(expandButton)
-        contentsView.addSubview(footerView)
+        contentsView.addSubview(imageCollectionView)
 
         contentsView.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -174,16 +177,32 @@ final class MovieViewController: UIViewController {
             make.height.equalTo(40)
         }
         
-        footerView.snp.makeConstraints { make in
+        imageCollectionView.snp.makeConstraints { make in
             make.top.equalTo(expandButton.snp.bottom)
             make.width.equalToSuperview()
-            make.height.equalTo(150)
+            make.height.greaterThanOrEqualTo(150)
             make.bottom.equalToSuperview()
         }
         
-        //https://api.themoviedb.org/3/movie/671/images?api_key=\(Secret.tmdbKey)
-        //TODO: 이미지 API 사용해서 이미지 스틸컷들 쭉 보여줘도 좋을듯.
+    }
+    
+    func configureSnapshot(_ item: [MovieImage]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, MovieImage>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(item)
+        dataSource.apply(snapshot)
+    }
+    
+    func configureDataSource(){
+        let cellRegi = UICollectionView.CellRegistration<MovieImagesCollectionViewCell, MovieImage> { cell, indexPath, itemIdentifier in
+            cell.imageView.kf.setImage(with: Secret.getEndPointImageURL(itemIdentifier.filePath ?? ""), placeholder: UIImage(systemName: "star"))
 
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource(collectionView: imageCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            return collectionView.dequeueConfiguredReusableCell(using: cellRegi, for: indexPath, item: itemIdentifier)
+        })
+        
     }
     
     func bind(_ movieID: String){
@@ -216,5 +235,25 @@ final class MovieViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        //TODO: 영화 이미지 API 로 쎌 뿌려주기 -> 백드롭 이미지들의 비율이 전부 1.778 쯤이라 다 똑같이 나온다.. 이렇게 되면 diffable쓴 메리트가 떨어진다.
+        output.movieImages
+            .bind(with: self, onNext: { owner, results in
+                let ratios = results.map{ Ratio(ratio: $0.aspectRatio ?? 1.0) }
+                let paths = results.map{$0.filePath}
+                print(paths)
+                let layout = CompositionalLayout(columnsCount: 2, itemRatios: ratios, spacing: Design.paddingDefault, contentWidth: self.view.frame.width)
+                owner.imageCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout(section: layout.section)
+                owner.configureSnapshot(results)
+                
+            })
+            .disposed(by: disposeBag)
+        
+    }
+ 
+    private func getPlaceholderLayout() -> UICollectionViewLayout{
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2 - 16, height: 300)
+        return layout
     }
 }

@@ -20,10 +20,13 @@ final class MovieViewModel: ViewModel{
     struct Output{
         let isExpanded: BehaviorRelay<Bool>
         let movieData: PublishRelay<MovieResponseDTO>
+        let movieImages: PublishRelay<[MovieImage]>
     }
     func transform(input: Input) -> Output {
         var isExpand = false
         let movieContents = PublishRelay<MovieResponseDTO>()
+        let movieImages = PublishRelay<[MovieImage]>()
+
         let isExpandedRelay = BehaviorRelay(value: false)
         
         input.didClickExpand
@@ -70,7 +73,48 @@ final class MovieViewModel: ViewModel{
             }
             .disposed(by: disposeBag)
         
-        let output = Output(isExpanded: isExpandedRelay, movieData: movieContents)
+        ///
+        ///Images API
+        let movieImagesObservable = {
+            return Observable<[MovieImage]>.create { observer in
+                let provider = MoyaProvider<MovieAPI>()
+                
+                provider.request(MovieAPI.images(id: input.movieID)) { result in
+                    switch result{
+                    case .success(let response):
+                        if response.statusCode == 200{
+                            print("TMDB IMAGES SUCCESS", response.statusCode)
+                            if let decodedResponse = try? JSONDecoder().decode(MovieImageResponse.self, from: response.data){
+                                guard let backdrops = decodedResponse.backdrops else { return }
+                                let filtered = backdrops.filter { movie in
+                                    movie.iso639_1 == "en" || movie.iso639_1 == "kr"
+                                }
+                                observer.onNext(filtered)
+                                observer.onCompleted() //해제
+                            }else{
+                                print("Movie Images Decoding Failed")
+                            }
+                        }else{
+                            print("TMDB FAilure", response.statusCode)
+                            print(String(data: response.data, encoding: .utf8) ?? "")
+                        }
+                        observer.onCompleted() //해제
+                    case .failure(let error):
+                        print("TMDB FAilure")
+                        observer.onError(error)
+                    }
+                }
+                return Disposables.create()
+            }
+        }
+        
+        movieImagesObservable()
+            .subscribe(with: self) { owner, response in
+                movieImages.accept(response)
+            }
+            .disposed(by: disposeBag)
+        ///
+        let output = Output(isExpanded: isExpandedRelay, movieData: movieContents, movieImages: movieImages)
         return output
     }
     

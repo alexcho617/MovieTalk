@@ -12,6 +12,7 @@ enum MovieAPI{
     case lookUp(id: String)
     case search(query: String)
     case trend
+    case images(id: String)
 }
 
 extension MovieAPI: TargetType{
@@ -27,6 +28,8 @@ extension MovieAPI: TargetType{
             return "search/movie"
         case .trend:
             return "trending/movie/week"
+        case .images(let id):
+            return "movie/\(id)/images"
         }
     }
     
@@ -42,11 +45,18 @@ extension MovieAPI: TargetType{
                 "language" : "ko-KR"
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+            
         case .search(let query):
             let parameters = [
                 "api_key" : Secret.tmdbKey,
                 "query" : query,
                 "language" : "ko-KR"
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+            
+        case .images:
+            let parameters = [
+                "api_key" : Secret.tmdbKey
             ]
             return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
         }

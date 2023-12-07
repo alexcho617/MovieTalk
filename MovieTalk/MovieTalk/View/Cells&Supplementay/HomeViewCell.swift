@@ -98,6 +98,7 @@ class HomeViewCell: UITableViewCell {
         return label
     }()
     
+    //TODO: line 수 가져와서 더보기 버튼 hidden   분기처리 하기
     var contentLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
@@ -282,6 +283,7 @@ class HomeViewCell: UITableViewCell {
             }
             .disposed(by: disposeBag)
         
+        //⚠️TODO: 댓글화면에서 생성된 댓글이 홈에 아이템엔 반영되지 않음. 따라서 나갔다 다시 클릭했을 시에 댓글이 사라져있음.
         commentButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.presentationHandler?()

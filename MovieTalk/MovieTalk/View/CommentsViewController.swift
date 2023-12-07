@@ -96,7 +96,7 @@ class CommentsViewController: UIViewController {
             cell.commentLabel.text = element.content
             
             //내가 쓴 댓글인지 확인
-            //TODO: trailing action 분기처리
+            //TODO: 삭제 trailing action 분기처리 
             if element.creator._id == UserDefaultsManager.shared.currentUserID{
 //                cell.backgroundColor = Design.debugPink
             }else{

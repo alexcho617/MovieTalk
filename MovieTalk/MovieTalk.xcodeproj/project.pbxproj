@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		570057732B1E027E00E28F87 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 570057722B1E027E00E28F87 /* Tabman */; };
+		570057752B21A4E200E28F87 /* MovieImageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570057742B21A4E200E28F87 /* MovieImageDTO.swift */; };
+		570057772B21BEF900E28F87 /* BaseCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570057762B21BEF900E28F87 /* BaseCollectionView.swift */; };
+		570057792B21DF6800E28F87 /* MovieImagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570057782B21DF6800E28F87 /* MovieImagesCollectionViewCell.swift */; };
+		5700577B2B21E4B200E28F87 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700577A2B21E4B200E28F87 /* CompositionalLayout.swift */; };
 		571154B42B034C1F00FD26A2 /* ViewModel + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */; };
 		571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B52B03623300FD26A2 /* LandingViewController.swift */; };
 		5740B0932B11D10E008A7808 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740B0922B11D10E008A7808 /* CommentsViewController.swift */; };
@@ -80,6 +84,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		570057742B21A4E200E28F87 /* MovieImageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageDTO.swift; sourceTree = "<group>"; };
+		570057762B21BEF900E28F87 /* BaseCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionView.swift; sourceTree = "<group>"; };
+		570057782B21DF6800E28F87 /* MovieImagesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImagesCollectionViewCell.swift; sourceTree = "<group>"; };
+		5700577A2B21E4B200E28F87 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
 		571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + Protocol.swift"; sourceTree = "<group>"; };
 		571154B52B03623300FD26A2 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		5740B0922B11D10E008A7808 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
@@ -171,6 +179,9 @@
 				5740B0962B11D9C9008A7808 /* SearchCollectionViewCell.swift */,
 				57C507082B184BF000F76B8D /* CommentsTableViewCell.swift */,
 				5740B0AC2B14E263008A7808 /* PaddedTextField.swift */,
+				570057762B21BEF900E28F87 /* BaseCollectionView.swift */,
+				570057782B21DF6800E28F87 /* MovieImagesCollectionViewCell.swift */,
+				5700577A2B21E4B200E28F87 /* CompositionalLayout.swift */,
 			);
 			path = "Cells&Supplementay";
 			sourceTree = "<group>";
@@ -295,6 +306,7 @@
 				57BCF4152B027F85001040A5 /* ErrorResponseDTO.swift */,
 				574B8BED2B0A537B00018EBD /* ContentsDTO.swift */,
 				57877FE82B0F99C100046F9B /* MovieDTO.swift */,
+				570057742B21A4E200E28F87 /* MovieImageDTO.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -470,11 +482,14 @@
 				57877FD52B0F117C00046F9B /* HomeViewModel.swift in Sources */,
 				574B8C3E2B0C972400018EBD /* ContentsServerAPI.swift in Sources */,
 				57BCF4022B026C50001040A5 /* SignUpDTO.swift in Sources */,
+				570057752B21A4E200E28F87 /* MovieImageDTO.swift in Sources */,
 				57BCF3FF2B026BAE001040A5 /* AuthManager.swift in Sources */,
 				5740B0AD2B14E263008A7808 /* PaddedTextField.swift in Sources */,
 				57BCF4162B027F85001040A5 /* ErrorResponseDTO.swift in Sources */,
+				570057772B21BEF900E28F87 /* BaseCollectionView.swift in Sources */,
 				57877FD82B0F142E00046F9B /* HomeViewCell.swift in Sources */,
 				57877FEB2B0F9C2D00046F9B /* MovieAPI.swift in Sources */,
+				570057792B21DF6800E28F87 /* MovieImagesCollectionViewCell.swift in Sources */,
 				57BCF41A2B030607001040A5 /* UserDefaultsManager.swift in Sources */,
 				5740B09B2B122C99008A7808 /* AddPostViewModel.swift in Sources */,
 				57BCF40A2B026F5A001040A5 /* WithdrawDTO.swift in Sources */,
@@ -494,6 +509,7 @@
 				574B8C2E2B0B776C00018EBD /* Secret.swift in Sources */,
 				57877FE12B0F80E400046F9B /* MovieViewModel.swift in Sources */,
 				57BCF4042B026DBE001040A5 /* LoginDTO.swift in Sources */,
+				5700577B2B21E4B200E28F87 /* CompositionalLayout.swift in Sources */,
 				57BCF3B82B023A0D001040A5 /* AppDelegate.swift in Sources */,
 				5740B0992B122C67008A7808 /* AddPostViewController.swift in Sources */,
 				57BCF4082B026EB1001040A5 /* RefreshTokenDTO.swift in Sources */,
