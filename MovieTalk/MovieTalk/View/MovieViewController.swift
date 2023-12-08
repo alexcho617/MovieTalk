@@ -107,6 +107,7 @@ final class MovieViewController: UIViewController {
     
     lazy var imageCollectionView = {
         let view = BaseCollectionView(frame: .zero, collectionViewLayout: getPlaceholderLayout())
+        view.backgroundColor = .black
         view.isScrollEnabled = false
         return view
     }()
@@ -195,7 +196,7 @@ final class MovieViewController: UIViewController {
     
     func configureDataSource(){
         let cellRegi = UICollectionView.CellRegistration<MovieImagesCollectionViewCell, MovieImage> { cell, indexPath, itemIdentifier in
-            cell.imageView.kf.setImage(with: Secret.getEndPointImageURL(itemIdentifier.filePath ?? ""), placeholder: UIImage(systemName: "star"))
+            cell.imageView.kf.setImage(with: Secret.getEndPointImageURL(itemIdentifier.filePath ?? ""), placeholder: UIImage(systemName: "popcorn"))
 
         }
         

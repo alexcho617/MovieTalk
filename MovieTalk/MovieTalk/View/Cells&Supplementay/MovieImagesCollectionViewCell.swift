@@ -9,7 +9,13 @@ import UIKit
 import SnapKit
 
 class MovieImagesCollectionViewCell: UICollectionViewCell {
-    var imageView = UIImageView()
+    var imageView = {
+        let view = UIImageView()
+        view.tintColor = .white
+        view.contentMode = .scaleAspectFit
+        view.clipsToBounds = true
+        return view
+    }()
     
     //Codebase initialize
     override init(frame: CGRect){

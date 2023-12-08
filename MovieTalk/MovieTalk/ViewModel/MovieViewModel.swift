@@ -87,7 +87,7 @@ final class MovieViewModel: ViewModel{
                             if let decodedResponse = try? JSONDecoder().decode(MovieImageResponse.self, from: response.data){
                                 guard let backdrops = decodedResponse.backdrops else { return }
                                 let filtered = backdrops.filter { movie in
-                                    movie.iso639_1 == "en" || movie.iso639_1 == "kr"
+                                    movie.iso639_1 == "en" || movie.iso639_1 == nil
                                 }
                                 observer.onNext(filtered)
                                 observer.onCompleted() //해제
