@@ -8,14 +8,21 @@
 import Foundation
 
 
-struct Comment: Codable{
+struct Comment: Codable, Equatable{
+    static func == (lhs: Comment, rhs: Comment) -> Bool {
+        return lhs._id == rhs._id &&
+                    lhs.content == rhs.content &&
+                    lhs.creator == rhs.creator &&
+                    lhs.time == rhs.time
+    }
+    
     let _id: String
     let content: String
     let time: String
     let creator: Creator
 }
 
-struct Creator: Codable{
+struct Creator: Codable, Equatable{
     let _id: String
     let nick: String
     let profile: String?
@@ -94,7 +101,7 @@ struct ContentsReadResponseDTO: Decodable {
 
 struct Post: Decodable {
     let id: String
-    let comments: [Comment]?
+    var comments: [Comment]?
     let content: String
     let movieID: String?
     let movieTitle: String?

@@ -187,24 +187,6 @@ final class MovieViewController: UIViewController {
         
     }
     
-    func configureSnapshot(_ item: [MovieImage]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, MovieImage>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(item)
-        dataSource.apply(snapshot)
-    }
-    
-    func configureDataSource(){
-        let cellRegi = UICollectionView.CellRegistration<MovieImagesCollectionViewCell, MovieImage> { cell, indexPath, itemIdentifier in
-            cell.imageView.kf.setImage(with: Secret.getEndPointImageURL(itemIdentifier.filePath ?? ""), placeholder: UIImage(systemName: "popcorn"))
-
-        }
-        
-        dataSource = UICollectionViewDiffableDataSource(collectionView: imageCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegi, for: indexPath, item: itemIdentifier)
-        })
-        
-    }
     
     func bind(_ movieID: String){
         let input = MovieViewModel.Input(didClickExpand: expandButton.rx.tap, movieID: movieID)
@@ -237,12 +219,10 @@ final class MovieViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
-        //TODO: 영화 이미지 API 로 쎌 뿌려주기 -> 백드롭 이미지들의 비율이 전부 1.778 쯤이라 다 똑같이 나온다.. 이렇게 되면 diffable쓴 메리트가 떨어진다.
+        //MARK: 영화 이미지 API 로 쎌 뿌려주기 -> 백드롭 이미지들의 비율이 전부 1.778 쯤이라 다 똑같이 나온다.. 이렇게 되면 diffable쓴 메리트가 떨어진다.
         output.movieImages
             .bind(with: self, onNext: { owner, results in
                 let ratios = results.map{ Ratio(ratio: $0.aspectRatio ?? 1.0) }
-                let paths = results.map{$0.filePath}
-                print(paths)
                 let layout = CompositionalLayout(columnsCount: 2, itemRatios: ratios, spacing: Design.paddingDefault, contentWidth: self.view.frame.width)
                 owner.imageCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout(section: layout.section)
                 owner.configureSnapshot(results)
@@ -252,9 +232,31 @@ final class MovieViewController: UIViewController {
         
     }
  
+    func configureSnapshot(_ item: [MovieImage]) {
+        var snapshot = NSDiffableDataSourceSnapshot<Int, MovieImage>()
+        snapshot.appendSections([0])
+        snapshot.appendItems(item)
+        dataSource.apply(snapshot)
+    }
+    
+    func configureDataSource(){
+        let cellRegi = UICollectionView.CellRegistration<MovieImagesCollectionViewCell, MovieImage> { cell, indexPath, itemIdentifier in
+            cell.imageView.kf.setImage(with: Secret.getEndPointImageURL(itemIdentifier.filePath ?? ""), placeholder: UIImage(systemName: "popcorn"))
+
+        }
+        
+        dataSource = UICollectionViewDiffableDataSource(collectionView: imageCollectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            return collectionView.dequeueConfiguredReusableCell(using: cellRegi, for: indexPath, item: itemIdentifier)
+        })
+        
+    }
     private func getPlaceholderLayout() -> UICollectionViewLayout{
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2 - 16, height: 300)
+//        layout.itemSize = CGSize(width: UIScreen.main.bounds.width/2 - 16, height: 300)
         return layout
+    }
+    
+    deinit {
+        print("MovieVC Deinit")
     }
 }

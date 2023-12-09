@@ -77,7 +77,7 @@ class HomeViewController: UIViewController{
             .drive(contentsTableView.rx.items(cellIdentifier: HomeViewCell.identifier, cellType: HomeViewCell.self)){
                 row, element, cell in
                 //configure cell
-                //TODO: Cell reuse 좋아요 버그, diffable data source or rx datasource 사용하면 해결 될지도
+                //TODO: Cell reuse 관련 좋아요 버그, diffable data source or rx datasource 사용하면 해결 될지도
                 cell.configureCellData(element)
                 cell.selectionStyle = .none
                 cell.navigationHandler = {
@@ -89,6 +89,10 @@ class HomeViewController: UIViewController{
                     let vc = CommentsViewController()
                     vc.postID = element.id
                     vc.comments = element.comments ?? []
+                    vc.newCommentsHandler = { [weak self] newComments in
+                        self?.viewModel.updateComment(forPostID: element.id, with: newComments)
+                    }
+                  
                     vc.setView()
                     vc.bind()
                     
@@ -115,11 +119,8 @@ class HomeViewController: UIViewController{
         
         refreshControl.rx.controlEvent(.valueChanged)
             .bind { [weak self] _ in
-                print("PULL TO REFRESH")
-//                self?.viewModel.tempContents = []
-//                self?.viewModel.nextCursor = ""
                 self?.viewModel.fetch(isRefreshing: true){
-                    self?.refreshControl.endRefreshing() //TODO: closure 처리
+                    self?.refreshControl.endRefreshing()
                 }
             }.disposed(by: disposeBag)
     }

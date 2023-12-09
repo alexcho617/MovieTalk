@@ -118,5 +118,7 @@ final class MovieViewModel: ViewModel{
         return output
     }
     
-    
+    deinit {
+        print("MovieVM Deinit")
+    }
 }

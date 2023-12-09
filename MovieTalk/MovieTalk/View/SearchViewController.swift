@@ -14,7 +14,6 @@ import Kingfisher
 final class SearchViewController: UIViewController {
     let viewModel = SearchViewModel()
     let disposeBag = DisposeBag()
-    //TODO: navigationItem.titleView = bar 로 변경하여 공간 확보 하기
 
     let searchBar = {
         let view = UISearchBar()
@@ -26,6 +25,7 @@ final class SearchViewController: UIViewController {
         return view
     }()
     
+    //TODO: 로딩 인디케이터 사용 안하고 있음
     let activityIndicator = {
         let view = UIActivityIndicatorView(style: .large)
         view.color = UIColor.label
@@ -60,23 +60,16 @@ final class SearchViewController: UIViewController {
         collectionView.keyboardDismissMode = .onDrag
         view.addSubview(activityIndicator)
         searchBar.becomeFirstResponder()
+        navigationItem.titleView = searchBar
     }
     
     func setConstraints(){
-        searchBar.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(48)
-        }
-        
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom).offset(Design.paddingDefault)
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(Design.paddingDefault)
-            
+            make.edges.equalTo(view.safeAreaLayoutGuide).inset(Design.paddingDefault)
         }
         
         activityIndicator.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(searchBar.snp.bottom).offset(4*Design.paddingDefault)
+            make.center.equalToSuperview()
         }
     }
     
@@ -110,10 +103,17 @@ final class SearchViewController: UIViewController {
                         sheet.detents = [.large()]
                         sheet.prefersGrabberVisible = true
                     }
+                    owner.searchBar.resignFirstResponder()
                     self.present(vc, animated: true, completion: nil)
                 }
                
             }.disposed(by: disposeBag)
+        //검색시 키보드 내림
+        searchBar.rx.searchButtonClicked
+            .bind { _ in
+                self.searchBar.resignFirstResponder()
+            }
+            .disposed(by: disposeBag)
     }
     
     private func scrollToTop() {

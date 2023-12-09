@@ -15,6 +15,8 @@ class CommentsViewController: UIViewController {
     var postID: String = ""
     var comments: [Comment] = [] //local변수 for view
     var disposeBag = DisposeBag()
+    var newCommentsHandler: (([Comment]) -> Void)?
+
     lazy var commentsSubject = BehaviorSubject<[Comment]>(value: comments)
     //views
     let titleLabel = {
@@ -62,16 +64,16 @@ class CommentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Comments VC", #function)
+//        print("Comments VC", #function)
         
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("Reload HomeVC")
+        newCommentsHandler?(comments)
     }
     
     func bind(){
-        print(#function)
+//        print(#function)
         commentsSubject
             .bind(to: commentsTableView.rx.items(cellIdentifier: CommentsTableViewCell.identifier , cellType: CommentsTableViewCell.self)){ row, element, cell in
             cell.selectionStyle = .none
@@ -196,7 +198,9 @@ class CommentsViewController: UIViewController {
         }
         return imageDownloadRequest
     }
-
+    deinit {
+        print("Comments VC, deinit")
+    }
 }
 
 

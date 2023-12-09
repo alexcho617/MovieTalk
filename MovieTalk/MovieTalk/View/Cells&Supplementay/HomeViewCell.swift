@@ -18,7 +18,6 @@ class HomeViewCell: UITableViewCell {
     
     var navigationHandler: (() -> Void)? //for movie VC
     var presentationHandler: (() -> Void)? //for comments VC
-    var reloadCompletion: (() -> Void)?
     var disposeBag = DisposeBag()
     
     private let profileImageView: UIImageView = {
@@ -44,14 +43,6 @@ class HomeViewCell: UITableViewCell {
         label.textColor = .systemGray
         return label
     }()
-    
-//    let movieLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "-"
-//        label.font = Design.fontAccentDefault
-//        label.textColor = Design.colorTextDefault
-//        return label
-//    }()
     
     let movieInfoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -283,7 +274,6 @@ class HomeViewCell: UITableViewCell {
             }
             .disposed(by: disposeBag)
         
-        //⚠️TODO: 댓글화면에서 생성된 댓글이 홈에 아이템엔 반영되지 않음. 따라서 나갔다 다시 클릭했을 시에 댓글이 사라져있음.
         commentButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.presentationHandler?()

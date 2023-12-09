@@ -96,7 +96,7 @@ final class AuthManager {
                     if let responseDTO = try? JSONDecoder().decode(LoginResponseDTO.self, from: response.data){
                         UserDefaultsManager.shared.saveLoginCredentional(model: responseDTO)
                         owner.currentAuthState.onNext(.loggedIn)
-                        print("Server: Login Success", responseDTO)
+                        print("Server: Login Success")
                     }
                 }
             }
