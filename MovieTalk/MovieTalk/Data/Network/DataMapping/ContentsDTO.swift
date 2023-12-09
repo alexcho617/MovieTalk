@@ -64,32 +64,6 @@ struct ContentsCreateResponseDTO: Decodable{
 
 //MARK: Read
 //read request
-
-//read response
-//{
-//    "data": [
-//        {
-//            "likes": [],
-//            "image": [],
-//            "hashTags": [],
-//            "comments": [],
-//            "_id": "655725d523460125d48a1ba2",
-//            "creator": {
-//                "_id": "6556dbbe8a6d7823a12848ca",
-//                "nick": "alex"
-//            },
-//            "time": "2023-11-17T08:35:33.317Z",
-//            "title": "해리포터와 마법사의 돌",
-//            "content": "더 레전드 오브 더 전설의 시작",
-//            "content1": "J.K.Rowling",
-//            "content2": "Daniel Radcliff",
-//            "product_id": "movietalk_topic"
-//        }
-//    ],
-//    "next_cursor": 0
-//}
-
-
 struct ContentsReadResponseDTO: Decodable {
     let data: [Post]
     let next_cursor: String?
@@ -150,5 +124,27 @@ struct CommentCreateResponseDTO: Decodable{
         return Comment(_id: "", content: "", time: "", creator: Creator(_id: "", nick: "", profile: nil))
     }
 }
-//Update
-//Delete
+//Comment Update
+//Comment Delete
+
+//MARK: Profile
+//profile read
+struct MyProfileReadResponseDTO: Decodable{
+    let posts: [String]? //post id만 들어옴
+    let followers: [Creator]
+    let following: [Creator]
+    
+    let _id: String
+    let email: String
+    let nick: String
+    let phoneNum: String?
+    let birthDay: String?
+    let profile: String?
+    
+    static func emptyRepsonse() -> MyProfileReadResponseDTO{
+        return MyProfileReadResponseDTO(posts: [], followers: [], following: [], _id: "", email: "", nick: "", phoneNum: "", birthDay: "", profile: "")
+    }
+}
+
+
+//profile update

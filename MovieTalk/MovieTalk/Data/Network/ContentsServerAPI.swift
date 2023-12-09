@@ -12,6 +12,7 @@ enum ContentsServerAPI{
     case createTopic(model: ContentsCreateRequestDTO)
     case readTopic(next: String)
     case getImage(imagePath: String)
+    case readUserTopic(userID: String, next: String)
 
     //나중에 추가 될 수 있는 루트들
 //    case editTopic
@@ -22,6 +23,9 @@ enum ContentsServerAPI{
 //    case deleteComment
     
     case likeTopic(postId: String)
+    
+    //profiles
+    case myProfile
 }
 
 extension ContentsServerAPI: TargetType{
@@ -33,15 +37,25 @@ extension ContentsServerAPI: TargetType{
         switch self {
         case .createTopic, .readTopic:
             return "post"
+            
+        case .readUserTopic(userID: let userID, next: _):
+            let path = "post/user/\(userID)"
+            print("PATH:",path)
+            return path
         case .getImage(let imagePath):
             return imagePath
+            
         case .likeTopic(postId: let postId):
             return "post/like/\(postId)"
+            
         case .createComment(model: _, postId: let id):
             let completeURL = "post/\(id)/comment"
 //            print("ContentsAPI, Path", completeURL)
 //            print(completeURL)
             return completeURL
+        
+        case .myProfile:
+            return "profile/me"
         }
     }
     
@@ -49,7 +63,7 @@ extension ContentsServerAPI: TargetType{
         switch self {
         case .createTopic, .likeTopic, .createComment:
             return .post
-        case .readTopic, .getImage:
+        case .readTopic, .getImage, .myProfile, .readUserTopic:
             return .get
         }
     }
@@ -110,14 +124,26 @@ extension ContentsServerAPI: TargetType{
                 "next" : next
             ]
             return .requestParameters(parameters: queryParameters, encoding: URLEncoding.default)
+                
+        case .readUserTopic(userID: _ , next: let next):
+            let queryParameters = [
+                "product_id" : "mtSNS",
+                "limit" : "10",
+                "next" : next
+            ]
             
+            return .requestParameters(parameters: queryParameters, encoding: URLEncoding.default)
         case .getImage:
             return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
             
         case .likeTopic:
             return .requestPlain
-        case .createComment(model: let model , postId: let id):
+        case .createComment(model: let model , postId: _):
             return .requestJSONEncodable(model)
+            
+        case .myProfile:
+            return .requestPlain
+        
         }
     }
     
@@ -129,7 +155,7 @@ extension ContentsServerAPI: TargetType{
                 "Content-Type" : "multipart/form-data",
                 "SesacKey" : Secret.key
             ]
-        case .readTopic, .getImage, .likeTopic:
+        case .readTopic, .readUserTopic, .getImage, .likeTopic, .myProfile:
             return [
                 "Authorization" : UserDefaultsManager.shared.currentToken,
                 "SesacKey" : Secret.key

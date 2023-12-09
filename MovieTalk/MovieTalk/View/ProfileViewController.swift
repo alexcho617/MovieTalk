@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-import Tabman
+import Tabman //TODO: User Tabman or remove it
+import Kingfisher
 
 class ProfileViewController: UIViewController {
     let disposeBag = DisposeBag()
@@ -59,25 +60,39 @@ class ProfileViewController: UIViewController {
     
     let postCountLabel = {
         let view = UILabel()
-        view.text = "25\n게시물"
+        view.textAlignment = .center
+        view.numberOfLines = 2
+        view.text = "-\n게시물"
         view.font = Design.fontDefault
-        view.textColor = Design.colorGray
+        view.textColor = Design.colorTextDefault
         return view
     }()
     
     let followerCountLabel = {
         let view = UILabel()
-        view.text = "1,120\n팔로워"
+        view.textAlignment = .center
+        view.numberOfLines = 2
+        view.text = "-\n팔로워"
         view.font = Design.fontDefault
-        view.textColor = Design.colorGray
+        view.textColor = Design.colorTextDefault
         return view
     }()
     
     let followingCountLabel = {
         let view = UILabel()
-        view.text = "2,201\n팔로잉"
+        view.textAlignment = .center
+        view.numberOfLines = 2
+        view.text = "-\n팔로잉"
         view.font = Design.fontDefault
-        view.textColor = Design.colorGray
+        view.textColor = Design.colorTextDefault
+        return view
+    }()
+    
+    lazy var statisticsStackView = {
+        let view = UIStackView(arrangedSubviews: [postCountLabel, followerCountLabel, followingCountLabel])
+        view.axis = .horizontal
+        view.distribution = .fillEqually
+        view.backgroundColor = Design.debugBlue
         return view
     }()
     
@@ -95,9 +110,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(emailLabel)
         view.addSubview(phoneLabel)
         view.addSubview(birthdayLabel)
-        view.addSubview(postCountLabel)
-        view.addSubview(followerCountLabel)
-        view.addSubview(followingCountLabel)
+        view.addSubview(statisticsStackView)
         setConstraints()
     }
     
@@ -130,6 +143,12 @@ class ProfileViewController: UIViewController {
             make.height.equalTo(20)
         }
         
+        statisticsStackView.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.bottom).offset(Design.paddingDefault)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(40)
+        }
+        
         
     }
     
@@ -139,7 +158,52 @@ class ProfileViewController: UIViewController {
         
         let output = viewModel.transform(input: input)
         
-            
+        output.myprofileRelay
+            .bind(with: self, onNext: { owner, myProfileResponse in
+//                print(myProfileResponse)
+                owner.nickLabel.text = myProfileResponse.nick
+                owner.emailLabel.text = myProfileResponse.email
+                owner.phoneLabel.text = myProfileResponse.phoneNum
+                owner.birthdayLabel.text = myProfileResponse.birthDay
+                //debug
+                //                let testProfilePath: String? = "uploads/posts/1701335519852.png"
+                //                if let profileURL = testProfilePath{
+                
+                if let profileURL = myProfileResponse.profile{
+                    let imageRequestString = Secret.baseURLString + profileURL + Secret.imageQuery
+                    owner.profileImageView.kf.setImage(
+                        with: URL(string: imageRequestString),
+                        placeholder: UIImage(systemName: "person.fill"),
+                        options: [.requestModifier(owner.getRequestModifier()), .cacheOriginalImage]
+                    )
+                }else{
+                    owner.profileImageView.image = UIImage(systemName: "person.fill")
+                    owner.profileImageView.tintColor = UIColor.random()
+                }
+                
+                //statistics
+                owner.postCountLabel.text = "\(myProfileResponse.posts?.count ?? 0)\n게시물"
+                owner.followerCountLabel.text = "\(myProfileResponse.followers.count )\n팔로워"
+                owner.followingCountLabel.text = "\(myProfileResponse.following.count )\n팔로잉"
+            })
+            .disposed(by: disposeBag)
+        
+        //TODO: get posts
+        output.mypostRelay
+            .bind { myPosts in
+                //TODO: Use collection view to display cells
+                print("나의 포스트들:",myPosts)
+            }
+            .disposed(by: disposeBag)
+        
     }
-
+    private func getRequestModifier() -> AnyModifier{
+        let imageDownloadRequest = AnyModifier { request in
+            var requestBody = request
+            requestBody.setValue(Secret.key, forHTTPHeaderField: "SesacKey")
+            requestBody.setValue(UserDefaultsManager.shared.currentToken, forHTTPHeaderField: "Authorization")
+            return requestBody
+        }
+        return imageDownloadRequest
+    }
 }
