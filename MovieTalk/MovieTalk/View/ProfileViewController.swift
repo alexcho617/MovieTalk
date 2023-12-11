@@ -9,19 +9,34 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-import Tabman //TODO: User Tabman or remove it
 import Kingfisher
+import PhotosUI
 
 class ProfileViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel = ProfileViewModel()
+    var itemProviders: [NSItemProvider] = []
+    var iterator: IndexingIterator<[NSItemProvider]>?
+    var photoConfig = PHPickerConfiguration()
+    lazy var photoPicker = PHPickerViewController(configuration: photoConfig)
+
     
     //view
+    //TODO: Profile edit + profile image
+    //TODO: Pull to refresh
     let profileImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "person")
+        view.contentMode = .scaleAspectFill
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.3).cgColor
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    let clearProfileButton = {
+        let view = UIButton()
+        view.backgroundColor = .clear
         view.clipsToBounds = true
         return view
     }()
@@ -110,6 +125,7 @@ class ProfileViewController: UIViewController {
     func setView(){
         view.backgroundColor = .white
         view.addSubview(profileImageView)
+        view.addSubview(clearProfileButton)
         view.addSubview(nickLabel)
         view.addSubview(emailLabel)
         view.addSubview(phoneLabel)
@@ -118,6 +134,10 @@ class ProfileViewController: UIViewController {
         view.addSubview(postCollectionView)
         postCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: PostCollectionViewCell.identifier)
         postCollectionView.delegate = self
+        
+        photoConfig.selectionLimit = 1
+        photoConfig.filter = .images
+        photoPicker.delegate = self
         setConstraints()
     }
     
@@ -126,6 +146,11 @@ class ProfileViewController: UIViewController {
             make.top.leading.equalTo(view.safeAreaLayoutGuide).inset(Design.paddingDefault * 2)
             make.size.equalTo(80)
             profileImageView.layer.cornerRadius = 40
+        }
+        
+        clearProfileButton.snp.makeConstraints { make in
+            make.edges.equalTo(profileImageView)
+            clearProfileButton.layer.cornerRadius = 40
         }
         
         nickLabel.snp.makeConstraints { make in
@@ -205,7 +230,14 @@ class ProfileViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        clearProfileButton.rx.tap.bind { [self] _ in
+            print("Profile Tap")
+            present(photoPicker, animated: true)
+        }
+        .disposed(by: disposeBag)
+        
     }
+    
     
     private func getRequestModifier() -> AnyModifier{
         let imageDownloadRequest = AnyModifier { request in
@@ -229,5 +261,35 @@ class ProfileViewController: UIViewController {
 
 
 extension ProfileViewController: UICollectionViewDelegate{
+    
+}
+
+extension ProfileViewController: PHPickerViewControllerDelegate{
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        print(#function)
+        dismiss(animated: true)
+        itemProviders = results.map(\.itemProvider)
+        iterator = itemProviders.makeIterator()
+        handleImage()
+    }
+    
+    
+    func handleImage() {
+        print(#function)
+            if let itemProvider = iterator?.next(), itemProvider.canLoadObject(ofClass: UIImage.self) {
+                let currentImage = profileImageView.image
+                
+                itemProvider.loadObject(ofClass: UIImage.self) { [weak self] pickedImage, error in
+                    DispatchQueue.main.async {
+                        guard let self = self, let pickedImage = pickedImage as? UIImage, self.profileImageView.image == currentImage else { return }
+                        self.profileImageView.image = pickedImage
+                    }
+                    //TODO: Upload to server
+                    //근데 서버에 프로필 사진만 올리는건 없기 때문에 프로필 수정 API 연결 후 수정함수 구현해야함.
+                    //사진 제외 다른 정보는 변경 없이 그냥 그대로 올리는걸로. 사진 올리는건 멀티파트 데이터 사용하고 사진 크기 1메가 이하로 줄여야함
+//                    viewModel.uploadProfilePicture
+                }
+            }
+        }
     
 }

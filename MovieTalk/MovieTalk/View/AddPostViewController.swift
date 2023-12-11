@@ -34,6 +34,13 @@ final class AddPostViewController: UIViewController {
         view.clipsToBounds = true
         return view
     }()
+    let gradientLayer = {
+        let layer = CAGradientLayer()
+        layer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        layer.startPoint = CGPoint(x: 0.5, y: 0.5)
+        layer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        return layer
+    }()
     
     //TODO: ImagePicker
     
@@ -97,9 +104,17 @@ final class AddPostViewController: UIViewController {
         setView()
     }
     
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        gradientLayer.frame = mainImageView.frame
+    }
+    
+    
     func setView(){
         view.backgroundColor = .systemBackground
         view.addSubview(mainImageView)
+        mainImageView.layer.addSublayer(gradientLayer)
         view.addSubview(postButton)
         view.addSubview(posterImageView)
         view.addSubview(movieTitleLabel)
