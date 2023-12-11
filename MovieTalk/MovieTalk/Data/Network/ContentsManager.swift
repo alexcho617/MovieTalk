@@ -144,4 +144,35 @@ final class ContentsManager{
         }
     }
     
+    func editProfile(_ model: MyProfileEditRequestDTO) -> Observable<MyProfileReadResponseDTO>{
+        return Observable<MyProfileReadResponseDTO>.create { observer in
+            print("ContentsManager: post()")
+            let provider = MoyaProvider<ContentsServerAPI>()
+            provider.request(ContentsServerAPI.editMyProfile(model: model)) { result in
+                switch result{
+                case .success(let response):
+//                    print(String(data: response.data, encoding: .utf8))
+                    if response.statusCode == 200{
+                        if let decodedData = try? JSONDecoder().decode(MyProfileReadResponseDTO.self, from: response.data){
+                            observer.onNext(decodedData)
+                        }else{
+                            print("Decoding Failure")
+                            observer.onNext(.emptyRepsonse())
+                        }
+
+                    }else{
+                        print("Server Failure", response.statusCode)
+                        print(String(data: response.data, encoding: .utf8) ?? "")
+                        observer.onNext(.emptyRepsonse())
+                    }
+                case .failure(let error):
+                    observer.onNext(.emptyRepsonse())
+                    handleStatusCodeError(error)
+                }
+                observer.onCompleted() //해제
+            }
+            return Disposables.create()
+        }
+    }
+    
 }// End of Class Declaration

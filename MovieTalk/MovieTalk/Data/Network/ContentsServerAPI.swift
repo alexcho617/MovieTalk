@@ -26,6 +26,7 @@ enum ContentsServerAPI{
     
     //profiles
     case myProfile
+    case editMyProfile(model: MyProfileEditRequestDTO)
 }
 
 extension ContentsServerAPI: TargetType{
@@ -51,7 +52,7 @@ extension ContentsServerAPI: TargetType{
             let completeURL = "post/\(id)/comment"
             return completeURL
         
-        case .myProfile:
+        case .myProfile, .editMyProfile:
             return "profile/me"
         }
     }
@@ -62,6 +63,8 @@ extension ContentsServerAPI: TargetType{
             return .post
         case .readTopic, .getImage, .myProfile, .readUserTopic:
             return .get
+        case .editMyProfile:
+            return .put
         }
     }
     
@@ -140,13 +143,37 @@ extension ContentsServerAPI: TargetType{
             
         case .myProfile:
             return .requestPlain
-        
+            
+        case .editMyProfile(model: let model):
+            var multiPartData: [Moya.MultipartFormData] = []
+            
+            let nicknameData = model.nick?.data(using: .utf8) ?? Data()
+            let birthdayData = model.birthDay?.data(using: .utf8) ?? Data()
+            let phoneData = model.phoneNum?.data(using: .utf8) ?? Data()
+            let fileData = model.profile ?? Data() //1MB 미만 이어야함
+//            if fileData.count > 1000000 {
+//
+//                print("File too large")
+//            }
+            
+            multiPartData.append(MultipartFormData(provider: .data(nicknameData), name: "nick"))
+            multiPartData.append(MultipartFormData(provider: .data(birthdayData), name: "birthDay"))
+            multiPartData.append(MultipartFormData(provider: .data(phoneData), name: "phoneNum"))
+            //binary데이터: fileName, mimeType 값 필요함
+            multiPartData.append(MultipartFormData(provider: .data(fileData), name: "profile",fileName: "profile.png", mimeType: "image/png"))
+            
+            
+//            DEBUG
+//            multiPartData.map({ data in
+//                print(data)
+//            })
+            return .uploadMultipart(multiPartData)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .createTopic:
+        case .createTopic, .editMyProfile:
             return [
                 "Authorization" : UserDefaultsManager.shared.currentToken,
                 "Content-Type" : "multipart/form-data",

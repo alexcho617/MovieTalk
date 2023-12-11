@@ -13,24 +13,24 @@ import Moya
 class ProfileViewModel: ViewModel{
     
     var disposeBag = DisposeBag()
-    
+    let profileRelay = BehaviorRelay(value: MyProfileReadResponseDTO.emptyRepsonse())
+    let postRelay: BehaviorRelay<[Post]> = BehaviorRelay(value: [])
     struct Input{
-        
     }
     
     struct Output{
         let myprofileRelay: BehaviorRelay<MyProfileReadResponseDTO>
         let mypostRelay: BehaviorRelay<[Post]>
+        
     }
     
     func transform(input: Input) -> Output {
-        let profileRelay = BehaviorRelay(value: MyProfileReadResponseDTO.emptyRepsonse())
-        let postRelay: BehaviorRelay<[Post]> = BehaviorRelay(value: [])
+       
 
         let profileObserver = {
             return Observable<MyProfileReadResponseDTO>.create { observer in
                 let provider = MoyaProvider<ContentsServerAPI>()
-                provider.request(.myProfile) { result in
+                provider.request(.myProfile) { [self] result in
                     switch result{
                     case .success(let response):
                         let statusCode = response.statusCode
@@ -57,7 +57,7 @@ class ProfileViewModel: ViewModel{
         let postObserver = {
             return Observable<ContentsReadResponseDTO>.create { observer in
                 let provider = MoyaProvider<ContentsServerAPI>()
-                provider.request(.readUserTopic(userID: UserDefaultsManager.shared.currentUserID, next: "")) { result in
+                provider.request(.readUserTopic(userID: UserDefaultsManager.shared.currentUserID, next: "")) { [self] result in
                     switch result{
                     case .success(let response):
                         let statusCode = response.statusCode
@@ -81,18 +81,28 @@ class ProfileViewModel: ViewModel{
         }
         
         profileObserver() //이미 생성 시점에서 이벤트 전달을 했는데 밑의 바인드가 꼭 필요한건가?
-            .bind { response in
+            .bind { [self] response in
                 profileRelay.accept(response)
             }
             .disposed(by: disposeBag)
         
         postObserver()
-            .bind { response in
+            .bind { [self] response in
                 postRelay.accept(response.data)
             }
             .disposed(by: disposeBag)
         
+        
         let output = Output(myprofileRelay: profileRelay, mypostRelay: postRelay)
         return output
+    }
+    
+    //edit 요청 후 받아온 응답 profileRelay에 전달
+    func editProfile(model: MyProfileEditRequestDTO){
+        ContentsManager.shared.editProfile(model)
+            .subscribe(with: self) { owner, newProfile in
+                owner.profileRelay.accept(newProfile)
+            }
+            .disposed(by: disposeBag)
     }
 }

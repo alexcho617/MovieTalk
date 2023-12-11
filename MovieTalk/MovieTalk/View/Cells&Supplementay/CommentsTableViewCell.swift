@@ -15,6 +15,7 @@ class CommentsTableViewCell: UITableViewCell {
     
     let profileImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFill
         view.image = UIImage(systemName: "person.fill")
         view.tintColor = UIColor.random()
         view.layer.cornerRadius = 12

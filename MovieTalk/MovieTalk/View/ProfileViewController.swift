@@ -283,11 +283,28 @@ extension ProfileViewController: PHPickerViewControllerDelegate{
                     DispatchQueue.main.async {
                         guard let self = self, let pickedImage = pickedImage as? UIImage, self.profileImageView.image == currentImage else { return }
                         self.profileImageView.image = pickedImage
+                        //TODO: Upload to server
+                        //사진 제외 다른 정보는 변경 없이 그냥 그대로 올리는걸로. 사진 올리는건 멀티파트 데이터 사용하고 사진 크기 1메가 이하로 줄여야함
+                        let profileImage = self.profileImageView.image ?? UIImage(systemName: "person")
+                        var profileData = profileImage?.jpegData(compressionQuality: 1.0) ?? Data()
+                        var quality: CGFloat = 1.0
+                        print("BEFORE:Compression Quality:",quality, "profileData:",profileData.count.formatted())
+
+                        //원래 1MB 제한이나 여유있게 900KB으로 잡음
+                        while profileData.count > 900000{
+                            quality -= 0.1
+                            profileData = profileImage?.jpegData(compressionQuality: quality) ?? Data()
+                        }
+                        
+                        guard profileData.count < 900000 else {
+                            print("Failed to downsize")
+                            return
+                        }
+                        print("AFTER:Compression Quality:",quality, "profileData:",profileData.count.formatted())
+                        let model = MyProfileEditRequestDTO(nick: self.nickLabel.text, phoneNum: self.phoneLabel.text, birthDay: self.birthdayLabel.text, profile: profileData)
+                        self.viewModel.editProfile(model: model)
                     }
-                    //TODO: Upload to server
-                    //근데 서버에 프로필 사진만 올리는건 없기 때문에 프로필 수정 API 연결 후 수정함수 구현해야함.
-                    //사진 제외 다른 정보는 변경 없이 그냥 그대로 올리는걸로. 사진 올리는건 멀티파트 데이터 사용하고 사진 크기 1메가 이하로 줄여야함
-//                    viewModel.uploadProfilePicture
+                   
                 }
             }
         }

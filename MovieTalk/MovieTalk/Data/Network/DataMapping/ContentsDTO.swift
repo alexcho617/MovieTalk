@@ -147,4 +147,23 @@ struct MyProfileReadResponseDTO: Decodable{
 }
 
 
+//struct ContentsCreateRequestDTO: Encodable{
+//    let title: String //글 제목
+//    let content: String //글 내용
+//    let file: Data? //영화 이미지 Data
+//    let product_id: String //mtSNS
+//    let content1: String? // 영화 아이디
+//    let content2: String? // 영화 제목
+//    let content3: String? // 안씀
+//    let content4: String? // 안씀
+//    let content5: String? // 안씀
+//}
+
+struct MyProfileEditRequestDTO{
+    let nick: String?
+    let phoneNum: String?
+    let birthDay: String?
+    let profile: Data? //profile picture
+}
+
 //profile update
