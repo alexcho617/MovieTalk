@@ -53,6 +53,8 @@ class HomeViewCell: UITableViewCell {
     
     private let mainImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.backgroundColor = .black
+        imageView.tintColor = .white
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
@@ -82,7 +84,7 @@ class HomeViewCell: UITableViewCell {
     }()
     
    
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = Design.fontAccentDefault
         label.textColor = Design.colorTextDefault
@@ -219,11 +221,11 @@ class HomeViewCell: UITableViewCell {
         nickLabel.text = cellData.creator.nick
         //profile image
         if let profileURL = cellData.creator.profile{
-            print("profile image url:", profileURL)
+//            print("profile image url:", profileURL)
             let imageRequestString = Secret.baseURLString + profileURL + Secret.imageQuery
             profileImageView.kf.setImage(
                 with: URL(string: imageRequestString),
-                placeholder: UIImage(systemName: "star"),
+                placeholder: UIImage(systemName: "person.fill"),
                 options: [.requestModifier(getRequestModifier()), .cacheOriginalImage]
             )
         }else{
@@ -243,7 +245,11 @@ class HomeViewCell: UITableViewCell {
                 //                    }.disposed(by: disposeBag)
                 //MARK: Using kingfisher request modifier
                 let imageRequestString = Secret.baseURLString + (fileArray.first ?? "") + Secret.imageQuery
-                mainImageView.kf.setImage(with: URL(string: imageRequestString),options: [.requestModifier(getRequestModifier()), .cacheOriginalImage])
+                mainImageView.kf.setImage(
+                    with: URL(string: imageRequestString),
+                    placeholder: UIImage(systemName: "popcorn"),
+                    options: [.requestModifier(getRequestModifier()), .cacheOriginalImage]
+                )
             }
         }
         titleLabel.text = cellData.title

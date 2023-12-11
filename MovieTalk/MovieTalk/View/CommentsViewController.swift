@@ -79,7 +79,7 @@ class CommentsViewController: UIViewController {
             cell.selectionStyle = .none
                 
             if let profileURL = element.creator.profile{
-                print("profile image url:", profileURL)
+//                print("profile image url:", profileURL)
                 let imageRequestString = Secret.baseURLString + profileURL + Secret.imageQuery
                 cell.profileImageView.kf.setImage(
                     with: URL(string: imageRequestString),

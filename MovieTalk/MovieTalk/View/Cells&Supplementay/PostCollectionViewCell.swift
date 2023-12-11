@@ -29,7 +29,7 @@ class PostCollectionViewCell: UICollectionViewCell {
             let imageRequestString = Secret.baseURLString + imageURL + Secret.imageQuery
             movieImageView.kf.setImage(
                 with: URL(string: imageRequestString),
-                placeholder: UIImage(systemName: "star"),
+                placeholder: UIImage(systemName: "popcorn"),
                 options: [.requestModifier(KingfisherManager.getRequestModifier()), .cacheOriginalImage]
             )
         }else{

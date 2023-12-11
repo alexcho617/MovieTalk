@@ -77,14 +77,23 @@ class HomeViewController: UIViewController{
             .drive(contentsTableView.rx.items(cellIdentifier: HomeViewCell.identifier, cellType: HomeViewCell.self)){
                 row, element, cell in
                 //configure cell
-                //TODO: Cell reuse 관련 좋아요 버그, diffable data source or rx datasource 사용하면 해결 될지도
+                //TODO: 좋아요 Cell reuse 관련  버그
                 cell.configureCellData(element)
                 cell.selectionStyle = .none
+//                print(cell.contentLabel.text)
+                //TODO: contentsLabel 내용이 길지 않은 경우 더보기 버튼 숨기기
+//                print("intrinsicContentSize width",cell.contentLabel.intrinsicContentSize.width)
+//                print("intrinsicContentSize height",cell.contentLabel.intrinsicContentSize.height)
+//                cell.moreButton.isHidden = !cell.contentLabel.isTextTruncated
+                print(cell.movieInfoButton.titleLabel?.text,"기나?",!cell.contentLabel.isTextTruncated)
+                //Movie VC
                 cell.navigationHandler = {
                     let vc = MovieViewController()
                     vc.bind(element.movieID ?? "")
                     self.navigationController?.pushViewController(vc, animated: true) //Rx 사용 안했기 때문에 구독이 끊길 일이 없음
                 }
+                
+                //Comment VC
                 cell.presentationHandler = {
                     let vc = CommentsViewController()
                     vc.postID = element.id
@@ -92,10 +101,8 @@ class HomeViewController: UIViewController{
                     vc.newCommentsHandler = { [weak self] newComments in
                         self?.viewModel.updateComment(forPostID: element.id, with: newComments)
                     }
-                  
                     vc.setView()
                     vc.bind()
-                    
                     if let sheet = vc.sheetPresentationController{
                         sheet.detents = [.custom(resolver: { context in
                             return (self.view.window?.windowScene?.screen.bounds.height ?? 800) * 0.66
@@ -105,6 +112,7 @@ class HomeViewController: UIViewController{
                     self.present(vc, animated: true, completion: nil)
                 }
                 
+                //More Button
                 cell.moreButton.rx.tap
                     .asDriver()
                     .drive { [weak self] _ in
@@ -136,4 +144,22 @@ extension HomeViewController: UITableViewDelegate{
             viewModel.fetch(completion: {})
         }
     }
+}
+
+
+extension UILabel{
+    var isTextTruncated: Bool {
+            guard let labelText = text else {
+                return false
+            }
+
+            let textSize = (labelText as NSString).boundingRect(
+                with: CGSize(width: bounds.width, height: .greatestFiniteMagnitude),
+                options: .usesLineFragmentOrigin,
+                attributes: [NSAttributedString.Key.font: font ?? UIFont.systemFont(ofSize: 17)],
+                context: nil
+            )
+
+            return textSize.height > bounds.height
+        }
 }

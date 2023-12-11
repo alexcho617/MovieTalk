@@ -18,7 +18,6 @@ final class SettingsViewModel: ViewModel{
         let logoutClicked: ControlEvent<Void>
         let withdrawClicked: ControlEvent<Void>
         let refreshClicked: ControlEvent<Void>
-        let contentsClicked: ControlEvent<Void>
     }
     
     struct Output {
