@@ -14,6 +14,8 @@
 		5700577B2B21E4B200E28F87 /* CompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5700577A2B21E4B200E28F87 /* CompositionalLayout.swift */; };
 		571154B42B034C1F00FD26A2 /* ViewModel + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */; };
 		571154B62B03623300FD26A2 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571154B52B03623300FD26A2 /* LandingViewController.swift */; };
+		573AE95B2B26E1F100EBF0A2 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573AE95A2B26E1F100EBF0A2 /* PostCollectionViewCell.swift */; };
+		573AE95D2B26E73700EBF0A2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573AE95C2B26E73700EBF0A2 /* Extensions.swift */; };
 		5740B0932B11D10E008A7808 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740B0922B11D10E008A7808 /* CommentsViewController.swift */; };
 		5740B0952B11D156008A7808 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740B0942B11D156008A7808 /* SearchViewModel.swift */; };
 		5740B0972B11D9C9008A7808 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5740B0962B11D9C9008A7808 /* SearchCollectionViewCell.swift */; };
@@ -90,6 +92,8 @@
 		5700577A2B21E4B200E28F87 /* CompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositionalLayout.swift; sourceTree = "<group>"; };
 		571154B32B034C1F00FD26A2 /* ViewModel + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModel + Protocol.swift"; sourceTree = "<group>"; };
 		571154B52B03623300FD26A2 /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		573AE95A2B26E1F100EBF0A2 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostCollectionViewCell.swift; path = "MovieTalk/View/Cells&Supplementay/PostCollectionViewCell.swift"; sourceTree = "<group>"; };
+		573AE95C2B26E73700EBF0A2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5740B0922B11D10E008A7808 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		5740B0942B11D156008A7808 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		5740B0962B11D9C9008A7808 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				57877FF32B10785300046F9B /* Design.swift */,
+				573AE95C2B26E73700EBF0A2 /* Extensions.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 		57BCF3AB2B023A0D001040A5 = {
 			isa = PBXGroup;
 			children = (
+				573AE95A2B26E1F100EBF0A2 /* PostCollectionViewCell.swift */,
 				57BCF3B62B023A0D001040A5 /* MovieTalk */,
 				57BCF3CD2B023A0E001040A5 /* MovieTalkTests */,
 				57BCF3D72B023A0E001040A5 /* MovieTalkUITests */,
@@ -474,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				573AE95B2B26E1F100EBF0A2 /* PostCollectionViewCell.swift in Sources */,
 				57BCF3F02B02600C001040A5 /* LoginViewController.swift in Sources */,
 				57877FF42B10785300046F9B /* Design.swift in Sources */,
 				5740B0932B11D10E008A7808 /* CommentsViewController.swift in Sources */,
@@ -502,6 +509,7 @@
 				57C507472B1A3BB900F76B8D /* ProfileViewController.swift in Sources */,
 				57C507492B1A3C0200F76B8D /* ProfileViewModel.swift in Sources */,
 				574B8BEE2B0A537B00018EBD /* ContentsDTO.swift in Sources */,
+				573AE95D2B26E73700EBF0A2 /* Extensions.swift in Sources */,
 				57877FED2B0FA84200046F9B /* SearchViewController.swift in Sources */,
 				57BCF4062B026DE5001040A5 /* ValidateEmailDTO.swift in Sources */,
 				57C507092B184BF000F76B8D /* CommentsTableViewCell.swift in Sources */,

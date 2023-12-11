@@ -40,7 +40,6 @@ extension ContentsServerAPI: TargetType{
             
         case .readUserTopic(userID: let userID, next: _):
             let path = "post/user/\(userID)"
-            print("PATH:",path)
             return path
         case .getImage(let imagePath):
             return imagePath
@@ -50,8 +49,6 @@ extension ContentsServerAPI: TargetType{
             
         case .createComment(model: _, postId: let id):
             let completeURL = "post/\(id)/comment"
-//            print("ContentsAPI, Path", completeURL)
-//            print(completeURL)
             return completeURL
         
         case .myProfile:

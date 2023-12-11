@@ -92,7 +92,11 @@ class ProfileViewController: UIViewController {
         let view = UIStackView(arrangedSubviews: [postCountLabel, followerCountLabel, followingCountLabel])
         view.axis = .horizontal
         view.distribution = .fillEqually
-        view.backgroundColor = Design.debugBlue
+        return view
+    }()
+    
+    lazy var postCollectionView = {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: getCollectionViewLayout())
         return view
     }()
     
@@ -111,6 +115,9 @@ class ProfileViewController: UIViewController {
         view.addSubview(phoneLabel)
         view.addSubview(birthdayLabel)
         view.addSubview(statisticsStackView)
+        view.addSubview(postCollectionView)
+        postCollectionView.register(PostCollectionViewCell.self, forCellWithReuseIdentifier: PostCollectionViewCell.identifier)
+        postCollectionView.delegate = self
         setConstraints()
     }
     
@@ -149,6 +156,11 @@ class ProfileViewController: UIViewController {
             make.height.equalTo(40)
         }
         
+        postCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(statisticsStackView.snp.bottom).offset(Design.paddingDefault)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
         
     }
     
@@ -180,23 +192,21 @@ class ProfileViewController: UIViewController {
                     owner.profileImageView.image = UIImage(systemName: "person.fill")
                     owner.profileImageView.tintColor = UIColor.random()
                 }
-                
                 //statistics
                 owner.postCountLabel.text = "\(myProfileResponse.posts?.count ?? 0)\n게시물"
                 owner.followerCountLabel.text = "\(myProfileResponse.followers.count )\n팔로워"
                 owner.followingCountLabel.text = "\(myProfileResponse.following.count )\n팔로잉"
             })
             .disposed(by: disposeBag)
-        
-        //TODO: get posts
+
         output.mypostRelay
-            .bind { myPosts in
-                //TODO: Use collection view to display cells
-                print("나의 포스트들:",myPosts)
+            .bind(to: postCollectionView.rx.items(cellIdentifier: PostCollectionViewCell.identifier, cellType: PostCollectionViewCell.self)){ row, element, cell in
+                cell.configureData(post: element)
             }
             .disposed(by: disposeBag)
         
     }
+    
     private func getRequestModifier() -> AnyModifier{
         let imageDownloadRequest = AnyModifier { request in
             var requestBody = request
@@ -206,4 +216,18 @@ class ProfileViewController: UIViewController {
         }
         return imageDownloadRequest
     }
+    
+    private func getCollectionViewLayout() -> UICollectionViewLayout{
+        let layout = UICollectionViewFlowLayout()
+        let width =  (UIScreen.main.bounds.width)/3 - 2
+        layout.itemSize = CGSize(width: width, height: width)
+        layout.minimumLineSpacing = 2
+        layout.minimumInteritemSpacing = 2
+        return layout
+    }
+}
+
+
+extension ProfileViewController: UICollectionViewDelegate{
+    
 }

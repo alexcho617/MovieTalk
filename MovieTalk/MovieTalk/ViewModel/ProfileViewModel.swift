@@ -61,8 +61,6 @@ class ProfileViewModel: ViewModel{
                     switch result{
                     case .success(let response):
                         let statusCode = response.statusCode
-                        //TODO: getting 500 error
-                        print(response.statusCode, String(data: response.data, encoding: .utf8))
                         if statusCode == 200{
                             let decodedResponse = try? JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data)
                             postRelay.accept(decodedResponse?.data ?? []) //TODO: 여기서 바로 주면 안되고 변수를 하나 더 만들어서 전달해야함. 바로줄꺼면 이렇게 따로 뺄 이유가 없음
@@ -72,7 +70,7 @@ class ProfileViewModel: ViewModel{
                             postRelay.accept([])
                         }
                     case .failure(let error):
-                        print("MyPost Fail",error)
+                        print("MyPost Read Fail",error)
                         postRelay.accept([])
 
                     }
