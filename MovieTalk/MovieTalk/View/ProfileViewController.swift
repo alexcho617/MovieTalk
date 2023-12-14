@@ -22,7 +22,6 @@ class ProfileViewController: UIViewController {
 
     
     //view
-    //TODO: Profile edit + profile image
     //TODO: Pull to refresh
     let profileImageView = {
         let view = UIImageView()

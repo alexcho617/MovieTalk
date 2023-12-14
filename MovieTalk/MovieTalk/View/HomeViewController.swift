@@ -85,7 +85,7 @@ class HomeViewController: UIViewController{
 //                print("intrinsicContentSize width",cell.contentLabel.intrinsicContentSize.width)
 //                print("intrinsicContentSize height",cell.contentLabel.intrinsicContentSize.height)
 //                cell.moreButton.isHidden = !cell.contentLabel.isTextTruncated
-                print(cell.movieInfoButton.titleLabel?.text,"기나?",!cell.contentLabel.isTextTruncated)
+//                print(cell.movieInfoButton.titleLabel?.text,"기나?",!cell.contentLabel.isTextTruncated)
                 //Movie VC
                 cell.navigationHandler = {
                     let vc = MovieViewController()
