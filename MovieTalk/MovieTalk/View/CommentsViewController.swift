@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-class CommentsViewController: UIViewController {
+final class CommentsViewController: UIViewController {
     var postID: String = ""
     var comments: [Comment] = [] //local변수 for view
     var disposeBag = DisposeBag()
@@ -69,13 +69,18 @@ class CommentsViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print(#function)
         newCommentsHandler?(comments)
+        disposeBag = DisposeBag()
+
     }
     
     func bind(){
 //        print(#function)
         commentsSubject
-            .bind(to: commentsTableView.rx.items(cellIdentifier: CommentsTableViewCell.identifier , cellType: CommentsTableViewCell.self)){ row, element, cell in
+            .bind(to: commentsTableView.rx.items(cellIdentifier: CommentsTableViewCell.identifier , cellType: CommentsTableViewCell.self)){ [weak self] row, element, cell in
+                guard let self = self else { return }
+
             cell.selectionStyle = .none
                 
             if let profileURL = element.creator.profile{

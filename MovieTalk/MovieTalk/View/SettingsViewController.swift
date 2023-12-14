@@ -10,7 +10,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     let viewModel = SettingsViewModel()
     let disposeBag = DisposeBag()
     var logoutButton = {

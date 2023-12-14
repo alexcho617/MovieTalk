@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
-class HomeViewController: UIViewController{
+final class HomeViewController: UIViewController{
     let disposeBag = DisposeBag()
     let viewModel = HomeViewModel()
     let refreshControl = UIRefreshControl()
@@ -94,12 +94,14 @@ class HomeViewController: UIViewController{
                 }
                 
                 //Comment VC
-                cell.presentationHandler = {
+                cell.presentationHandler = { [weak self] in
+                    guard let self = self else { return }
+                    
                     let vc = CommentsViewController()
                     vc.postID = element.id
                     vc.comments = element.comments ?? []
-                    vc.newCommentsHandler = { [weak self] newComments in
-                        self?.viewModel.updateComment(forPostID: element.id, with: newComments)
+                    vc.newCommentsHandler = { newComments in
+                        self.viewModel.updateComment(forPostID: element.id, with: newComments)
                     }
                     vc.setView()
                     vc.bind()

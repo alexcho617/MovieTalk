@@ -12,7 +12,7 @@ import RxCocoa
 import Kingfisher
 import PhotosUI
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     let disposeBag = DisposeBag()
     let viewModel = ProfileViewModel()
     var itemProviders: [NSItemProvider] = []

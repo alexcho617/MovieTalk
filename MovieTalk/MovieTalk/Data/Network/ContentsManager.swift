@@ -15,8 +15,11 @@ final class ContentsManager{
     static let shared = ContentsManager()
     private init(){}
     let disposeBag = DisposeBag()
+    
     //TODO: Add error handling codes -> 각 함수에 token refresh 넣기. 전부 refresh 호출해버리면 되는거 아닌가? 갱신 성공, 만료 안됨 말고는싹다 리턴
     func post(_ model: ContentsCreateRequestDTO) -> Observable<Bool>{
+        AuthManager.shared.refresh()
+            .disposed(by: disposeBag)
         return Observable<Bool>.create { observer in
             print("ContentsManager: post()")
             let provider = MoyaProvider<ContentsServerAPI>()
@@ -43,20 +46,26 @@ final class ContentsManager{
     }
     
     func fetch(nextCursor: String) -> Observable<ContentsReadResponseDTO>{
+        print("ContentsManager: fetch()")
         return Observable<ContentsReadResponseDTO>.create { observer in
-            print("ContentsManager: fetch()")
             let provider = MoyaProvider<ContentsServerAPI>()
             provider.request(ContentsServerAPI.readTopic(next: nextCursor)) { result in
                 switch result{
                 case .success(let response):
                     print("SESAC Contents SUCCESS",response.statusCode)
 //                    print(String(data: response.data, encoding: .utf8))
-                    if let decodedResponse = try? JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data){
-                        observer.onNext(decodedResponse)
+                    if response.statusCode == 200{
+                        if let decodedResponse = try? JSONDecoder().decode(ContentsReadResponseDTO.self, from: response.data){
+                            observer.onNext(decodedResponse)
+                        }else{
+                            print("Contents: Decoding Failed") //에러시 빈값 전달
+                            observer.onNext(ContentsReadResponseDTO.emptyResponse())
+                        }
                     }else{
-                        print("Contents: Decoding Failed") //에러시 빈값 전달
+                        print("Contents: Server Error", response.statusCode) //에러시 빈값 전달
                         observer.onNext(ContentsReadResponseDTO.emptyResponse())
                     }
+                    
                 case .failure(let error):
                     observer.onNext(ContentsReadResponseDTO.emptyResponse())
                     handleStatusCodeError(error)
