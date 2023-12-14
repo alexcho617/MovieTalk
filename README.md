@@ -1,6 +1,6 @@
 # “무비톡” - 영화인들의 소모임
 
-<img width="128" alt="appIcon" src="https://github.com/alexcho617/MovieTalk/assets/38528052/6c0e2d6c-16d0-4f73-b642-02d0ff67b850">
+<img width="128" alt="appIcon" src="https://github.com/alexcho617/MovieTalk/assets/38528052/d9de60c4-b00d-4858-8e91-784d294bfefb">
 
 <br>
 <img width="2163" alt="image" src="https://github.com/alexcho617/MovieTalk/assets/38528052/8a92d5f9-429f-4ee7-b12f-3ec66b4fc3f1">
