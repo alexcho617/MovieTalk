@@ -16,12 +16,12 @@ class AddPostViewModel: ViewModel{
     var contentsString = ""
     struct Input{
         let postClicked: ControlEvent<Void>
-        
+
         let movieID: String
         let movieTitle: String
         let postImageData: Data
     }
-    
+        
     struct Output{
         let postResult: PublishRelay<Bool>
     }
