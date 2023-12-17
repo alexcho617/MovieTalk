@@ -27,7 +27,7 @@ UIKit / MVVM / RxSwift / SnapKit  / Kingfisher / Moya
 - iOS 16.0
 
 ## 🤔  개발하며 고민한 점
-### JWT 기반 인증
+### 고민한점 1
 
 ## ⚠️  트러블슈팅
 ### Trouble1
@@ -37,7 +37,7 @@ UIKit / MVVM / RxSwift / SnapKit  / Kingfisher / Moya
 ## 🐾 회고
 
 ## 🍎 기능상세
-> Aladin Open API를 사용한 도서 검색 및 추가 | 페이지네이션 적용
+> 기능1
 <img width="60%" alt="image" src="https://github.com/alexcho617/BookKeep/assets/38528052/69ae743d-13de-42cf-a231-8af87deac024">
 <br><br>
 
