@@ -80,6 +80,7 @@ final class HomeViewController: UIViewController{
                 //TODO: 좋아요 Cell reuse 관련  버그
                 cell.configureCellData(element)
                 cell.selectionStyle = .none
+
 //                print(cell.contentLabel.text)
                 //TODO: contentsLabel 내용이 길지 않은 경우 더보기 버튼 숨기기
 //                print("intrinsicContentSize width",cell.contentLabel.intrinsicContentSize.width)
