@@ -47,11 +47,14 @@ class HomeViewCell: UITableViewCell {
     let movieInfoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("영화정보", for: .normal)
+        button.contentHorizontalAlignment = .trailing
+        button.tintColor = .white
+        button.backgroundColor = .black.withAlphaComponent(0.5)
         button.titleLabel?.font = Design.fontAccentDefault
         return button
     }()
     
-    private let mainImageView: UIImageView = {
+    let mainImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .black
         imageView.tintColor = .white
@@ -120,20 +123,17 @@ class HomeViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
-//        mainImageView.image = nil
-//        contentLabel.text = nil
-        
     }
+    
     
     func configureCell() {
         contentView.addSubview(profileImageView)
         contentView.addSubview(nickLabel)
         contentView.addSubview(dateLabel)
-//        contentView.addSubview(movieLabel)
+        contentView.addSubview(mainImageView)
         contentView.addSubview(movieInfoButton)
         movieInfoButton.addTarget(self, action: #selector(movieButtonClicked), for: .touchUpInside)
         
-        contentView.addSubview(mainImageView)
         contentView.addSubview(likeButton)
         contentView.addSubview(commentButton)
         contentView.addSubview(likeCountLabel)
@@ -159,17 +159,16 @@ class HomeViewCell: UITableViewCell {
             make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
         }
         
-        movieInfoButton.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom)
-            make.leading.equalToSuperview().offset(Design.paddingDefault).priority(.high)
-            make.trailing.lessThanOrEqualToSuperview().inset(Design.paddingDefault)
-        }
-        
-        
         mainImageView.snp.makeConstraints { make in
-            make.top.equalTo(movieInfoButton.snp.bottom)
+            make.top.equalTo(dateLabel.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(mainImageView.snp.width).multipliedBy(1)
+        }
+        
+        movieInfoButton.snp.makeConstraints { make in
+            make.bottom.equalTo(mainImageView.snp.bottom)
+            make.leading.trailing.equalToSuperview()//.offset(Design.paddingDefault).priority(.high)
+//            make.trailing.lessThanOrEqualToSuperview()//.inset(Design.paddingDefault)
         }
         
         ///button stack
@@ -233,7 +232,7 @@ class HomeViewCell: UITableViewCell {
             profileImageView.tintColor = UIColor.random()
         }
         dateLabel.text = DateFormatter.localizedDateString(fromTimestampString: cellData.time)
-        movieInfoButton.setTitle(cellData.movieTitle, for: .normal)
+        movieInfoButton.setTitle("\(cellData.movieTitle ?? "-")\t", for: .normal)
 
         //image
         if let fileArray = cellData.image{
@@ -292,7 +291,12 @@ class HomeViewCell: UITableViewCell {
                 owner.presentationHandler?()
             }
             .disposed(by: disposeBag)
+
+
+
     }
+    
+    
     private func updateLikeInfo(){
        
         likeButton.setImage(UIImage(systemName: isLiked ? "heart.fill" : "heart" ), for: .normal)
