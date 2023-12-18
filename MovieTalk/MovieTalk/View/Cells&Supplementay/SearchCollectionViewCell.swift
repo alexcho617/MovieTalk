@@ -19,7 +19,7 @@ class SearchCollectionViewCell: UICollectionViewCell {
         view.tintColor = .white
         view.image = UIImage(systemName: "popcorn")
         view.layer.cornerRadius = Design.paddingDefault
-        view.contentMode = .scaleAspectFit
+        view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
     }()
