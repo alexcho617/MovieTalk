@@ -154,13 +154,10 @@ class HomeViewCell: UITableViewCell {
             make.leading.equalTo(profileImageView.snp.trailing).offset(Design.paddingDefault)
         }
         
-        dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(Design.paddingDefault)
-            make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
-        }
+
         
         mainImageView.snp.makeConstraints { make in
-            make.top.equalTo(dateLabel.snp.bottom)
+            make.top.equalTo(profileImageView.snp.bottom).offset(Design.paddingDefault)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(mainImageView.snp.width).multipliedBy(1)
         }
@@ -200,7 +197,11 @@ class HomeViewCell: UITableViewCell {
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
-            make.bottom.equalTo(allCommentsButton.snp.top)
+        }
+        
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentLabel.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(Design.paddingDefault)
         }
         
         moreButton.snp.makeConstraints { make in
@@ -210,6 +211,7 @@ class HomeViewCell: UITableViewCell {
         }
         
         allCommentsButton.snp.makeConstraints { make in
+            make.top.equalTo(dateLabel.snp.bottom)
             make.leading.equalToSuperview().inset(Design.paddingDefault)
             make.bottom.equalToSuperview()
         }
