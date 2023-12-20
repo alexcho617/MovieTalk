@@ -14,7 +14,7 @@ enum AuthServerAPI{
     case login(model: LoginRequestDTO)
     case validateEmail(model: ValidateEmailRequestDTO)
     case refresh
-    case withdraw //withdraw request body 필요없어짐 v11.17
+    case withdraw
 }
 
 extension AuthServerAPI: TargetType{

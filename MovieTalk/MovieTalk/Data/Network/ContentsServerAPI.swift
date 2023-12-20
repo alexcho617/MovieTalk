@@ -131,13 +131,14 @@ extension ContentsServerAPI: TargetType{
                 "limit" : "10",
                 "next" : next
             ]
-            
             return .requestParameters(parameters: queryParameters, encoding: URLEncoding.default)
+        
         case .getImage:
             return .requestParameters(parameters: ["product_id" : "mtSNS"], encoding: URLEncoding.default)
             
         case .likeTopic:
             return .requestPlain
+        
         case .createComment(model: let model , postId: _):
             return .requestJSONEncodable(model)
             
@@ -146,7 +147,6 @@ extension ContentsServerAPI: TargetType{
             
         case .editMyProfile(model: let model):
             var multiPartData: [Moya.MultipartFormData] = []
-            
             let nicknameData = model.nick?.data(using: .utf8) ?? Data()
             let birthdayData = model.birthDay?.data(using: .utf8) ?? Data()
             let phoneData = model.phoneNum?.data(using: .utf8) ?? Data()

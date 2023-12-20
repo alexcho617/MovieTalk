@@ -15,6 +15,7 @@ final class MovieTalkTests: XCTestCase {
     
     var viewModel: AddPostViewModel!
     var disposeBag: DisposeBag!
+    
     override func setUpWithError() throws {
         viewModel = AddPostViewModel()
         disposeBag = DisposeBag()
